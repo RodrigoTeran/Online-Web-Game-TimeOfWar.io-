@@ -41,3 +41,7 @@ Para hacerlo online:
 
 Para venderlo:
 -Comprar servidores y dominio (hostinger)
+
+
+<script src="archivo_script.js"></script>
+visibility: visible;
