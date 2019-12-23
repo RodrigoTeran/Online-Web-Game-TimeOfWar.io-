@@ -12,17 +12,8 @@
 <body> 
         <div class="loader">
 <!--
-
-
-
-
 LOADER LOADER LOADER
-
-
-
-
 -->
-
         </div>    
     <div id="part1">
     	<aside class="leftaside">
@@ -193,7 +184,6 @@ LOADER LOADER LOADER
         </div>              
     </div>
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
-        var socket = io();
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> // JQuery libary
@@ -461,7 +451,7 @@ LOADER LOADER LOADER
         function knowgame(){
             var img = new Image();
             img.onload = function(){
-                ctxgame.drawImage(img, 700, 248, 100, 100); // canvas w=1500 h=696 (last 2 important)...
+                ctxgame.drawImage(img, 700, 268, 100, 80); // canvas w=1500 h=696 (last 2 important)...
             };
             img.src = know_tank_2(); //todo [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[change the tank]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
         };
@@ -473,6 +463,39 @@ LOADER LOADER LOADER
         setInterval(draw, check_navigator());
         change_stats();
         draw();
+        // --------------------------------------------------------------------ONLINE GAME LOGIC
+        var socket = io();
+        socket.on("new_position", function(data){
+            ctxgame.clearRect(0, 0, 1500, 696);
+            for(var i = 0; i < data.player.length; i++){
+                /*var img = new Image();
+                img.onload = function(){
+                    ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 100, 80); 
+                };
+                img.src = know_tank_2();*/
+                ctxgame.fillText("P", data.player[i].x, data.player[i].y);
+            };  
+        });
+        document.onkeydown = function(event){
+            if(event.keyCode === 68)    //d
+                socket.emit("keyPress", {inputId:"right", state:true});
+            else if(event.keyCode === 83)   //s
+                socket.emit("keyPress", {inputId:"down", state:true});
+            else if(event.keyCode === 65)   //a
+                socket.emit("keyPress", {inputId:"left", state:true});
+            else if(event.keyCode === 87)   //w
+                socket.emit("keyPress", {inputId:"up", state:true});                        
+        };
+        document.onkeyup = function(event){
+            if(event.keyCode === 68)    //d
+                socket.emit("keyPress", {inputId:"right", state:false});
+            else if(event.keyCode === 83)   //s
+                socket.emit("keyPress", {inputId:"down", state:false});
+            else if(event.keyCode === 65)   //a
+                socket.emit("keyPress", {inputId:"left", state:false});
+            else if(event.keyCode === 87)   //w
+                socket.emit("keyPress", {inputId:"up", state:false});                       
+        };
     </script>
 </body>
 </html>
