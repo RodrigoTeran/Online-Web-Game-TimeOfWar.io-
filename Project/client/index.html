@@ -431,7 +431,8 @@ LOADER LOADER LOADER
             };
         };
         // --------------------------------------------------------------------FUNCTIONS 2
-        var ctxgame = document.getElementsByClassName("canvasgame")[0].getContext("2d"); 
+        var ctxgame = document.getElementsByClassName("canvasgame")[0].getContext("2d");
+        var socket = io();
 
         function start2(){
             document.getElementById("part2").style.display = 'block';
@@ -448,15 +449,12 @@ LOADER LOADER LOADER
             document.getElementById("part1").style.display = 'block';
             finish2();
         };
-        function knowgame(){
-            var img = new Image();
-            img.onload = function(){
-                ctxgame.drawImage(img, 700, 268, 100, 80); // canvas w=1500 h=696 (last 2 important)...
-            };
-            img.src = know_tank_2(); //todo [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[change the tank]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+        function knowgame(){    // it is called when the client pushes the start button
+            var tank_ = know_tank_2();
+            socket.emit("tankOfClient", {tankId:tank_});
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
-        tutorial('id1');    
+        tutorial('id1');
         tutorial('id2');
         tutorial('id3'); 
         write_();       
@@ -464,17 +462,13 @@ LOADER LOADER LOADER
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
-        var socket = io();
+        var img = new Image();
         socket.on("new_position", function(data){
             ctxgame.clearRect(0, 0, 1500, 696);
             for(var i = 0; i < data.player.length; i++){
-                /*var img = new Image();
-                img.onload = function(){
-                    ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 100, 80); 
-                };
-                img.src = know_tank_2();*/
-                ctxgame.fillText("P", data.player[i].x, data.player[i].y);
-            };  
+                img.src = data.player[i].tank;
+                ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
+            };
         });
         document.onkeydown = function(event){
             if(event.keyCode === 68)    //d

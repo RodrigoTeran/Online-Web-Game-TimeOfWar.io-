@@ -14,6 +14,7 @@ console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
 var SOCKET_LIST = {};
+var tanks = {};
 
 var Entity = function(){	// Entity Class
 	var self = {
@@ -38,11 +39,13 @@ var Player = function(id){	// PLayer Class
 	self.pressingRight = false;
 	self.pressingLeft = false;
 	self.pressingUp = false;
-	self.pressingDown = false;			
+	self.pressingDown = false;
+	self.tank = "";
 	self.maxSpd = 10;	// this attribute might change because of the powerups of the shop
 	var super_update = self.update;
 	self.update = function(){
 		self.updateSpd();
+		self.updateTank();
 		super_update();
 	};
 	self.updateSpd = function(){
@@ -65,6 +68,9 @@ var Player = function(id){	// PLayer Class
 			self.spdY = 0;
 		};									
 	};
+	self.updateTank = function(){
+		self.tank = tanks[self.id];
+	};
 	Player.list[id] = self;
 	return self;
 };
@@ -77,6 +83,7 @@ Player.update = function(){
 		pack.push({
 			x:player.x,
 			y:player.y,
+			tank:player.tank,	//need to change
 		});
 	};
 	return pack;
@@ -93,9 +100,13 @@ Player.onConnect = function(socket){
 		else if(data.inputId === "down")
 			player.pressingDown = data.state;									
 	});
+	socket.on("tankOfClient", function(data){
+		tanks[socket.id] = data.tankId; // gets the actual tank for every client
+	});
 };
 Player.onDisconnect = function(socket){
 	delete Player.list[socket.id];
+	delete tanks[socket.id];
 };
 var io = require("socket.io")(serv,{});	// Player connects
 io.sockets.on("connection", function(socket){
@@ -115,5 +126,5 @@ setInterval(function(){	// Must important function
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
 		socket.emit("new_position",pack);
-	};	
+	};
 },1000/25);
