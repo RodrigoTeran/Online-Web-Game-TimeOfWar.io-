@@ -197,6 +197,19 @@
             '<img src="css/keys/tanks/side_tanks/blue/st1.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/blue/st2.png" width="160" height="100"/>'],
         ];
+        var superlist_2 = [
+            ["css/keys/tanks/side_tanks/red/st0.png",  // red
+            "css/keys/tanks/side_tanks/red/st1.png",
+            "css/keys/tanks/side_tanks/red/st2.png"],
+            
+            ["css/keys/tanks/side_tanks/green/st0.png",  // green
+            "css/keys/tanks/side_tanks/green/st1.png",
+            "css/keys/tanks/side_tanks/green/st2.png"],
+            
+            ["css/keys/tanks/side_tanks/blue/st0.png",  // blue
+            "css/keys/tanks/side_tanks/blue/st1.png",
+            "css/keys/tanks/side_tanks/blue/st2.png"],
+        ];        
         var superlistposition = 0;  // COLOR
         var insidelistposition = 0;  // WEAPON
 
@@ -272,6 +285,11 @@
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
         };
+        function know_tank_2(){   //know what tank to draw
+            var color_position = superlist_2[superlistposition];
+            var actual_tank = color_position[insidelistposition];
+            return actual_tank;
+        };        
         function change_stats(){
             if(insidelistposition == 0){    //"SINGLE SHOT"
                 howmuch_range = 350;
@@ -396,8 +414,7 @@
             };
         };
         // --------------------------------------------------------------------FUNCTIONS 2
-        var c = document.getElementsByClassName("canvasgame")[0];
-        var ctxgame = c.getContext("2d");
+        var ctxgame = document.getElementsByClassName("canvasgame")[0].getContext("2d"); 
 
         function start2(){
             document.getElementById("part2").style.display = 'block';
@@ -415,8 +432,11 @@
             finish2();
         };
         function knowgame(){
-            var img = know_tank();
-            ctxgame.drawImage(img, 10, 10);
+            var img = new Image();
+            img.onload = function(){
+                ctxgame.drawImage(img, 700, 248, 100, 100); // canvas w=1500 h=696 (last 2 important)...
+            };
+            img.src = know_tank_2(); //todo [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[change the tank]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');    
