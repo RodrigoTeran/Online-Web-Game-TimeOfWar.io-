@@ -6,6 +6,7 @@ body{
 	background-image:url(keys/images/background.jpg);
 	background-size:cover;
 }
+
 /*-----------------------------------------------PART1-----------------------------------------------*/
 #part1{
 	display: none;

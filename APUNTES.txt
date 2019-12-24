@@ -13,17 +13,8 @@ Por dibujar:
 -Tanque rey
 -Bases
 -Mapa
--Imágenes de cargando
 
 Para página de inicio: (html y css)
--Botón tutorial
--Animación de cargando ->
-	Tener tres imágenes así:
-		Cargando .
-		Cargando ..
-		Cargando ...
-	Y sólo intercambiarlas y ya...
-<-
 -Saber que hacer con el footer
 
 Para el juego: (js)
@@ -35,12 +26,22 @@ Para el juego: (js)
 -Clasificación de amigos y enemigos (nombres de diferente color)
 
 Para hacerlo online:
--Saber cómo hacer el juego online (intercambio de información)
+-Saber cómo hacer el juego online (intercambio de información) [[[[[[[[[[[[[[[[[ EN PROCESO ]]]]]]]]]]]]]]]]]
 -Vincular a qué servidores te quieres meter cuando le das a start y ya agarro con varios servidores...
 -Chat
 
 Para venderlo:
 -Comprar servidores y dominio (hostinger)
 
-Problemas:
-- Es porque intenta cargr las imágenes desde que se inicia, se deben de cargar hasta que se le da a start...
+---------------------------------------------------------Problemas hijo puta---------------------------------------------------------
+- No se deben de obtener errores en la consola...
+
+- Pinche solución jaja
+	socket.on("new_position", function(data){
+	    ctxgame.clearRect(0, 0, 1500, 696);
+	    for(var i = 0; i < data.player.length; i++){
+	        var img = new Image();
+	        img.src = data.player[i].tank;
+	        ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
+	    };
+	});

@@ -457,15 +457,15 @@ LOADER LOADER LOADER
         tutorial('id1');
         tutorial('id2');
         tutorial('id3'); 
-        write_();       
+        write_();
         setInterval(draw, check_navigator());
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
-        var img = new Image();
         socket.on("new_position", function(data){
             ctxgame.clearRect(0, 0, 1500, 696);
             for(var i = 0; i < data.player.length; i++){
+                var img = new Image();
                 img.src = data.player[i].tank;
                 ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
             };
