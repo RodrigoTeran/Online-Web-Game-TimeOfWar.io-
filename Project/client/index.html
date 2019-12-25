@@ -82,7 +82,7 @@ LOADER LOADER LOADER
                 <div class="start">	
                     <section class="playername">
                         <label>PLAYER NAME</label>
-                        <input class="inputname" type="text"/>
+                        <input maxlength="20" class="inputname" type="text" name="nameplayer"/>
                     </section> 
                     <section>
                         <button class="startbutton" onClick="var b = play(); start(); return b">START GAME</button>
@@ -449,9 +449,14 @@ LOADER LOADER LOADER
             document.getElementById("part1").style.display = 'block';
             finish2();
         };
+        function getname_(){
+            var nameplayer = document.getElementsByName("nameplayer")[0].value;
+            return nameplayer;
+        };
         function knowgame(){    // it is called when the client pushes the start button
             var tank_ = know_tank_2();
-            socket.emit("tankOfClient", {tankId:tank_});
+            var tank_name = getname_();
+            socket.emit("tankOfClient", {tankId:tank_, name:tank_name});
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
@@ -467,7 +472,14 @@ LOADER LOADER LOADER
             for(var i = 0; i < data.player.length; i++){
                 var img = new Image();
                 img.src = data.player[i].tank;
+                // The tank
                 ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
+                // The tank's name
+                // style of the text...
+                ctxgame.lineWidth = .5;
+                ctxgame.strokeStyle = 'white';
+                ctxgame.font = "20px Verdana";
+                ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 10);
             };
         });
         document.onkeydown = function(event){

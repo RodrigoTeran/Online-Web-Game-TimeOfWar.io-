@@ -15,6 +15,8 @@ console.log("Starting Server..."); // When the server is started
 // SOCKETS
 var SOCKET_LIST = {};
 var tanks = {};
+var names = {};
+var namesLen = {};
 
 var Entity = function(){	// Entity Class
 	var self = {
@@ -36,11 +38,13 @@ var Entity = function(){	// Entity Class
 var Player = function(id){	// PLayer Class
 	var self = Entity();
 	self.id = id;
+	self.name = "";
 	self.pressingRight = false;
 	self.pressingLeft = false;
 	self.pressingUp = false;
 	self.pressingDown = false;
 	self.tank = "";
+	self.detOfName = 0;
 	self.maxSpd = 10;	// this attribute might change because of the powerups of the shop
 	var super_update = self.update;
 	self.update = function(){
@@ -70,6 +74,17 @@ var Player = function(id){	// PLayer Class
 	};
 	self.updateTank = function(){
 		self.tank = tanks[self.id];
+		self.name = names[self.id];
+		var cont = 0;
+		for(var i in self.name){
+			cont += 1;
+		};
+		if(cont == 0){
+			self.detOfName = 0;
+		}else{
+			var cont_ = ((1 - cont) * 5) + 20; // only change the 30 and 7
+			self.detOfName = cont_;
+		};
 	};
 	Player.list[id] = self;
 	return self;
@@ -83,7 +98,9 @@ Player.update = function(){
 		pack.push({
 			x:player.x,
 			y:player.y,
-			tank:player.tank,	//need to change
+			tank:player.tank,
+			name:player.name,
+			detOfName:player.detOfName,
 		});
 	};
 	return pack;
@@ -102,6 +119,7 @@ Player.onConnect = function(socket){
 	});
 	socket.on("tankOfClient", function(data){
 		tanks[socket.id] = data.tankId; // gets the actual tank for every client
+		names[socket.id] = data.name; // gets the actual name for every client
 	});
 };
 Player.onDisconnect = function(socket){
