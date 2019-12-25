@@ -213,18 +213,31 @@ LOADER LOADER LOADER
             '<img src="css/keys/tanks/side_tanks/blue/st2.png" width="160" height="100"/>'],
         ];
         var superlist_2 = [
-            ["css/keys/tanks/side_tanks/red/st0.png",  // red
-            "css/keys/tanks/side_tanks/red/st1.png",
-            "css/keys/tanks/side_tanks/red/st2.png"],
+            ["css/keys/tanks/red/r_b.png",  // red
+            "css/keys/tanks/red/r_b.png",
+            "css/keys/tanks/red/r_b.png"],
             
-            ["css/keys/tanks/side_tanks/green/st0.png",  // green
-            "css/keys/tanks/side_tanks/green/st1.png",
-            "css/keys/tanks/side_tanks/green/st2.png"],
+            ["css/keys/tanks/green/g_b.png",  // green
+            "css/keys/tanks/green/g_b.png",
+            "css/keys/tanks/green/g_b.png"],
             
-            ["css/keys/tanks/side_tanks/blue/st0.png",  // blue
-            "css/keys/tanks/side_tanks/blue/st1.png",
-            "css/keys/tanks/side_tanks/blue/st2.png"],
-        ];        
+            ["css/keys/tanks/blue/b_b.png",  // blue
+            "css/keys/tanks/blue/b_b.png",
+            "css/keys/tanks/blue/b_b.png"],
+        ];  
+        var superlist_3 = [
+            ["css/keys/tanks/red/r_1.png",  // red
+            "css/keys/tanks/red/r_2.png",
+            "css/keys/tanks/red/r_0.png"],
+            
+            ["css/keys/tanks/green/g_1.png",  // green
+            "css/keys/tanks/green/g_2.png",
+            "css/keys/tanks/green/g_0.png"],
+            
+            ["css/keys/tanks/blue/b_1.png",  // blue
+            "css/keys/tanks/blue/b_2.png",
+            "css/keys/tanks/blue/b_0.png"],
+        ];
         var superlistposition = 0;  // COLOR
         var insidelistposition = 0;  // WEAPON
 
@@ -306,7 +319,12 @@ LOADER LOADER LOADER
             var color_position = superlist_2[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
-        };        
+        };
+        function know_tank_3(){   //know what tank's weapon to draw
+            var color_position = superlist_3[superlistposition];
+            var actual_tank = color_position[insidelistposition];
+            return actual_tank;
+        }; 
         function change_stats(){
             if(insidelistposition == 0){    //"SINGLE SHOT"
                 howmuch_range = 350;
@@ -455,8 +473,13 @@ LOADER LOADER LOADER
         };
         function knowgame(){    // it is called when the client pushes the start button
             var tank_ = know_tank_2();
+            var tank_w = know_tank_3();            
             var tank_name = getname_();
-            socket.emit("tankOfClient", {tankId:tank_, name:tank_name});
+            socket.emit("tankOfClient", {
+                tankId:tank_, 
+                name:tank_name,
+                weatank:tank_w,
+            });
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
@@ -471,15 +494,18 @@ LOADER LOADER LOADER
             ctxgame.clearRect(0, 0, 1500, 696);
             for(var i = 0; i < data.player.length; i++){
                 var img = new Image();
+                var img2 = new Image();
                 img.src = data.player[i].tank;
+                img2.src = data.player[i].tankw;
                 // The tank
-                ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
+                ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);     // chasis
+                ctxgame.drawImage(img2, data.player[i].x + 20, data.player[i].y - 25, 40, 120);     // weapon
                 // The tank's name
                 // style of the text...
                 ctxgame.lineWidth = .5;
                 ctxgame.strokeStyle = 'white';
                 ctxgame.font = "20px Verdana";
-                ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 10);
+                ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 30);        // name
             };
         });
         document.onkeydown = function(event){

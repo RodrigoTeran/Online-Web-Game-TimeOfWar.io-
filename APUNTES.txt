@@ -3,7 +3,6 @@ Colores importantes:
 
 ---------------------------------------------------------Por hacer---------------------------------------------------------
 Por investigar:
--Checar como usar el input box
 -Checar como hacer para que las cosas se hagan más pequeñas o grandes si el tamaño de la ventana es editado
 
 Recordar:
@@ -45,5 +44,3 @@ Para venderlo:
 	        ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
 	    };
 	});
-
-nameplayer (nombre player)...

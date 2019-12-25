@@ -15,6 +15,7 @@ console.log("Starting Server..."); // When the server is started
 // SOCKETS
 var SOCKET_LIST = {};
 var tanks = {};
+var tanks_w = {};
 var names = {};
 var namesLen = {};
 
@@ -44,6 +45,7 @@ var Player = function(id){	// PLayer Class
 	self.pressingUp = false;
 	self.pressingDown = false;
 	self.tank = "";
+	self.tankw = "";	
 	self.detOfName = 0;
 	self.maxSpd = 10;	// this attribute might change because of the powerups of the shop
 	var super_update = self.update;
@@ -74,6 +76,7 @@ var Player = function(id){	// PLayer Class
 	};
 	self.updateTank = function(){
 		self.tank = tanks[self.id];
+		self.tankw = tanks_w[self.id];
 		self.name = names[self.id];
 		var cont = 0;
 		for(var i in self.name){
@@ -99,6 +102,7 @@ Player.update = function(){
 			x:player.x,
 			y:player.y,
 			tank:player.tank,
+			tankw:player.tankw,
 			name:player.name,
 			detOfName:player.detOfName,
 		});
@@ -120,6 +124,7 @@ Player.onConnect = function(socket){
 	socket.on("tankOfClient", function(data){
 		tanks[socket.id] = data.tankId; // gets the actual tank for every client
 		names[socket.id] = data.name; // gets the actual name for every client
+		tanks_w[socket.id] = data.weatank; // gets the actual tank's weapon for every client
 	});
 };
 Player.onDisconnect = function(socket){
