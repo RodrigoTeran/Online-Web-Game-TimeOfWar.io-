@@ -490,6 +490,13 @@ LOADER LOADER LOADER
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
+        function drawImageR(context, image, x, y, angle, width_i, height_i){
+            context.save();
+            context.translate(x + (width_i / 2), y + (height_i / 2));
+            context.rotate((angle*Math.PI)/180);
+            context.drawImage(image, (-width_i / 2), (-height_i / 2), width_i, height_i);
+            context.restore();
+        };
         socket.on("new_position", function(data){
             ctxgame.clearRect(0, 0, 1500, 696);
             for(var i = 0; i < data.player.length; i++){
@@ -498,10 +505,10 @@ LOADER LOADER LOADER
                 img.src = data.player[i].tank;
                 img2.src = data.player[i].tankw;
                 // The tank
-                ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);     // chasis
-                ctxgame.drawImage(img2, data.player[i].x + 20, data.player[i].y - 25, 40, 120);     // weapon
+                drawImageR(ctxgame, img, data.player[i].x, data.player[i].y, data.player[i].angle, 80, 80);  // chasis
+                drawImageR(ctxgame, img2, data.player[i].x + 20, data.player[i].y - 25, data.player[i].angle, 40, 120);   // weapon
+                console.log(data.player[i].angle);
                 // The tank's name
-                // style of the text...
                 ctxgame.lineWidth = .5;
                 ctxgame.strokeStyle = 'white';
                 ctxgame.font = "20px Verdana";
@@ -528,6 +535,12 @@ LOADER LOADER LOADER
             else if(event.keyCode === 87)   //w
                 socket.emit("keyPress", {inputId:"up", state:false});                       
         };
+        document.onmousemove = function(event){
+            var mx = event.clientX;
+            var my = event.clientY;
+            socket.emit("mousePos", {mouseX:mx, mouseY:my});
+        };
     </script>
 </body>
 </html>
+ 

@@ -18,11 +18,12 @@ var tanks = {};
 var tanks_w = {};
 var names = {};
 var namesLen = {};
+var angles = {};
 
 var Entity = function(){	// Entity Class
 	var self = {
-		x:700,
-		y:268,
+		x:710,
+		y:308,
 		spdX:0,
 		spdY:0,
 		id:"",
@@ -40,6 +41,7 @@ var Player = function(id){	// PLayer Class
 	var self = Entity();
 	self.id = id;
 	self.name = "";
+	self.angle = 0;
 	self.pressingRight = false;
 	self.pressingLeft = false;
 	self.pressingUp = false;
@@ -78,6 +80,7 @@ var Player = function(id){	// PLayer Class
 		self.tank = tanks[self.id];
 		self.tankw = tanks_w[self.id];
 		self.name = names[self.id];
+		self.angle = angles[self.id];
 		var cont = 0;
 		for(var i in self.name){
 			cont += 1;
@@ -101,6 +104,7 @@ Player.update = function(){
 		pack.push({
 			x:player.x,
 			y:player.y,
+			angle:player.angle,
 			tank:player.tank,
 			tankw:player.tankw,
 			name:player.name,
@@ -125,6 +129,12 @@ Player.onConnect = function(socket){
 		tanks[socket.id] = data.tankId; // gets the actual tank for every client
 		names[socket.id] = data.name; // gets the actual name for every client
 		tanks_w[socket.id] = data.weatank; // gets the actual tank's weapon for every client
+	});
+	socket.on("mousePos", function(data){
+		angleRad = Math.atan2((data.mouseY - 348), (data.mouseX - 750));
+		angleDeg = (angleRad * 180) / Math.PI;
+		angleDeg = angleDeg + 90;
+		angles[socket.id] = angleDeg;  // gets the actual angle for every client
 	});
 };
 Player.onDisconnect = function(socket){
