@@ -10,11 +10,9 @@
     <link rel="stylesheet" type="text/css" href="css/css_principal_page.css"/>
 </head>
 <body> 
-        <div class="loader">
-<!--
-LOADER LOADER LOADER
--->
-        </div>    
+    <div class="loader">
+        Connecting...
+    </div>
     <div id="part1">
     	<aside class="leftaside">
         	<div class="h1container">   
@@ -490,29 +488,34 @@ LOADER LOADER LOADER
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
+        var imgmap = new Image();
+        imgmap.src = "/client/css/keys/images/map.png";
+        // --------------------------------------------------------------------FUNCTIONS
         function drawImageR(context, image, x, y, angle, width_i, height_i){
             context.save();
             context.translate(x + (width_i / 2), y + (height_i / 2));
             context.rotate((angle*Math.PI)/180);
             context.drawImage(image, (-width_i / 2), (-height_i / 2), width_i, height_i);
             context.restore();
-        };
+        };     
         socket.on("new_position", function(data){
             ctxgame.clearRect(0, 0, 1500, 696);
             for(var i = 0; i < data.player.length; i++){
-                var img = new Image();
-                var img2 = new Image();
-                img.src = data.player[i].tank;
-                img2.src = data.player[i].tankw;
-                // The tank
-                drawImageR(ctxgame, img, data.player[i].x, data.player[i].y, data.player[i].angle, 80, 80);  // chasis
-                drawImageR(ctxgame, img2, data.player[i].x + 20, data.player[i].y - 25, data.player[i].angle, 40, 120);   // weapon
-                console.log(data.player[i].angle);
-                // The tank's name
-                ctxgame.lineWidth = .5;
-                ctxgame.strokeStyle = 'white';
-                ctxgame.font = "20px Verdana";
-                ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 30);        // name
+                function drawPlayers(){
+                    var img = new Image();
+                    var img2 = new Image();
+                    img.src = data.player[i].tank;
+                    img2.src = data.player[i].tankw;
+                    // The tank
+                    drawImageR(ctxgame, img, data.player[i].x, data.player[i].y, data.player[i].angle, 80, 80);  // chasis
+                    drawImageR(ctxgame, img2, data.player[i].x + 20, data.player[i].y - 25, data.player[i].angle, 40, 120);   // weapon
+                    // The tank's name
+                    ctxgame.lineWidth = .5;
+                    ctxgame.strokeStyle = 'white';
+                    ctxgame.font = "20px Verdana";
+                    ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 30);    // name
+                };
+                drawPlayers();
             };
         });
         document.onkeydown = function(event){
