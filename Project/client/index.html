@@ -12,9 +12,6 @@
 <body> 
     <div class="loader">
             Connecting...
-        </div>    
-    <div class="loader">
-        Connecting...
     </div>
     <div id="part1">
     	<aside class="leftaside">
@@ -102,25 +99,22 @@
                         	text-align:center; 
                             font-weight:bold; 
                             font-size:36px; 
-                            font:Arial, Helvetica, sans-serif;
-                            background-color:#999;">
+                            font:Arial, Helvetica, sans-serif;">
                         </div>
                         <div id="id2" class="tutorial" style="
                         	text-align:left; 
                             font-weight:bold;
                             top:140px;
                             font:Arial, Helvetica, sans-serif;
-                            background-color:#CCC;
                             overflow-y: scroll;">
                         </div>
                         <div id="id3" class="tutorial" style="
                         	text-align:center;
-                            height:25px;                        
+                            height:27px;                        
                             top:475px;
-                            width:591px;
+                            width:595px;
                             margin-left:0px;
-                            border-top-color:#CCC;
-                            border-right-color:#CCC;">
+                            border: none;">
                         </div>                                               
                     </section>                                  
                 </div>
@@ -198,6 +192,16 @@
     </script>
     
     <script type="text/javascript">
+        // función que actualiza el zoom del elemento body
+        function actualizarTama(){
+        $("body").css("zoom", window.innerWidth / 1530);
+        };
+        $(document).ready(function(){
+            // actualizaremos el zoom cuando la ventana cambie de tamaño
+            $(window).on("resize", actualizarTama);
+            // y al cargar la página
+            actualizarTama();  
+        });
         // --------------------------------------------------------------------VARIABLES
         var names_of_weapon_list = ["SINGLE SHOT", "MACHINE GUN", "BOMB"];
         var superlist = [
@@ -445,7 +449,7 @@
                     '<br>';
                 };
                 if(id == "id3"){
-                    document.getElementById(id).innerHTML='<button class="startbutton" onClick="tutorialbutton();">Got it bro!';
+                    document.getElementById(id).innerHTML='<button class="backbutton" onClick="tutorialbutton();">Got it bro!';
                 };
             };
         };
