@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta charset="iso-8559-1"/>
+	<meta name="description" content="GreatWars is a fast-paced pixelated third-person shooter."/>
+	<meta name="keywords" content="wars, online game, shooter, rpg"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Time of war</title>
+    <style>
+		body{
+			background-color:#2F2F2F;
+		}
+		.centerheader{
+			display:inline-block;							
+			width:450px;
+			height:260px;			
+      		margin-left: 100px;					
+		}
+		header .imagenlogo{
+			text-align:center;					
+			width:400px;
+			height:240px;		
+      		margin-left: auto;
+      		margin-right: auto;		
+			animation-duration: 1.5s;
+			animation-name: anima_logo;
+			animation-iteration-count: infinite;	
+			animation-direction: alternate;
+		}
+		aside{				
+		}
+		.rightaside{
+			display:inline-block;
+			float:right;
+			color:#FFF;	
+			max-width:400px;
+			width:400px;
+			text-align:center;			
+		}
+		.leftaside{
+			display:inline-block;
+			float:left;	
+			margin-left:10px;
+			margin-top:10px;
+			max-width:400px;
+		}
+		.leftasideplayer{
+			background-image:url(imagenes/metal.png);			
+		}
+		.headermetal{
+			text-align:center;
+			color:#FFF;
+			font-size:50px;
+			background-color:#0FF;
+		}
+		.flechaizq{
+			display:inline-block;			
+		}
+		.arma{
+			display:inline-block;			
+		}
+		.flechaderecha{
+			display:inline-block;			
+		}
+		.confarma{
+			background-color:#3F3;	
+		}
+		.nombrearma{
+			text-align:center;	
+		}
+		.cararma{
+			background-color:#F60;		
+		}
+		.start{
+			background-color:#9F9;
+			text-align:center;	
+		}
+		h1{
+			color:#FFF;
+			margin-top:0px;
+			margin-bottom:5px;
+			background-color:#666;
+		}
+		.player{
+			background-image:url(imagenes/metal.png);	
+		}
+		.contenedorplayer{
+			background-color:#99C;	
+		}
+		.statsplayer{
+			display:inline-block;			
+		}
+		.finalfooter{
+			background-color:#6C9;
+			clear:both;				
+		}
+		/*ANIMATIONS*/
+		@keyframes anima_logo {
+			to{
+				transform: scale(1.08);	
+			}
+		}
+	</style>
+    <script>
+		function play(){
+			var audio = new Audio("sonidos/sonido_1.mp3");
+			audio.play();
+		};
+    </script>
+</head>
+<body>
+	<aside class="leftaside">  
+        <h1>TimeOfWar.io</h1> 
+    	<div class="leftasideplayer">
+            <header>
+                <div class="headermetal">
+                    <span>WEAPON TYPE</span>
+                </div>
+            </header>
+            <div class="confarma">
+                <aside class="flechaizq">
+                    aqui va la flecha izq
+                </aside>
+                <section class="arma">
+                    Aqui va el arma 
+                </section>
+                <aside class="flechaderecha">
+                    aqui va la flecha derecha
+                </aside>
+                <footer class="nombrearma">
+                    aqui va el nombre del arma
+                </footer>
+            </div>
+            <div class="cararma">
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>    
+                <p>hola</p>                                                                                         
+            </div>
+        </div>
+    </aside>
+    <header class="centerheader">
+        <div class="imagenlogo">              
+	    	<img src="imagenes/logo2.png" width="400" height="240"/>
+        </div>
+        <div class="start">
+            <section>
+            	payer name
+            </section>  
+            <section>
+            	start game
+            </section> 
+            <section>
+            	monito
+            </section> 
+            <section>
+				tutorial
+            </section>                                        
+        </div>   
+    </header>
+	<aside class="rightaside">
+        <div class="redes">
+            redes
+        </div>
+        <div class="player">
+            <header class="headermetal">
+                Customize your player
+            </header>
+            <div class="contenedorplayer">
+                <aside class="statsplayer">
+                    flecha izq
+                </aside>
+                <section class="statsplayer">
+                    cara monito
+                </section>
+                <aside class="statsplayer">
+                    flecha derecha
+                </aside>
+                <footer>
+                    quote
+                </footer>
+            </div>
+        </div>        
+    </aside> 
+    <footer class="finalfooter">
+    	footer de hasta abajo<br>
+    	footer de hasta abajo<br>
+    	footer de hasta abajo<br>
+    	footer de hasta abajo<br>
+    	footer de hasta abajo<br>
+    	footer de hasta abajo<br>
+    	footer de hasta abajo                                                
+    </footer>   
+</body>
+</html>

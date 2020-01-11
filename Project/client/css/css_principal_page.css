@@ -1,0 +1,426 @@
+@charset "utf-8";
+
+/*-----------------------------------------------BODY-----------------------------------------------*/
+body{
+	text-align:center;
+	background-image:url(keys/images/background.jpg);
+	background-size:cover;
+}
+
+/*-----------------------------------------------PART1-----------------------------------------------*/
+#part1{
+	display: none;
+}
+.loader {
+    position: fixed;
+    left: 0px;
+    font-size:80px;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    color: #FFF;
+    padding-top: 250px;
+    font-weight: bold;    
+    font-weight: bold;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: .8;
+}
+/*-----------------------------------------------LEFT ASIDE-----------------------------------------------*/
+.leftaside{
+	display:inline-block;
+	float:left;	
+	margin-left:10px;
+	margin-top:10px;
+	max-width:400px;
+}
+.leftasideweapon{
+	background-image:url(keys/images/light_metal.png);
+	box-shadow: 0 0 45px #ddd;
+	min-height:446px;
+	min-width:450px;
+	margin-top:20px;
+}
+.weaponcontainer{
+	display:inline-block;
+	min-height:120px;	
+}		
+.headerleftasidecontainer{
+	text-align:center;
+	color:#FFF;
+	font-size:50px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	background-color:rgba(0,0,0,0.5);
+}
+.leftarrow{
+	display:inline-block;
+	float:left;
+	margin-top:40px;
+}
+.weapon{
+	display:inline-block;
+	padding-top:16px;
+	animation-duration: 1s;
+	animation-name: anima_arma;
+	animation-iteration-count: infinite;	
+	animation-direction: alternate;						
+}
+.rightarrow{
+	display:inline-block;	
+	float:right;
+	margin-top:40px;							
+}
+.weaponconfig{
+	text-align:center;
+	min-height:140px;
+}
+.weaponname{
+	font-weight:bold;
+	margin-top:18px;
+	text-align:center;
+	color:#FFF;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	width:200px;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:rgba(0,0,0,0.5);
+	border:rgba(255,255,255, 1) 1px solid;
+}
+.weaponstats{
+	text-align:left;
+	background-color:rgba(0,0,0,0.5);
+	padding-top:14px;
+	padding-bottom:14px;
+}
+h1{
+	color:rgba(255,217,102,1);
+	margin-top:0px;
+	padding-left:8px;
+	margin-bottom:5px;
+	text-align:left;
+	display:inline-block;
+}
+.leftarrowbutton{
+	background-image:url(keys/images/left_arrow.png);
+	background-repeat:no-repeat;
+	width:40px;
+	height:60px;
+	background-color: transparent;
+	border:none;
+	cursor: pointer;
+	outline: none;	
+	background-position:center;								
+}
+.rightarrowbutton{
+	background-image:url(keys/images/right_arrow.png);
+	background-repeat:no-repeat;
+	width:40px;
+	height:60px;
+	background-color: transparent;
+	border:none;
+	cursor: pointer;
+	outline: none;	
+	background-position:center;								
+}
+.rightarrowbutton:hover{
+	-webkit-transform:scale(1.2);
+	filter: saturate(3);
+}
+.leftarrowbutton:hover{
+	-webkit-transform:scale(1.2);
+	filter: saturate(3);
+}
+.leftarrowbutton:active{
+	filter: grayscale(100%);
+	-webkit-transform:scale(1);			
+}
+.rightarrowbutton:active{
+	filter: grayscale(100%);
+	-webkit-transform:scale(1);			
+}
+.rangebarcanvas{
+	background-color:#0FF;	
+}
+.rpmbarcanvas{
+	background-color:#0FF;	
+}
+.damagebarcanvas{
+	background-color:#0FF;	
+}
+.chargerbarcanvas{
+	background-color:#0FF;	
+}
+.range{
+	background-color:transparent;
+	color:#FFF;
+	margin-left:5px;
+}
+.rpm{
+	background-color:transparent;
+	color:#FFF;	
+	margin-left:5px;				
+}
+.damage{
+	background-color:transparent;	
+	color:#FFF;
+	margin-left:5px;			
+}
+.charger{
+	background-color:transparent;	
+	color:#FFF;	
+	margin-left:5px;			
+}
+.h1container{
+	text-align:left;
+}
+.weapon:hover{
+	transform:scale(1.2);
+}
+.stats{
+	background-color:rgba(0,0,0,0.5);
+	box-shadow: 0 0 45px #ddd;
+	font-family:Arial, Helvetica, sans-serif;
+	margin-top:10px;
+	color:#FFF;
+	font-weight:bold;
+	font-size:36px;
+	text-align:center;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+.bullet{
+	display:inline-block;	
+}								
+/*-----------------------------------------------CENTER-----------------------------------------------*/
+.centerheader{
+	display:inline-block;							
+	width:450px;
+	height:260px;			
+}
+.center{
+	display:inline-block;
+	text-align:center;
+}
+header .logo{
+	text-align:center;					
+	width:400px;
+	height:240px;		
+		margin-left: auto;
+		margin-right: auto;		
+	animation-duration: 1.5s;
+	animation-name: anima_logo;
+	animation-iteration-count: infinite;	
+	animation-direction: alternate;
+}
+.start{
+	text-align:center;
+}
+.imagecenter{
+	padding-top:10px;
+	background-color:transparent;
+}		
+.playername{
+	color:#FFF;
+	font-weight:bold;
+	width:300px;
+	padding:5px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;	
+}
+.startbutton{
+	background-color:rgba(0,121,0,1);
+	color:#FFF;
+	outline:none;
+	padding-top:1px;
+	padding-bottom:1px;
+	width:180px;
+	font:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	border:rgba(0,121,0,1) 2px solid;
+	cursor:pointer;
+}
+.startbutton:hover{
+	transform:scale(1.1);
+}
+.startbutton:active{
+	transform:scale(1);
+	background-color:rgba(0,83,0,1);
+}
+.tutorialbutton{
+	padding-top:2px;
+	padding-bottom:2px;			
+	background-color:rgba(0,0,0,1);
+	border:rgba(50,50,50,1) 2px solid;
+	color:#FFF;
+	outline:none;
+	width:100px;
+	font:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	cursor:pointer;
+}
+.tutorialbutton:hover{
+	transform:scale(1.1);
+}
+.tutorialbutton:active{
+	transform:scale(1);
+	background-color:rgba(80,80,80,1);
+	color:
+}		
+.inputname{
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	width:300px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:16px;
+	text-align:center;
+	outline:none;
+	border:none;
+}
+.tutorial{ 
+	position:absolute;
+	z-index:1;
+	text-align:left;
+	background-color:#CCC;
+	top:100px;
+	width:610px;
+	left:480px;
+	height:360px;
+	padding-left:10px;
+	border:#000 2px solid;		
+}
+/*-----------------------------------------------RIGHT ASIDE-----------------------------------------------*/	
+.rightaside{
+	display:inline-block;
+	float:right;
+	max-width:400px;
+	text-align:center;			
+}
+.player{
+	background-image:url(keys/images/light_metal.png);	
+	height:300px;
+	box-shadow: 0 0 45px #ddd;
+}
+.playercontainer{
+	color:#FFF;	
+}
+.fbcontainer{
+	display:inline-block;
+}
+.fb{
+	background-image:url(keys/images/fb_logo.png);
+	background-repeat:no-repeat;
+	width:40px;
+	height:40px;
+	background-color:transparent;
+	border:none;
+	cursor: pointer;
+	outline: none;	
+	background-position:center;	
+}
+.fb:hover{
+	transform:scale(1.3);
+}
+.fb:active{
+	transform:scale(1);
+}
+.socialmedia{
+	font-size:15px;
+	font-weight:bold;
+	display:inline-block;
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:5px;
+	padding-right:5px;
+	margin-right:5px;
+	color:#FFF;
+}
+.socialmediacontainer{
+	height:40px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width:400px;
+}
+.greentank{
+	background-color:rgba(0,96,43,1);
+	width:100px;
+	height:30px;
+	border:#000 2px solid;
+	outline:none;
+	cursor:pointer;
+}
+.bluetank{
+	background-color:rgba(0,176,240,1);
+	cursor:pointer;			
+	width:100px;
+	height:30px;
+	border:#000 2px solid;
+	outline:none;					
+}
+.redtank{
+	background-color:rgba(255,0,0,1);	
+	cursor:pointer;			
+	width:100px;
+	height:30px;
+	border:#000 2px solid;			
+	outline:none;			
+}
+.greentank:hover{
+	transform:scale(1.1);
+}
+.bluetank:hover{
+	transform:scale(1.1);	
+}
+.redtank:hover{
+	transform:scale(1.1);
+}
+.greentank:active{
+	transform:scale(1);
+}
+.bluetank:active{
+	transform:scale(1);	
+}
+.redtank:active{
+	transform:scale(1);
+}
+.ad{
+	background-color:#2F2F2F;
+	min-height:240px;
+	min-width:400px;
+	color:#FFF;	
+	text-align:center;
+}
+.realad{
+	margin-top:10px;			
+	padding-top:105px;
+}
+/*-----------------------------------------------FOOTER-----------------------------------------------*/			
+.finalfooter{
+	background-color:#000;
+	clear:both;
+	margin-top:115px;
+	text-align:left;
+	color:#FFF;
+}
+/*-----------------------------------------------ANIMATIONS-----------------------------------------------*/		
+/*ANIMATIONS*/
+@keyframes anima_logo{
+	to{
+		transform: scale(1.08);	
+	}
+}
+@keyframes anima_arma{
+	to{
+		padding-top:0px;
+	}
+}
+/*-----------------------------------------------PART2-----------------------------------------------*/
+#part2{
+	display: none;
+}
