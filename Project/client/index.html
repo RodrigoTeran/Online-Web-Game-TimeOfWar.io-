@@ -18,7 +18,7 @@
         	<div class="h1container">   
                 <h1>TimeOfWar.io</h1>
                 <div class="bullet">
-                    <img src="css/keys/images/bullet.png" width="15" height="25"7>
+                    <img src="css/keys/images/bullet.png" width="15" height="25">
                 </div>
             </div>
         	<div class="leftasideweapon">
@@ -169,15 +169,13 @@
     </div>
     <div id="part2">
         <!--<button onclick="finish();">putos</button>-->
-        <canvas class="canvasgame" width="1500" height="696" style=" 
-        background-color:rgba(160, 160, 160, 1);
-        border: 2px solid #000">
-        </canvas>
-        <div id="namegame">
-        </div>
-        <div id="tankgame">
-        </div>              
+        <canvas class="canvasgame" width="1500" height="696" style=" background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
+        <div class="chatclass" id="chat-text" style="width: 220px; height: 655px; overflow-y: scroll;"></div>
+        <form class="chatclass2" id="chat-form">
+            <input id ="chat-input" type="text" style="width: 220px;"/>
+        </form>
     </div>
+
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
     </script>
 
@@ -456,20 +454,22 @@
         // --------------------------------------------------------------------FUNCTIONS 2
         var ctxgame = document.getElementsByClassName("canvasgame")[0].getContext("2d");
         var socket = io();
+        var chat = false;
 
         function start2(){
             document.getElementById("part2").style.display = 'block';
         };
         function start(){  //hide the main page and show game
-            document.getElementById("part1").style.display = 'none';
+            $("#part1").fadeOut("slow");
+            chat = true;
             start2();
             knowgame();
         };    
         function finish2(){
-            document.getElementById("part2").style.display = 'none';
+            document.getElementById("part1").style.display = 'block';
         };
         function finish(){  //hide the game and show main page
-            document.getElementById("part1").style.display = 'block';
+            $("#part2").fadeOut("slow");
             finish2();
         };
         function getname_(){
@@ -485,7 +485,7 @@
                 name:tank_name,
                 weatank:tank_w,
             });
-        };
+        };    
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
         tutorial('id2');
@@ -533,7 +533,18 @@
             else if(event.keyCode === 65)   //a
                 socket.emit("keyPress", {inputId:"left", state:true});
             else if(event.keyCode === 87)   //w
-                socket.emit("keyPress", {inputId:"up", state:true});                        
+                socket.emit("keyPress", {inputId:"up", state:true});
+            else if(event.keyCode === 39)   //d arrow
+                socket.emit("keyPress", {inputId:"right", state:true});
+            else if(event.keyCode === 40)   //s arrow
+                socket.emit("keyPress", {inputId:"down", state:true});
+            else if(event.keyCode === 37)   //a arrow
+                socket.emit("keyPress", {inputId:"left", state:true});
+            else if(event.keyCode === 38)   //w arrow
+                socket.emit("keyPress", {inputId:"up", state:true});
+            if(chat == true)   //chat true
+                if(event.keyCode === 84)    //t
+                    console.log("Putazo");
         };
         document.onkeyup = function(event){
             if(event.keyCode === 68)    //d

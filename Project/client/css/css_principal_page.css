@@ -268,7 +268,7 @@ header .logo{
 }
 .backbutton:active{
 	transform:scale(1);
-	background-color:rgba(0,83,0,1);
+	background-color:rgba(50,50,50,1);
 }
 .tutorialbutton{
 	padding-top:2px;
@@ -445,4 +445,39 @@ header .logo{
 /*-----------------------------------------------PART2-----------------------------------------------*/
 #part2{
 	display: none;
+}
+.chatclass{
+	position:absolute;
+	z-index:1;
+	text-align:left;
+	background-image: url("keys/images/paper.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	top:9px;
+	width:220px;
+	left:1295px;
+	height:655px;
+	border:#000 2px solid;	
+}
+.chatclass2{
+	position:absolute;
+	z-index:1;
+	text-align:left;
+	background-color:#CCC;
+	top:667px;
+	width:220px;
+	left:1296px;
+	height:10px;
+	padding-left:0px;
+	border: none;
+	outline:none;
+}
+#chat-input{
+	background-color: rgba(255, 255, 255, 1);
+	border:#000 2px solid;	
+	height:35px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:20px;
+	color: #000;
 }
