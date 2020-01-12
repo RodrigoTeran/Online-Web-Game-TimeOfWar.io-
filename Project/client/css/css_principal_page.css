@@ -6,6 +6,8 @@ body{
 	background-image:url(keys/images/background.jpg);
 	background-repeat:no-repeat;
 	background-size: cover;
+    margin: 0;
+    overflow: hidden;	
 }
 /*-----------------------------------------------PART1-----------------------------------------------*/
 #part1{
@@ -288,7 +290,6 @@ header .logo{
 .tutorialbutton:active{
 	transform:scale(1);
 	background-color:rgba(80,80,80,1);
-	color:
 }		
 .inputname{
 	display:block;
@@ -307,7 +308,6 @@ header .logo{
 	position:absolute;
 	z-index:1;
 	text-align:left;
-	/*background-color:#CCC;*/
 	background-image: url(keys/images/paper.jpg);
 	top:100px;
 	width:610px;
@@ -450,20 +450,21 @@ header .logo{
 	position:absolute;
 	z-index:1;
 	text-align:left;
-	background-image: url("keys/images/paper.jpg");
-	background-repeat:no-repeat;
-	background-size: cover;
+	background-color:#FFF;
 	top:9px;
 	width:220px;
 	left:1295px;
-	height:655px;
-	border:#000 2px solid;	
+	height:640px;
+	border-radius: 35px 0px 0px 35px;
+	-moz-border-radius: 35px 0px 0px 35px;
+	-webkit-border-radius: 35px 0px 0px 35px;
+	border: 0px solid #000000;
 }
 .chatclass2{
 	position:absolute;
 	z-index:1;
 	text-align:left;
-	background-color:#CCC;
+	background-color:transparent;
 	top:667px;
 	width:220px;
 	left:1296px;
@@ -472,12 +473,23 @@ header .logo{
 	border: none;
 	outline:none;
 }
-#chat-input{
+.chatclass3{
 	background-color: rgba(255, 255, 255, 1);
-	border:#000 2px solid;	
+	border-radius: 35px 35px 35px 35px;
+	-moz-border-radius: 35px 35px 35px 35px;
+	-webkit-border-radius: 35px 35px 35px 35px;
+	border: 0px solid #000000;
 	height:35px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	font-size:20px;
+	color: #000;
+}
+#chat-text{
+	padding-left: 10px;
+	padding-top: 15px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:15px;
 	color: #000;
 }

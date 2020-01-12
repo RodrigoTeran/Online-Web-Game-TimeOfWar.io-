@@ -169,19 +169,18 @@
     </div>
     <div id="part2">
         <!--<button onclick="finish();">putos</button>-->
-        <canvas class="canvasgame" width="1500" height="696" style=" background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
-        <div class="chatclass" id="chat-text" style="width: 220px; height: 655px; overflow-y: scroll;"></div>
+        <!-- width="1532" height="715"-->
+        <canvas class="canvasgame" id ="lienzo" style="width: 1532px; height: 715px; background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
+        <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;"></div>
         <form class="chatclass2" id="chat-form">
-            <input id ="chat-input" type="text" style="width: 220px;"/>
+            <input class="chatclass3" id ="chat-input" type="text" style="width: 220px;"/>
         </form>
     </div>
-
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> // JQuery libary
     </script> 
-
     <script type="text/javascript"> // loading page
     $(window).load(function() {
         $(".loader").fadeOut("slow");
@@ -457,7 +456,7 @@
         var chat = false;
 
         function start2(){
-            document.getElementById("part2").style.display = 'block';
+            $("#part2").fadeIn("slow");
         };
         function start(){  //hide the main page and show game
             $("#part1").fadeOut("slow");
@@ -466,7 +465,7 @@
             knowgame();
         };    
         function finish2(){
-            document.getElementById("part1").style.display = 'block';
+            $("#part1").fadeIn("slow");
         };
         function finish(){  //hide the game and show main page
             $("#part2").fadeOut("slow");
@@ -485,11 +484,42 @@
                 name:tank_name,
                 weatank:tank_w,
             });
-        };    
+        };
+        var listOfChats = [];
+        var new_block = document.getElementById("chat-text");   // poner info
+        var new_block_2 = document.getElementById("chat-form"); 
+        var new_block_3 = document.getElementById("chat-input");
+        function drawChatInfo(){
+            new_block.innerHTML = "";
+            for(var i = 0; i < listOfChats.length; i++){
+                new_block.innerHTML += "<div>" + listOfChats[i] + "</div>";
+            };
+        };
+        function chatHideShow(){  //hide and show the chat section  
+            if(new_block.className == 'chatclass'){
+                new_block.className = '';
+                new_block.innerHTML="";
+                new_block_2.className = '';
+                new_block_3.className = '';                              
+                new_block_3.innerHTML="";
+            }else{
+                new_block.className = 'chatclass';
+                new_block_2.className = 'chatclass2';
+                new_block_3.className = 'chatclass3';
+                drawChatInfo();
+            };
+        };
+        new_block_2.onsubmit = function(e){
+            e.preventDefault();
+            listOfChats.push(new_block_3.value);
+            new_block_3.value = "";
+            drawChatInfo();
+        };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
         tutorial('id2');
         tutorial('id3'); 
+        chatHideShow();
         write_();
         setInterval(draw, check_navigator());
         change_stats();
@@ -544,7 +574,7 @@
                 socket.emit("keyPress", {inputId:"up", state:true});
             if(chat == true)   //chat true
                 if(event.keyCode === 84)    //t
-                    console.log("Putazo");
+                    chatHideShow();
         };
         document.onkeyup = function(event){
             if(event.keyCode === 68)    //d
