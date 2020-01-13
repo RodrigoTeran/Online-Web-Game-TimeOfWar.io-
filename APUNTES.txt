@@ -3,14 +3,11 @@ Colores importantes:
 
 ---------------------------------------------------------Por hacer---------------------------------------------------------
 Por investigar:
--Checar como hacer para que las cosas se hagan más pequeñas o grandes si el tamaño de la ventana es editado
 
 Recordar:
 -Cambiar los meta
 
 Por dibujar:
--Tanque rey
--Bases
 -Mapa
 
 Para página de inicio: (html y css)
@@ -20,13 +17,11 @@ Para el juego: (js)
 -Detectar qué tipo de colisión fue... (bloques, proyectiles, items, monedas, jugadores, tanque rey con base, y bordes del mapa)
 -Cambiar configuración específica si hubo una colisión
 -Movimiento del tanque (chasis, y arma)
--Disparos del tanque (los tres de los normales, y tanque rey)
+-Disparos del tanque (los tres de los normales)
 -Stats de los tanques (vida, stats, total de monedas, vida tanque rey)
--Clasificación de amigos y enemigos (nombres de diferente color)
 
 Para hacerlo online:
 -Saber cómo hacer el juego online (intercambio de información) [[[[[[[[[[[[[[[[[ EN PROCESO ]]]]]]]]]]]]]]]]]
--Vincular a qué servidores te quieres meter cuando le das a start y ya agarro con varios servidores...
 -Chat
 
 Para venderlo:
@@ -35,12 +30,6 @@ Para venderlo:
 ---------------------------------------------------------Problemas hijo puta---------------------------------------------------------
 - No se deben de obtener errores en la consola...
 
-- Pinche solución jaja
-	socket.on("new_position", function(data){
-	    ctxgame.clearRect(0, 0, 1500, 696);
-	    for(var i = 0; i < data.player.length; i++){
-	        var img = new Image();
-	        img.src = data.player[i].tank;
-	        ctxgame.drawImage(img, data.player[i].x, data.player[i].y, 80, 64);
-	    };
-	});
+- Primera cosa... hay que quitar las listas del servidor, todo orientado a objetos, también hay qe seguir con los tutoriales de ScripterWars, también voy a seguir viendo que pedo con los tanques, porque no se dibujan. Voy a cambiar cosas, y voy a preguntar, sin miedo al éxito xd...
+
+- Nota: hay problemas con el Server, menos con el chat xdxdxd...

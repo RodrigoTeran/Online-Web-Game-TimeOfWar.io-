@@ -40,14 +40,15 @@ var Entity = function(){	// Entity Class
 var Player = function(id){	// PLayer Class
 	var self = Entity();
 	self.id = id;
-	self.name = "";
+	self.name = ".";
 	self.angle = 0;
+	self.determinantOfStart = false;
 	self.pressingRight = false;
 	self.pressingLeft = false;
 	self.pressingUp = false;
 	self.pressingDown = false;
-	self.tank = "";
-	self.tankw = "";	
+	self.tank = 'css/keys/tanks/red/r_b.png';
+	self.tankw = 'css/keys/tanks/red/r_1.png';	
 	self.detOfName = 0;
 	self.maxSpd = 10;	// this attribute might change because of the powerups of the shop
 	var super_update = self.update;
@@ -104,6 +105,7 @@ Player.update = function(){
 		pack.push({
 			x:player.x,
 			y:player.y,
+			determinantOfStart:player.determinantOfStart,
 			angle:player.angle,
 			tank:player.tank,
 			tankw:player.tankw,
@@ -126,6 +128,7 @@ Player.onConnect = function(socket){
 			player.pressingDown = data.state;									
 	});
 	socket.on("tankOfClient", function(data){
+		player.determinantOfStart = true;
 		tanks[socket.id] = data.tankId; // gets the actual tank for every client
 		names[socket.id] = data.name; // gets the actual name for every client
 		tanks_w[socket.id] = data.weatank; // gets the actual tank's weapon for every client
@@ -146,11 +149,16 @@ io.sockets.on("connection", function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
 	Player.onConnect(socket);
-	
 	socket.on("disconnect", function(){
 		delete SOCKET_LIST[socket.id];
 		Player.onDisconnect(socket);
 	});
+	socket.on("sendMsgToServer", function(data){
+		var playerName = names[socket.id];
+		for(var i in SOCKET_LIST){
+			SOCKET_LIST[i].emit("addToChat", playerName + ":" + data);
+		};
+	});	
 });
 setInterval(function(){	// Must important function
 	var pack = {
@@ -158,6 +166,10 @@ setInterval(function(){	// Must important function
 	};
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
-		socket.emit("new_position",pack);
+		for(var j = 0; j < pack.player.length; j++){
+			console.log(pack);
+			if(pack.player[j].determinantOfStart)
+				socket.emit("new_position",pack);
+		};
 	};
 },1000/25);

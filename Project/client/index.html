@@ -1,27 +1,28 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta charset="iso-8559-1"/>
-	<meta name="description" content="Time of War is a fast-paced third-person shooter."/>
-	<meta name="keywords" content="wars, online game, shooter, rpg"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Time of war</title>
+    <meta charset="utf-8">
+    <meta charset="iso-8559-1"/>
+    <meta name="description" content="Time of War is a fast-paced third-person shooter."/>
+    <meta name="keywords" content="wars, online game, shooter, rpg"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Time of war</title>
     <link rel="stylesheet" type="text/css" href="css/css_principal_page.css"/>
+    <link rel="icon" type="image/png"href="css/keys/images/bullet.png"/>
 </head>
 <body> 
     <div class="loader">
             Connecting...
     </div>
     <div id="part1">
-    	<aside class="leftaside">
-        	<div class="h1container">   
+        <aside class="leftaside">
+            <div class="h1container">   
                 <h1>TimeOfWar.io</h1>
                 <div class="bullet">
                     <img src="css/keys/images/bullet.png" width="15" height="25">
                 </div>
             </div>
-        	<div class="leftasideweapon">
+            <div class="leftasideweapon">
                 <header>
                     <div class="headerleftasidecontainer">
                         <span>WEAPON TYPE</span>
@@ -42,29 +43,29 @@
                     </footer>
                 </div>
                 <div class="stats">
-    	            INITIAL STATS
+                    INITIAL STATS
                 </div>
                 <div class="weaponstats">
-                	<div>
-                    	<span class="range">RANGE</span><br>
+                    <div>
+                        <span class="range">RANGE</span><br>
                         <div>
                             <canvas class="rangebarcanvas" width="430" height="10" style="margin-left:5px;"></canvas>
                         </div>
-                	</div>
+                    </div>
                     <div>
-    	                <span class="rpm">RPM</span><br>
+                        <span class="rpm">RPM</span><br>
                         <div>
                             <canvas class="rpmbarcanvas" width="430" height="10" style="margin-left:5px;"></canvas>                        
                         </div>
                     </div>
                     <div>
-    	                <span class="damage">DAMAGE</span><br>
+                        <span class="damage">DAMAGE</span><br>
                         <div>
                             <canvas class="damagebarcanvas" width="430" height="10" style="margin-left:5px;"></canvas>                        
                         </div>                    
                     </div>
                     <div>
-    	                <span class="charger">CHARGER SIZE</span>                                                                                      
+                        <span class="charger">CHARGER SIZE</span>                                                                                      
                         <div>
                             <canvas class="chargerbarcanvas" width="430" height="10" style="margin-left:5px;"></canvas>                        
                         </div>                    
@@ -77,7 +78,7 @@
                 <div class="logo">              
                     <img src="css/keys/images/logo.png" width="400" height="240"/>
                 </div>
-                <div class="start">	
+                <div class="start"> 
                     <section class="playername">
                         <label>PLAYER NAME</label>
                         <input maxlength="20" class="inputname" type="text" name="nameplayer"/>
@@ -96,20 +97,20 @@
                         return b">TUTORIAL</button>
                         <!-- Appear and disappear -->
                         <div id="id1" class="tutorial" style=" 
-                        	text-align:center; 
+                            text-align:center; 
                             font-weight:bold; 
                             font-size:36px; 
                             font:Arial, Helvetica, sans-serif;">
                         </div>
                         <div id="id2" class="tutorial" style="
-                        	text-align:left; 
+                            text-align:left; 
                             font-weight:bold;
                             top:140px;
                             font:Arial, Helvetica, sans-serif;
                             overflow-y: scroll;">
                         </div>
                         <div id="id3" class="tutorial" style="
-                        	text-align:center;
+                            text-align:center;
                             height:27px;                        
                             top:475px;
                             width:595px;
@@ -120,13 +121,13 @@
                 </div>
             </header>
         </div>
-    	<aside class="rightaside">
+        <aside class="rightaside">
             <div class="socialmediacontainer">
-            	<div class="socialmedia">
-                	Follow us in social media!
+                <div class="socialmedia">
+                    Follow us in social media!
                 </div>
                 <div class="fbcontainer">
-    	            <button class="fb" onclick=" window.open('https://www.facebook.com/rodrigo.teran.127','_blank')"></button>
+                    <button class="fb" onclick=" window.open('https://www.facebook.com/rodrigo.teran.127','_blank')"></button>
                 </div>
             </div>
             <div class="player">
@@ -150,27 +151,27 @@
                             </button>                                                
                         </section>
                         <footer class="weaponname" style="margin-top:7px;">
-    	                    TANK COLOR
+                            TANK COLOR
                         </footer>
                     </div>
                 </div>
             </div>
             <div class="ad">
-            	<p class="realad">SPACE FOR ADS</p>
+                <p class="realad">SPACE FOR ADS</p>
             </div>        
         </aside> 
         <footer class="finalfooter">
-        	footer de hasta abajo<br>
-        	footer de hasta abajo<br>
-        	footer de hasta abajo<br>
-        	footer de hasta abajo<br>
-        	footer de hasta abajo                                           
+            footer de hasta abajo<br>
+            footer de hasta abajo<br>
+            footer de hasta abajo<br>
+            footer de hasta abajo<br>
+            footer de hasta abajo                                           
         </footer>
     </div>
     <div id="part2">
         <!--<button onclick="finish();">putos</button>-->
         <!-- width="1532" height="715"-->
-        <canvas class="canvasgame" id ="lienzo" style="width: 1532px; height: 715px; background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
+        <canvas class="canvasgame" style="width: 1532px; height: 715px; background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
         <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;"></div>
         <form class="chatclass2" id="chat-form">
             <input class="chatclass3" id ="chat-input" type="text" style="width: 220px;"/>
@@ -178,7 +179,6 @@
     </div>
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
     </script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> // JQuery libary
     </script> 
     <script type="text/javascript"> // loading page
@@ -187,7 +187,6 @@
         document.getElementById("part1").style.display = 'block';
     });
     </script>
-    
     <script type="text/javascript">
         // función que actualiza el zoom del elemento body
         function actualizarTama(){
@@ -469,6 +468,7 @@
         };
         function finish(){  //hide the game and show main page
             $("#part2").fadeOut("slow");
+            chat = false;
             finish2();
         };
         function getname_(){
@@ -498,22 +498,31 @@
         function chatHideShow(){  //hide and show the chat section  
             if(new_block.className == 'chatclass'){
                 new_block.className = '';
+                new_block.style.display = "none"; 
+                new_block_2.style.display = "none"; 
+                new_block_3.style.display = "none"; 
                 new_block.innerHTML="";
                 new_block_2.className = '';
                 new_block_3.className = '';                              
                 new_block_3.innerHTML="";
             }else{
+                new_block.style.display = "block"; 
+                new_block_2.style.display = "block"; 
+                new_block_3.style.display = "block"; 
                 new_block.className = 'chatclass';
                 new_block_2.className = 'chatclass2';
                 new_block_3.className = 'chatclass3';
                 drawChatInfo();
             };
         };
+        socket.on("addToChat", function(data){
+            listOfChats.push(data);
+            drawChatInfo();
+        });        
         new_block_2.onsubmit = function(e){
             e.preventDefault();
-            listOfChats.push(new_block_3.value);
+            socket.emit("sendMsgToServer", new_block_3.value);
             new_block_3.value = "";
-            drawChatInfo();
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
@@ -525,8 +534,6 @@
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
-        var imgmap = new Image();
-        imgmap.src = "/client/css/keys/images/map.png";
         // --------------------------------------------------------------------FUNCTIONS
         function drawImageR(context, image, x, y, angle, width_i, height_i){
             context.save();
@@ -534,9 +541,9 @@
             context.rotate((angle*Math.PI)/180);
             context.drawImage(image, (-width_i / 2), (-height_i / 2), width_i, height_i);
             context.restore();
-        };     
+        };
         socket.on("new_position", function(data){
-            ctxgame.clearRect(0, 0, 1500, 696);
+            ctxgame.clearRect(0, 0, 1532, 715);
             for(var i = 0; i < data.player.length; i++){
                 function drawPlayers(){
                     var img = new Image();
@@ -556,35 +563,36 @@
             };
         });
         document.onkeydown = function(event){
-            if(event.keyCode === 68)    //d
-                socket.emit("keyPress", {inputId:"right", state:true});
-            else if(event.keyCode === 83)   //s
-                socket.emit("keyPress", {inputId:"down", state:true});
-            else if(event.keyCode === 65)   //a
-                socket.emit("keyPress", {inputId:"left", state:true});
-            else if(event.keyCode === 87)   //w
-                socket.emit("keyPress", {inputId:"up", state:true});
-            else if(event.keyCode === 39)   //d arrow
-                socket.emit("keyPress", {inputId:"right", state:true});
-            else if(event.keyCode === 40)   //s arrow
-                socket.emit("keyPress", {inputId:"down", state:true});
-            else if(event.keyCode === 37)   //a arrow
-                socket.emit("keyPress", {inputId:"left", state:true});
-            else if(event.keyCode === 38)   //w arrow
-                socket.emit("keyPress", {inputId:"up", state:true});
             if(chat == true)   //chat true
+                if(event.keyCode === 68)    //d
+                    socket.emit("keyPress", {inputId:"right", state:true});
+                else if(event.keyCode === 83)   //s
+                    socket.emit("keyPress", {inputId:"down", state:true});
+                else if(event.keyCode === 65)   //a
+                    socket.emit("keyPress", {inputId:"left", state:true});
+                else if(event.keyCode === 87)   //w
+                    socket.emit("keyPress", {inputId:"up", state:true});
+                else if(event.keyCode === 39)   //d arrow
+                    socket.emit("keyPress", {inputId:"right", state:true});
+                else if(event.keyCode === 40)   //s arrow
+                    socket.emit("keyPress", {inputId:"down", state:true});
+                else if(event.keyCode === 37)   //a arrow
+                    socket.emit("keyPress", {inputId:"left", state:true});
+                else if(event.keyCode === 38)   //w arrow
+                    socket.emit("keyPress", {inputId:"up", state:true});
                 if(event.keyCode === 84)    //t
                     chatHideShow();
         };
         document.onkeyup = function(event){
-            if(event.keyCode === 68)    //d
-                socket.emit("keyPress", {inputId:"right", state:false});
-            else if(event.keyCode === 83)   //s
-                socket.emit("keyPress", {inputId:"down", state:false});
-            else if(event.keyCode === 65)   //a
-                socket.emit("keyPress", {inputId:"left", state:false});
-            else if(event.keyCode === 87)   //w
-                socket.emit("keyPress", {inputId:"up", state:false});                       
+            if(chat == true)   //chat true
+                if(event.keyCode === 68)    //d
+                    socket.emit("keyPress", {inputId:"right", state:false});
+                else if(event.keyCode === 83)   //s
+                    socket.emit("keyPress", {inputId:"down", state:false});
+                else if(event.keyCode === 65)   //a
+                    socket.emit("keyPress", {inputId:"left", state:false});
+                else if(event.keyCode === 87)   //w
+                    socket.emit("keyPress", {inputId:"up", state:false});                       
         };
         document.onmousemove = function(event){
             var mx = event.clientX;
