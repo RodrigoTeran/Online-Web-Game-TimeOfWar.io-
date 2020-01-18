@@ -13,17 +13,11 @@ serv.listen(2000); // Local host port
 console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
-var SOCKET_LIST = {};
-var tanks = {};
-var tanks_w = {};
-var names = {};
-var namesLen = {};
-var angles = {};
-
-var Entity = function(){	// Entity Class
+var SOCKET_LIST = {}; 
+var Entity = function(){
 	var self = {
-		x:710,
-		y:308,
+		x:766,
+		y:358,
 		spdX:0,
 		spdY:0,
 		id:"",
@@ -35,27 +29,40 @@ var Entity = function(){	// Entity Class
 		self.x += self.spdX;
 		self.y += self.spdY;
 	};
+	self.getDistance = function(pt){
+		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
+	};
 	return self;
 };
-var Player = function(id){	// PLayer Class
+var Player = function(id){
 	var self = Entity();
 	self.id = id;
-	self.name = ".";
-	self.angle = 0;
-	self.determinantOfStart = false;
+	self.number = "" + Math.floor(10 * Math.random());
 	self.pressingRight = false;
 	self.pressingLeft = false;
 	self.pressingUp = false;
 	self.pressingDown = false;
-	self.tank = 'css/keys/tanks/red/r_b.png';
-	self.tankw = 'css/keys/tanks/red/r_1.png';	
-	self.detOfName = 0;
-	self.maxSpd = 10;	// this attribute might change because of the powerups of the shop
+	self.pressingAttack = false;			
+	self.mouseAngle = 0;		
+	self.maxSpd = 10;
+	self.hp = 10;
+	self.hpMax = 10;
+	self.score = 0;
+	
 	var super_update = self.update;
 	self.update = function(){
 		self.updateSpd();
-		self.updateTank();
 		super_update();
+		if(self.pressingAttack){
+			for(var i = -3; i < 3; i++){
+				self.shootBullet(i  * 10 + self.mouseAngle);
+			};
+		};
+	};
+	self.shootBullet = function(angle){
+		var b = Bullet(self.id, angle);
+		b.x = self.x;
+		b.y = self.y;		
 	};
 	self.updateSpd = function(){
 		if(self.pressingRight){
@@ -77,47 +84,34 @@ var Player = function(id){	// PLayer Class
 			self.spdY = 0;
 		};									
 	};
-	self.updateTank = function(){
-		self.tank = tanks[self.id];
-		self.tankw = tanks_w[self.id];
-		self.name = names[self.id];
-		self.angle = angles[self.id];
-		var cont = 0;
-		for(var i in self.name){
-			cont += 1;
+	self.getInitPack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+			number:self.number,
+			hp:self.hp,
+			hpMax:self.hpMax,
+			score:self.score,
 		};
-		if(cont == 0){
-			self.detOfName = 0;
-		}else{
-			var cont_ = ((1 - cont) * 5) + 20; // only change the 30 and 7
-			self.detOfName = cont_;
+	};
+	self.getUpdatePack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+			hp:self.hp,
+			score:self.score,
 		};
 	};
 	Player.list[id] = self;
+	initPack.player.push(self.getInitPack());
 	return self;
 };
 Player.list = {};
-Player.update = function(){
-	var pack = [];
-	for(var i in Player.list){
-		var player = Player.list[i];
-		player.update();
-		pack.push({
-			x:player.x,
-			y:player.y,
-			determinantOfStart:player.determinantOfStart,
-			angle:player.angle,
-			tank:player.tank,
-			tankw:player.tankw,
-			name:player.name,
-			detOfName:player.detOfName,
-		});
-	};
-	return pack;
-};
 Player.onConnect = function(socket){
 	var player = Player(socket.id);
-	socket.on("keyPress", function(data){
+	socket.on("keyPress", function(data){ // (name important)
 		if(data.inputId === "left")
 			player.pressingLeft = data.state;
 		else if(data.inputId === "right")
@@ -125,51 +119,149 @@ Player.onConnect = function(socket){
 		else if(data.inputId === "up")
 			player.pressingUp = data.state;
 		else if(data.inputId === "down")
-			player.pressingDown = data.state;									
+			player.pressingDown = data.state;		
+		else if(data.inputId === "attack")
+			player.pressingAttack = data.state;
+		else if(data.inputId === "mouseAngle")
+			player.mouseAngle = data.state;															
 	});
-	socket.on("tankOfClient", function(data){
-		player.determinantOfStart = true;
-		tanks[socket.id] = data.tankId; // gets the actual tank for every client
-		names[socket.id] = data.name; // gets the actual name for every client
-		tanks_w[socket.id] = data.weatank; // gets the actual tank's weapon for every client
-	});
-	socket.on("mousePos", function(data){
-		angleRad = Math.atan2((data.mouseY - 348), (data.mouseX - 750));
-		angleDeg = (angleRad * 180) / Math.PI;
-		angleDeg = angleDeg + 90;
-		angles[socket.id] = angleDeg;  // gets the actual angle for every client
+	socket.emit("init", {
+		selfId:socket.id,
+		player:Player.getAllInitPack(),
+		bullet:Bullet.getAllInitPack(),
 	});
 };
+Player.getAllInitPack = function(){
+	var players = [];
+	for(var i in Player.list){
+		players.push(Player.list[i].getInitPack());		
+	};
+	return players;
+};
+
 Player.onDisconnect = function(socket){
 	delete Player.list[socket.id];
-	delete tanks[socket.id];
+	removePack.player.push(socket.id);
+
+};
+Player.update = function(){
+	var pack = [];
+	for(var i in Player.list){
+		var player = Player.list[i];
+		player.update();
+		pack.push(player.getUpdatePack());
+	};
+	return pack;
+};
+var Bullet = function(parent, angle){
+	var self = Entity();
+	self.id = Math.random();
+	self.spdX = Math.cos(angle/180*Math.PI) * 10;
+	self.spdY = Math.sin(angle/180*Math.PI) * 10;	
+	self.parent = parent;
+	self.timer = 0;
+	self.toRemove = false;
+	var super_update = self.update;
+	self.update = function(){
+		if(self.timer++ > 100){
+			self.toRemove = true;
+		};
+		super_update();
+		for(var i in Player.list){
+			var p = Player.list[i];
+			if(self.getDistance(p) < 32 && self.parent !== p.id){
+				p.hp -= 1;
+				if(p.hp <= 0){
+					var shooter = Player.list[self.parent];
+					if(shooter)
+						shooter.score += 1;
+					p.hp = p.hpMax;
+					p.x = Math.random() * 1532;
+					p.y = Math.random() * 715;
+				};
+				self.toRemove = true;
+			};
+		};
+	};
+	self.getInitPack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+		};
+	};
+	self.getUpdatePack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+		};
+	};		
+	Bullet.list[self.id] = self;
+	initPack.bullet.push(self.getInitPack());
+	return self;
+};
+Bullet.list = {};
+Bullet.update = function(){
+	var pack = [];
+	for(var i in Bullet.list){
+		var bullet = Bullet.list[i];
+		bullet.update();
+		if(bullet.toRemove){
+			delete Bullet.list[i];
+			removePack.bullet.push(bullet.id);
+		}else
+			pack.push(bullet.getUpdatePack());
+	};
+	return pack;
+};
+Bullet.getAllInitPack = function(){
+	var bullets = [];
+	for(var i in Bullet.list){
+		bullets.push(Bullet.list[i].getInitPack());		
+	};	
+	return bullets;
 };
 var io = require("socket.io")(serv,{});	// Player connects
 io.sockets.on("connection", function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
+	
 	Player.onConnect(socket);
-	socket.on("disconnect", function(){
+	
+	socket.on("disconnect", function(){ // (name important)
 		delete SOCKET_LIST[socket.id];
 		Player.onDisconnect(socket);
 	});
 	socket.on("sendMsgToServer", function(data){
-		var playerName = names[socket.id];
+		var playerName = ("" + socket.id).slice(2,7);
 		for(var i in SOCKET_LIST){
 			SOCKET_LIST[i].emit("addToChat", playerName + ":" + data);
 		};
-	});	
+	});
+	socket.on("evalServer", function(data){
+		var res = eval(data);		
+		socket.emit("evalAnswer", res);
+	});
 });
-setInterval(function(){	// Must important function
+
+var initPack = {player:[], bullet:[]};
+var removePack = {player:[], bullet:[]};
+
+setInterval(function(){
 	var pack = {
 		player:Player.update(),
+		bullet:Bullet.update(),
 	};
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
-		for(var j = 0; j < pack.player.length; j++){
-			console.log(pack);
-			if(pack.player[j].determinantOfStart)
-				socket.emit("new_position",pack);
-		};
-	};
+		socket.emit("init",initPack);
+		socket.emit("update",pack);
+		socket.emit("remove",removePack);
+	};	
+	initPack.player = [];
+	initPack.bullet = [];
+	removePack.player = [];
+	removePack.bullet = [];
+
 },1000/25);

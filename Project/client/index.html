@@ -1,18 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta charset="iso-8559-1"/>
     <meta name="description" content="Time of War is a fast-paced third-person shooter."/>
     <meta name="keywords" content="wars, online game, shooter, rpg"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Time of war</title>
     <link rel="stylesheet" type="text/css" href="css/css_principal_page.css"/>
-    <link rel="icon" type="image/png"href="css/keys/images/bullet.png"/>
+    <link rel="icon" type="image/png" href="css/keys/images/bullet.png"/>
 </head>
 <body> 
     <div class="loader">
             Connecting...
+    </div>
+    <div id="part2">
+        <!--<button onclick="finish();">putos</button>-->
+        <!-- width="1532" height="715"-->
+        <canvas class="ctx" width="1532" height="715" style="border:1px solid #000; background-color:#0F9;"></canvas>
+        <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
+        </div>
+        <form class="chatclass2" id="chat-form">
+            <input class="chatclass3" id ="chat-input" type="text" style="width: 220px;"/>
+        </form>
     </div>
     <div id="part1">
         <aside class="leftaside">
@@ -168,15 +178,6 @@
             footer de hasta abajo                                           
         </footer>
     </div>
-    <div id="part2">
-        <!--<button onclick="finish();">putos</button>-->
-        <!-- width="1532" height="715"-->
-        <canvas class="canvasgame" style="width: 1532px; height: 715px; background-color:rgba(160, 160, 160, 1);border: 2px solid #000"></canvas>
-        <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;"></div>
-        <form class="chatclass2" id="chat-form">
-            <input class="chatclass3" id ="chat-input" type="text" style="width: 220px;"/>
-        </form>
-    </div>
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> // JQuery libary
@@ -311,12 +312,12 @@
             document.getElementsByClassName("weapon")[0].innerHTML=know_tank(); //draw tank (weapon side)
             document.getElementsByClassName("weapon")[1].innerHTML=know_tank(); // draw tank (color side)
         };
-        function know_tank(){   //know what tank to draw
+        function know_tank(){   //know what tank to draw first page 
             var color_position = superlist[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
         };
-        function know_tank_2(){   //know what tank to draw
+        function know_tank_2(){   //know what tank to draw game
             var color_position = superlist_2[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
@@ -450,120 +451,225 @@
             };
         };
         // --------------------------------------------------------------------FUNCTIONS 2
-        var ctxgame = document.getElementsByClassName("canvasgame")[0].getContext("2d");
-        var socket = io();
-        var chat = false;
+        var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
+        var DetGame = false;
 
         function start2(){
             $("#part2").fadeIn("slow");
         };
         function start(){  //hide the main page and show game
             $("#part1").fadeOut("slow");
-            chat = true;
             start2();
-            knowgame();
-        };    
+            DetGame = true;
+        };
         function finish2(){
             $("#part1").fadeIn("slow");
         };
         function finish(){  //hide the game and show main page
             $("#part2").fadeOut("slow");
-            chat = false;
             finish2();
         };
         function getname_(){
             var nameplayer = document.getElementsByName("nameplayer")[0].value;
             return nameplayer;
         };
-        function knowgame(){    // it is called when the client pushes the start button
-            var tank_ = know_tank_2();
-            var tank_w = know_tank_3();            
-            var tank_name = getname_();
-            socket.emit("tankOfClient", {
-                tankId:tank_, 
-                name:tank_name,
-                weatank:tank_w,
-            });
-        };
-        var listOfChats = [];
         var new_block = document.getElementById("chat-text");   // poner info
         var new_block_2 = document.getElementById("chat-form"); 
         var new_block_3 = document.getElementById("chat-input");
-        function drawChatInfo(){
-            new_block.innerHTML = "";
-            for(var i = 0; i < listOfChats.length; i++){
-                new_block.innerHTML += "<div>" + listOfChats[i] + "</div>";
-            };
-        };
         function chatHideShow(){  //hide and show the chat section  
             if(new_block.className == 'chatclass'){
                 new_block.className = '';
+                new_block_2.className = '';
+                new_block_3.className = '';
+
                 new_block.style.display = "none"; 
                 new_block_2.style.display = "none"; 
                 new_block_3.style.display = "none"; 
-                new_block.innerHTML="";
-                new_block_2.className = '';
-                new_block_3.className = '';                              
-                new_block_3.innerHTML="";
             }else{
                 new_block.style.display = "block"; 
                 new_block_2.style.display = "block"; 
                 new_block_3.style.display = "block"; 
+
                 new_block.className = 'chatclass';
                 new_block_2.className = 'chatclass2';
                 new_block_3.className = 'chatclass3';
-                drawChatInfo();
             };
-        };
-        socket.on("addToChat", function(data){
-            listOfChats.push(data);
-            drawChatInfo();
-        });        
-        new_block_2.onsubmit = function(e){
-            e.preventDefault();
-            socket.emit("sendMsgToServer", new_block_3.value);
-            new_block_3.value = "";
         };
         // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
         tutorial('id2');
         tutorial('id3'); 
-        chatHideShow();
         write_();
+        chatHideShow();
         setInterval(draw, check_navigator());
         change_stats();
         draw();
         // --------------------------------------------------------------------ONLINE GAME LOGIC
         // --------------------------------------------------------------------FUNCTIONS
-        function drawImageR(context, image, x, y, angle, width_i, height_i){
-            context.save();
-            context.translate(x + (width_i / 2), y + (height_i / 2));
-            context.rotate((angle*Math.PI)/180);
-            context.drawImage(image, (-width_i / 2), (-height_i / 2), width_i, height_i);
-            context.restore();
+        var WIDTH = 1532;
+        var HEIGHT = 715;
+
+        var Img = {};
+        Img.player = new Image();
+        Img.player.src = "css/keys/tanks/red/r_b.png";
+        Img.bullet = new Image();
+        Img.bullet.src = "/client/css/keys/images/bullet.png"
+        Img.map = new Image();
+        Img.map.src = "/client/css/keys/images/map.png"
+        var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
+        var chatText = document.getElementById("chat-text");
+        var chatInput = document.getElementById("chat-input");
+        var chatForm = document.getElementById("chat-form");
+        var socket = io(); // Sends package connection to the server
+
+        /*var getAgainTank = function(){
+            Img.player.src = know_tank_2();
+        };*/
+
+        var Player = function(initPack){
+            var self = {};
+            self.id = initPack.id;
+            self.number = initPack.number;
+            self.x = initPack.x;
+            self.y = initPack.y;          
+            self.hp = initPack.hp;
+            self.hpMax = initPack.hpMax;
+            self.score = initPack.score;
+
+            self.draw = function(){
+                var x = self.x - Player.list[selfId].x + WIDTH/2;
+                var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+                var hpWidth = 30 * self.hp / self.hpMax;
+                ctx.fillStyle = "red";
+                ctx.fillRect(x - hpWidth/2, y - 40, hpWidth, 4);
+                
+                var width = Img.player.width/4;
+                var height = Img.player.height/4;           
+
+                ctx.drawImage(Img.player, 0,0,Img.player.width, Img.player.height,
+                    x-width/2, y-height/2, width, height);
+                //ctx.fillText(self.score, self.x, self.y-60);
+            };
+
+            Player.list[self.id] = self;
+            return self;
         };
-        socket.on("new_position", function(data){
-            ctxgame.clearRect(0, 0, 1532, 715);
+
+        Player.list = {};
+        var Bullet = function(initPack){
+            var self = {};
+            self.id = initPack.id;
+            self.x = initPack.x;
+            self.y = initPack.y;
+
+            self.draw = function(){
+                var width = Img.bullet.width/8;
+                var height = Img.bullet.height/8;
+
+                var x = self.x - Player.list[selfId].x + WIDTH/2;
+                var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+                ctx.drawImage(Img.bullet, 0,0,Img.bullet.width, Img.bullet.height, 
+                    x-width/2, y-height/2, width, height);
+            };
+
+            Bullet.list[self.id] = self;
+            return self;
+        };
+        Bullet.list = {};
+
+        var selfId = null;
+        socket.on("init", function(data){
+            if(data.selfId)
+                selfId = data.selfId;
             for(var i = 0; i < data.player.length; i++){
-                function drawPlayers(){
-                    var img = new Image();
-                    var img2 = new Image();
-                    img.src = data.player[i].tank;
-                    img2.src = data.player[i].tankw;
-                    // The tank
-                    drawImageR(ctxgame, img, data.player[i].x, data.player[i].y, data.player[i].angle, 80, 80);  // chasis
-                    drawImageR(ctxgame, img2, data.player[i].x + 20, data.player[i].y - 25, data.player[i].angle, 40, 120);   // weapon
-                    // The tank's name
-                    ctxgame.lineWidth = .5;
-                    ctxgame.strokeStyle = 'white';
-                    ctxgame.font = "20px Verdana";
-                    ctxgame.strokeText(data.player[i].name, data.player[i].x + data.player[i].detOfName, data.player[i].y - 30);    // name
+                new Player(data.player[i]);
+            };
+            for(var i = 0; i < data.bullet.length; i++){
+                new Bullet(data.bullet[i]);
+            };      
+        });
+        socket.on("update", function(data){
+            for(var i = 0; i< data.player.length; i++){
+                var pack = data.player[i];
+                var p = Player.list[pack.id];
+                if(p){
+                    if(pack.x !== undefined)
+                        p.x = pack.x;
+                    if(pack.y !== undefined)
+                        p.y = pack.y;
+                    if(pack.hp !== undefined)
+                        p.hp = pack.hp;             
+                    if(pack.score !== undefined)
+                        p.score = pack.score;               
                 };
-                drawPlayers();
+            };
+            for(var i = 0; i< data.bullet.length; i++){
+                var pack = data.bullet[i];
+                var b = Bullet.list[data.bullet[i].id];
+                if(b){
+                    if(pack.x !== undefined)
+                        b.x = pack.x;
+                    if(pack.y !== undefined)
+                        b.y = pack.y;           
+                };
+            };      
+        });
+        socket.on("remove", function(data){
+            for(var i = 0; i < data.player.length; i++){
+                delete Player.list[data.player[i]];
+            };
+            for(var i = 0; i < data.bullet.length; i++){
+                delete Bullet.list[data.bullet[i]];
             };
         });
+        setInterval(function(){
+            if(!selfId)
+                return;
+            if(DetGame == false){
+                return;
+            }else{
+                ctx.clearRect(0, 0, 1532, 715);
+                //getAgainTank();
+                drawMap();
+                drawScore();
+                for(var i in Player.list){
+                    Player.list[i].draw();
+                };
+                for(var i in Bullet.list){
+                    Bullet.list[i].draw();
+                };   
+            };   
+        }, 40);
+
+        var drawMap = function(){
+            var x = WIDTH/2 - Player.list[selfId].x;
+            var y = HEIGHT/2 - Player.list[selfId].y;
+            ctx.drawImage(Img.map, x, y);
+        };
+
+        var drawScore = function(){
+            ctx.fillStyle = "white";
+            ctx.fillText(Player.list[selfId].score, 0, 30);
+        };
+
+        socket.on("addToChat", function(data){
+            chatText.innerHTML += "<div>" + data + "</div>";
+        });
+        socket.on("evalAnswer", function(data){
+            console.log(data);
+        });
+        chatForm.onsubmit = function(e){
+            e.preventDefault();
+            if(chatInput.value[0] === "/")
+                socket.emit("evalServer", chatInput.value.slice(1));
+            else
+                socket.emit("sendMsgToServer", chatInput.value);
+            chatInput.value = "";
+        };
         document.onkeydown = function(event){
-            if(chat == true)   //chat true
+            if(DetGame == true){
                 if(event.keyCode === 68)    //d
                     socket.emit("keyPress", {inputId:"right", state:true});
                 else if(event.keyCode === 83)   //s
@@ -571,20 +677,13 @@
                 else if(event.keyCode === 65)   //a
                     socket.emit("keyPress", {inputId:"left", state:true});
                 else if(event.keyCode === 87)   //w
-                    socket.emit("keyPress", {inputId:"up", state:true});
-                else if(event.keyCode === 39)   //d arrow
-                    socket.emit("keyPress", {inputId:"right", state:true});
-                else if(event.keyCode === 40)   //s arrow
-                    socket.emit("keyPress", {inputId:"down", state:true});
-                else if(event.keyCode === 37)   //a arrow
-                    socket.emit("keyPress", {inputId:"left", state:true});
-                else if(event.keyCode === 38)   //w arrow
-                    socket.emit("keyPress", {inputId:"up", state:true});
+                    socket.emit("keyPress", {inputId:"up", state:true}); 
                 if(event.keyCode === 84)    //t
-                    chatHideShow();
+                    chatHideShow();                
+            };       
         };
         document.onkeyup = function(event){
-            if(chat == true)   //chat true
+            if(DetGame == true){
                 if(event.keyCode === 68)    //d
                     socket.emit("keyPress", {inputId:"right", state:false});
                 else if(event.keyCode === 83)   //s
@@ -592,14 +691,27 @@
                 else if(event.keyCode === 65)   //a
                     socket.emit("keyPress", {inputId:"left", state:false});
                 else if(event.keyCode === 87)   //w
-                    socket.emit("keyPress", {inputId:"up", state:false});                       
+                    socket.emit("keyPress", {inputId:"up", state:false});
+            };
+        };  
+        document.onmousedown = function(event){
+            if(DetGame == true){
+                socket.emit("keyPress", {inputId:"attack", state:true})
+            };
         };
+        document.onmouseup = function(event){
+            if(DetGame == true){
+                socket.emit("keyPress", {inputId:"attack", state:false})
+            };
+        };  
         document.onmousemove = function(event){
-            var mx = event.clientX;
-            var my = event.clientY;
-            socket.emit("mousePos", {mouseX:mx, mouseY:my});
-        };
+            if(DetGame == true){
+                var x = -766 + event.clientX - 8;
+                var y = -358 + event.clientY - 8;       
+                var angle = Math.atan2(y, x) / Math.PI * 180;
+                socket.emit("keyPress", {inputId:"mouseAngle", state:angle})
+            };
+        };      
     </script>
 </body>
 </html>
- 
