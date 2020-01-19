@@ -28,8 +28,5 @@ Para venderlo:
 -Comprar servidores y dominio (hostinger)
 
 ---------------------------------------------------------Problemas hijo puta---------------------------------------------------------
-- No se deben de obtener errores en la consola...
-
-- Primera cosa... hay que quitar las listas del servidor, todo orientado a objetos, también hay qe seguir con los tutoriales de ScripterWars, también voy a seguir viendo que pedo con los tanques, porque no se dibujan. Voy a cambiar cosas, y voy a preguntar, sin miedo al éxito xd...
-
-- Nota: hay problemas con el Server, menos con el chat xdxdxd...
+- Hacer que el chat sirva en los diferentes mapas bien, ya que sale la info del chat en todos los mapas.
+- Que la barra de vida de la persona salga hasta abajo de la pantalla y la de los enemigos estaria mejor si estaria abajito del tanque

@@ -17,7 +17,7 @@
     <div id="part2">
         <!--<button onclick="finish();">putos</button>-->
         <!-- width="1532" height="715"-->
-        <canvas class="ctx" width="1532" height="715" style="border:1px solid #000; background-color:#0F9;"></canvas>
+        <canvas class="ctx" width="1532" height="715" style="border:1px solid #000; background-color:rgba(2, 26, 70 ,1);"></canvas>
         <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
@@ -513,9 +513,15 @@
         Img.player = new Image();
         Img.player.src = "css/keys/tanks/red/r_b.png";
         Img.bullet = new Image();
-        Img.bullet.src = "/client/css/keys/images/bullet.png"
-        Img.map = new Image();
-        Img.map.src = "/client/css/keys/images/map.png"
+        Img.bullet.src = "/client/css/keys/images/nuke.png";
+        Img.map = {};
+
+        Img.map["map1"] = new Image();
+        Img.map["map1"].src = "/client/css/keys/images/map1.png";
+
+        Img.map["map2"] = new Image();
+        Img.map["map2"].src = "/client/css/keys/images/map2.png";        
+
         var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
         var chatText = document.getElementById("chat-text");
         var chatInput = document.getElementById("chat-input");
@@ -535,8 +541,12 @@
             self.hp = initPack.hp;
             self.hpMax = initPack.hpMax;
             self.score = initPack.score;
+            self.map = initPack.map;
 
             self.draw = function(){
+                if(Player.list[selfId].map !== self.map){
+                    return;
+                };
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
 
@@ -562,10 +572,14 @@
             self.id = initPack.id;
             self.x = initPack.x;
             self.y = initPack.y;
+            self.map = initPack.map;
 
             self.draw = function(){
-                var width = Img.bullet.width/8;
-                var height = Img.bullet.height/8;
+                if(Player.list[selfId].map !== self.map){
+                    return;
+                };
+                var width = Img.bullet.width/25;
+                var height = Img.bullet.height/25;
 
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
@@ -634,24 +648,47 @@
                 //getAgainTank();
                 drawMap();
                 drawScore();
-                for(var i in Player.list){
-                    Player.list[i].draw();
-                };
                 for(var i in Bullet.list){
                     Bullet.list[i].draw();
-                };   
+                };                  
+                for(var i in Player.list){
+                    Player.list[i].draw();
+                }; 
             };   
         }, 40);
 
         var drawMap = function(){
-            var x = WIDTH/2 - Player.list[selfId].x;
-            var y = HEIGHT/2 - Player.list[selfId].y;
-            ctx.drawImage(Img.map, x, y);
+            var player = Player.list[selfId];
+            var x = WIDTH/2 - player.x;
+            var y = HEIGHT/2 - player.y;
+            ctx.drawImage(Img.map[player.map], x, y);
         };
 
         var drawScore = function(){
             ctx.fillStyle = "white";
-            ctx.fillText(Player.list[selfId].score, 0, 30);
+            ctx.font = "30px Arial";
+            var realScore = "Score: " + Player.list[selfId].score;
+            ctx.fillText(realScore, 0, 30);
+            var howManyPlayers = 0;
+            var player = Player.list[selfId];
+             for (key in Player.list){
+                if(Player.list[key].map == player.map){
+                    howManyPlayers ++;
+                };
+            };
+            var arena = 0;
+            if(player.map == "map1"){
+                arena = 1;
+            };
+            if(player.map == "map2"){
+                arena = 2;
+            };            
+            var realFillArena = "Arena: " + arena;
+            ctx.fillText(realFillArena, 0, 660);
+            var realFillPlayers = "Number of players: " + howManyPlayers;
+            ctx.fillText(realFillPlayers, 0, 700);
+            //ctx.fillText("x: " + player.x, 0, 500);
+            //ctx.fillText("y: " + player.y, 0, 550);
         };
 
         socket.on("addToChat", function(data){
@@ -669,15 +706,16 @@
             chatInput.value = "";
         };
         document.onkeydown = function(event){
+            var player = Player.list[selfId];
             if(DetGame == true){
-                if(event.keyCode === 68)    //d
-                    socket.emit("keyPress", {inputId:"right", state:true});
-                else if(event.keyCode === 83)   //s
-                    socket.emit("keyPress", {inputId:"down", state:true});
-                else if(event.keyCode === 65)   //a
+                if(event.keyCode === 65)   //a
                     socket.emit("keyPress", {inputId:"left", state:true});
+                else if(event.keyCode === 68)    //d
+                    socket.emit("keyPress", {inputId:"right", state:true}); 
                 else if(event.keyCode === 87)   //w
                     socket.emit("keyPress", {inputId:"up", state:true}); 
+                else if(event.keyCode === 83)   //s
+                    socket.emit("keyPress", {inputId:"down", state:true});                                         
                 if(event.keyCode === 84)    //t
                     chatHideShow();                
             };       
