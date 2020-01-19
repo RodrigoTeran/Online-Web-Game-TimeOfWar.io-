@@ -30,3 +30,4 @@ Para venderlo:
 ---------------------------------------------------------Problemas hijo puta---------------------------------------------------------
 - Hacer que el chat sirva en los diferentes mapas bien, ya que sale la info del chat en todos los mapas.
 - Que la barra de vida de la persona salga hasta abajo de la pantalla y la de los enemigos estaria mejor si estaria abajito del tanque
+- Hacer que el pinche tanque no se dibuje cuando esta en la main page

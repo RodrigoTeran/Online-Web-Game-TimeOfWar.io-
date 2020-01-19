@@ -28,7 +28,7 @@ var Entity = function(param){
 			self.x = param.x;
 		};
 		if(param.y){
-			self.y = param.y;
+			self.y = param.y;		
 		};
 		if(param.map){
 			self.map = param.map;
@@ -42,7 +42,7 @@ var Entity = function(param){
 	};
 	self.updatePosition = function(){
 		self.x += self.spdX;
-		self.y += self.spdY;
+		self.y += self.spdY;			
 	};
 	self.getDistance = function(pt){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
@@ -67,6 +67,18 @@ var Player = function(param){
 	self.update = function(){
 		self.updateSpd();
 		super_update();
+		if(self.x <= 25){
+			self.x = 25;
+		};
+		if(self.x >= 3753){
+			self.x = 3753;
+		};
+		if(self.y <= 20){
+			self.y = 20;
+		};
+		if(self.y >= 923){
+			self.y = 923;
+		};		
 		if(self.pressingAttack){
 			for(var i = 0; i < 1; i++){
 				self.shootBullet(i  * 10 + self.mouseAngle);
@@ -100,7 +112,7 @@ var Player = function(param){
 		}
 		else{
 			self.spdY = 0;
-		};									
+		};								
 	};
 	self.getInitPack = function(){
 		return {
@@ -139,32 +151,16 @@ Player.onConnect = function(socket){
 	});
 	socket.on("keyPress", function(data){ // (name important)
 		if(data.inputId === "left"){
-			if(player.x >= 25){	// a
-				player.pressingLeft = data.state;
-			}else{
-				player.pressingLeft = false;
-			};	
+			player.pressingLeft = data.state;
 		};		
 		if(data.inputId === "right"){
-			if(player.x <= 3750){	// d
-				player.pressingRight = data.state;
-			}else{
-				player.pressingRight = false;
-			};	
+			player.pressingRight = data.state;
 		};
 		if(data.inputId === "up"){
-			if(player.y >= 20){	// w
-				player.pressingUp = data.state;
-			}else{
-				player.pressingUp = false;
-			};	
+			player.pressingUp = data.state;
 		};				
 		if(data.inputId === "down"){
-			if(player.y <= 920){	// s
-				player.pressingDown = data.state;
-			}else{
-				player.pressingDown = false;
-			};	
+			player.pressingDown = data.state;
 		};	
 		if(data.inputId === "attack")
 			player.pressingAttack = data.state;
@@ -223,8 +219,14 @@ var Bullet = function(param){
 					if(shooter)
 						shooter.score += 1;
 					p.hp = p.hpMax;
-					p.x = Math.random() * 1532;
-					p.y = Math.random() * 715;
+					p.x = Math.random() * 3750;
+					p.y = Math.random() * 920;
+					if(p.x <= 25){
+						p.x = 25;
+					};
+					if(p.y <= 20){
+						p.y = 20;
+					};					
 				};
 				self.toRemove = true;
 			};
