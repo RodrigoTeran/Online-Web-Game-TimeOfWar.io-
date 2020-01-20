@@ -454,13 +454,24 @@
         // --------------------------------------------------------------------FUNCTIONS 2
         var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
         var DetGame = false;
+        var socket = io(); // Sends package connection to the server
 
+        function getname_(){    //need to evaluate
+            var nameplayer = document.getElementsByName("nameplayer")[0].value;
+            return nameplayer;
+        };
+        var SignIn = function(){
+            socket.emit("SignIn", {
+                username:getname_(),
+            })
+        };
         function start2(){
             $("#part2").fadeIn("slow");
         };
         function start(){  //hide the main page and show game
             $("#part1").fadeOut("slow");
             start2();
+            SignIn();
             DetGame = true;
         };
         function finish2(){
@@ -469,10 +480,6 @@
         function finish(){  //hide the game and show main page
             $("#part2").fadeOut("slow");
             finish2();
-        };
-        function getname_(){    //need to evaluate
-            var nameplayer = document.getElementsByName("nameplayer")[0].value;
-            return nameplayer;
         };
         var new_block = document.getElementById("chat-text");   // poner info
         var new_block_2 = document.getElementById("chat-form"); 
@@ -528,7 +535,6 @@
         var chatText = document.getElementById("chat-text");
         var chatInput = document.getElementById("chat-input");
         var chatForm = document.getElementById("chat-form");
-        var socket = io(); // Sends package connection to the server
 
         /*var getAgainTank = function(){
             Img.player.src = know_tank_2();
@@ -544,6 +550,7 @@
             self.hpMax = initPack.hpMax;
             self.score = initPack.score;
             self.map = initPack.map;
+            self.username = initPack.username;
 
             self.draw = function(){
                 if(Player.list[selfId].map !== self.map){
@@ -553,15 +560,31 @@
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
 
                 var hpWidth = 50 * self.hp / self.hpMax;
-                ctx.fillStyle = "red";
-                ctx.fillRect(x - hpWidth/2, y + 40, hpWidth, 4);
+                var hpWidth2 = 800 * self.hp / self.hpMax;
+                if(self.id == Player.list[selfId].id){
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(x - hpWidth2/2, y + 330, hpWidth2, 15);    // Own player
+                }else{
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(x - hpWidth/2, y + 40, hpWidth, 4);    // Everyone player
+                };
                 
                 var width = Img.player.width/4;
                 var height = Img.player.height/4;           
 
                 ctx.drawImage(Img.player, 0,0,Img.player.width, Img.player.height,
                     x-width/2, y-height/2, width, height);
-                //ctx.fillText(self.score, self.x, self.y-60);
+
+                ctx.fillStyle = "black";
+                ctx.font = "15px Arial";
+                var name = "";
+                if(self.username == ""){
+                    name = "An unnamed tank";
+                }else{
+                    name = self.username;
+                };
+                var widthText = ctx.measureText(name).width;
+                ctx.fillText(name, x - widthText/2, y - 30);
             };
 
             Player.list[self.id] = self;
@@ -699,7 +722,10 @@
             lastScore = Player.list[selfId].score;
             ctxUi.clearRect(0, 0, 1532, 715);
             var realScore = "Score: " + Player.list[selfId].score;
-            ctxUi.fillText(realScore, 0, 30);     
+            ctxUi.fillText(realScore, 0, 30);   
+
+            var widthText = ctx.measureText("LIFE").width;
+            ctxUi.fillText("LIFE", WIDTH/2 - widthText/2, 680);  
         };
         var lastScore = null;
 

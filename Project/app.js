@@ -62,6 +62,7 @@ var Player = function(param){
 	self.hp = 10;
 	self.hpMax = 10;
 	self.score = 0;
+	self.username = param.username;
 	
 	var super_update = self.update;
 	self.update = function(){
@@ -124,6 +125,7 @@ var Player = function(param){
 			hpMax:self.hpMax,
 			score:self.score,
 			map:self.map,
+			username:self.username,
 		};
 	};
 	self.getUpdatePack = function(){
@@ -140,13 +142,14 @@ var Player = function(param){
 	return self;
 };
 Player.list = {};
-Player.onConnect = function(socket){
+Player.onConnect = function(socket, username){
 	var map = "map1";
 	if(Math.random() > .5){
 		map = "map2";
 	};
 	var player = Player({
 		id:socket.id,
+		username:username,
 		map:map,
 	});
 	socket.on("keyPress", function(data){ // (name important)
@@ -166,6 +169,11 @@ Player.onConnect = function(socket){
 			player.pressingAttack = data.state;
 		if(data.inputId === "mouseAngle")
 			player.mouseAngle = data.state;															
+	});
+	socket.on("sendMsgToServer", function(data){
+		for(var i in SOCKET_LIST){
+			SOCKET_LIST[i].emit("addToChat", player.username + ":" + data);
+		};
 	});
 	socket.emit("init", {
 		selfId:socket.id,
@@ -199,8 +207,11 @@ var Bullet = function(param){
 	var self = Entity(param);
 	self.id = Math.random();
 	self.angle = param.angle;
-	self.spdX = Math.cos(param.angle/180*Math.PI) * 10;
-	self.spdY = Math.sin(param.angle/180*Math.PI) * 10;	
+	self.bulletSpd = 15;
+	self.bulletDamage = 1;	//bullets to kill = 10
+	self.scoreIfKill = 1;
+	self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletSpd;
+	self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletSpd;	
 	self.parent = param.parent;
 	self.timer = 0;
 	self.toRemove = false;
@@ -213,11 +224,11 @@ var Bullet = function(param){
 		for(var i in Player.list){
 			var p = Player.list[i];
 			if(self.map === p.map && self.getDistance(p) < 32 && self.parent !== p.id){
-				p.hp -= 1;
+				p.hp -= self.bulletDamage;
 				if(p.hp <= 0){
 					var shooter = Player.list[self.parent];
 					if(shooter)
-						shooter.score += 1;
+						shooter.score += self.scoreIfKill;
 					p.hp = p.hpMax;
 					p.x = Math.random() * 3750;
 					p.y = Math.random() * 920;
@@ -256,7 +267,7 @@ Bullet.update = function(){
 	var pack = [];
 	for(var i in Bullet.list){
 		var bullet = Bullet.list[i];
-		bullet.update();
+		bullet.update(); // que este no se haga esperando el rpm
 		if(bullet.toRemove){
 			delete Bullet.list[i];
 			removePack.bullet.push(bullet.id);
@@ -276,18 +287,13 @@ var io = require("socket.io")(serv,{});	// Player connects
 io.sockets.on("connection", function(socket){
 	socket.id = Math.random();
 	SOCKET_LIST[socket.id] = socket;
-	
-	Player.onConnect(socket);
-	
+
+	socket.on("SignIn", function(data){ // gets username
+		Player.onConnect(socket, data.username);
+	});
 	socket.on("disconnect", function(){ // (name important)
 		delete SOCKET_LIST[socket.id];
 		Player.onDisconnect(socket);
-	});
-	socket.on("sendMsgToServer", function(data){
-		var playerName = ("" + socket.id).slice(2,7);
-		for(var i in SOCKET_LIST){
-			SOCKET_LIST[i].emit("addToChat", playerName + ":" + data);
-		};
 	});
 	socket.on("evalServer", function(data){
 		var res = eval(data);		
@@ -298,7 +304,7 @@ io.sockets.on("connection", function(socket){
 var initPack = {player:[], bullet:[]};
 var removePack = {player:[], bullet:[]};
 
-setInterval(function(){
+var functionalities = function(){
 	var pack = {
 		player:Player.update(),
 		bullet:Bullet.update(),
@@ -313,5 +319,8 @@ setInterval(function(){
 	initPack.bullet = [];
 	removePack.player = [];
 	removePack.bullet = [];
+};
 
+setInterval(function(){	//player
+	functionalities();
 },1000/25);

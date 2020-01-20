@@ -15,11 +15,9 @@ Para el juego: (js)
 -Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
 -Stats de cada arma, range, damage, rpm, etc.
 -Dibujar los stats de los tanques (vida, stats)
--Poner la barra de vida del propio tanque hasta abajo
 -Saber que arma se escogió
--Proyectar el nombre de cada jugador
 -Que el chat sea específifico para cada arena
 -Añadir más arenas (3)
--Hacer que el pinche tanque no se dibuje cuando esta en la main page
 -Poner la tienda (que aparezca y desaparezca)
 -Hacer que las teclas no se activen cuando se escribe en el chat
+-Crear una leaderboard
