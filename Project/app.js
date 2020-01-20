@@ -70,14 +70,14 @@ var Player = function(param){
 		if(self.x <= 25){
 			self.x = 25;
 		};
-		if(self.x >= 3753){
-			self.x = 3753;
+		if(self.x >= 4333){
+			self.x = 4333;
 		};
 		if(self.y <= 20){
 			self.y = 20;
 		};
-		if(self.y >= 923){
-			self.y = 923;
+		if(self.y >= 975){
+			self.y = 975;
 		};		
 		if(self.pressingAttack){
 			for(var i = 0; i < 1; i++){

@@ -17,7 +17,8 @@
     <div id="part2">
         <!--<button onclick="finish();">putos</button>-->
         <!-- width="1532" height="715"-->
-        <canvas class="ctx" width="1532" height="715" style="border:1px solid #000; background-color:rgba(2, 26, 70 ,1);"></canvas>
+        <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
+        <canvas class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
         <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
@@ -469,7 +470,7 @@
             $("#part2").fadeOut("slow");
             finish2();
         };
-        function getname_(){
+        function getname_(){    //need to evaluate
             var nameplayer = document.getElementsByName("nameplayer")[0].value;
             return nameplayer;
         };
@@ -523,6 +524,7 @@
         Img.map["map2"].src = "/client/css/keys/images/map2.png";        
 
         var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
+        var ctxUi = document.getElementsByClassName("ctx-score")[0].getContext("2d");
         var chatText = document.getElementById("chat-text");
         var chatInput = document.getElementById("chat-input");
         var chatForm = document.getElementById("chat-form");
@@ -550,9 +552,9 @@
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
 
-                var hpWidth = 30 * self.hp / self.hpMax;
+                var hpWidth = 50 * self.hp / self.hpMax;
                 ctx.fillStyle = "red";
-                ctx.fillRect(x - hpWidth/2, y - 40, hpWidth, 4);
+                ctx.fillRect(x - hpWidth/2, y + 40, hpWidth, 4);
                 
                 var width = Img.player.width/4;
                 var height = Img.player.height/4;           
@@ -665,10 +667,11 @@
         };
 
         var drawScore = function(){
-            ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            var realScore = "Score: " + Player.list[selfId].score;
-            ctx.fillText(realScore, 0, 30);
+            ctxUi.fillStyle = "black";
+            ctxUi.font = "30px Arial";         
+            //---------------------------------------------no tiene interes común---------------------------------------------
+            ctx.fillStyle = "black";
+            ctx.font = "30px Arial";   
             var howManyPlayers = 0;
             var player = Player.list[selfId];
              for (key in Player.list){
@@ -687,9 +690,18 @@
             ctx.fillText(realFillArena, 0, 660);
             var realFillPlayers = "Number of players: " + howManyPlayers;
             ctx.fillText(realFillPlayers, 0, 700);
-            //ctx.fillText("x: " + player.x, 0, 500);
-            //ctx.fillText("y: " + player.y, 0, 550);
+            ctx.fillText("x: " + player.x, 0, 500);
+            ctx.fillText("y: " + player.y, 0, 550);
+            //---------------------------------------------no tiene interes común---------------------------------------------
+            if(lastScore === Player.list[selfId].score){
+                return;
+            };
+            lastScore = Player.list[selfId].score;
+            ctxUi.clearRect(0, 0, 1532, 715);
+            var realScore = "Score: " + Player.list[selfId].score;
+            ctxUi.fillText(realScore, 0, 30);     
         };
+        var lastScore = null;
 
         socket.on("addToChat", function(data){
             chatText.innerHTML += "<div>" + data + "</div>";
@@ -749,7 +761,10 @@
                 var angle = Math.atan2(y, x) / Math.PI * 180;
                 socket.emit("keyPress", {inputId:"mouseAngle", state:angle})
             };
-        };      
+        };
+        document.oncontextmenu = function(event){
+            event.preventDefault();
+        };
     </script>
 </body>
 </html>
