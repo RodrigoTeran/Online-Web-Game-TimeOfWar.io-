@@ -11,13 +11,14 @@ Para página de inicio: (html y css)
 Para el juego: (js)
 -Detectar qué tipo de colisión fue... (items)
 -Cambiar configuración específica si hubo una colisión... (items)
--Movimiento del tanque (cambiar ángulo del chasis y de el arma)
+-Movimiento del tanque (cambiar ángulo del chasis y de el arma)-------------------------------------
 -Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
--Stats de cada arma, range, damage, rpm, etc.
--Dibujar los stats de los tanques (vida, stats)
--Saber que arma se escogió
--Que el chat sea específifico para cada arena
--Añadir más arenas (3)
+-Stats de cada arma, range, damage, rpm, etc.-------------------------RPM
+-Dibujar los stats de los tanques (stats)-------------------------
+-Saber que arma se escogió-------------------------
+-Que el chat sea específifico para cada arena-------------------------
+-Añadir más arenas (3)-------------------------
 -Poner la tienda (que aparezca y desaparezca)
 -Hacer que las teclas no se activen cuando se escribe en el chat
 -Crear una leaderboard
+-------------------------Que en el chat, si no te pusiste nombre también salga An unnamed tank

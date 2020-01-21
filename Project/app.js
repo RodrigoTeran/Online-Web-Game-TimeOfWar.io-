@@ -172,7 +172,13 @@ Player.onConnect = function(socket, username){
 	});
 	socket.on("sendMsgToServer", function(data){
 		for(var i in SOCKET_LIST){
-			SOCKET_LIST[i].emit("addToChat", player.username + ":" + data);
+			var name = "";
+			if(player.username == ""){
+				name = "An unnamed tank";
+			}else{
+				name = play.username;
+			}
+			SOCKET_LIST[i].emit("addToChat", name + ":" + data);
 		};
 	});
 	socket.emit("init", {
@@ -216,6 +222,7 @@ var Bullet = function(param){
 	self.timer = 0;
 	self.toRemove = false;
 	var super_update = self.update;
+	var det = 0;
 	self.update = function(){
 		if(self.timer++ > 100){
 			self.toRemove = true;
