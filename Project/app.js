@@ -58,9 +58,9 @@ var Player = function(param){
 	self.pressingDown = false;
 	self.pressingAttack = false;			
 	self.mouseAngle = 0;		
-	self.maxSpd = 10;
+	self.maxSpd = 10;	//------------------------------stats
 	self.hp = 10;
-	self.hpMax = 10;
+	self.hpMax = 10;	//------------------------------stats
 	self.score = 0;
 	self.username = param.username;
 	
@@ -176,7 +176,7 @@ Player.onConnect = function(socket, username){
 			if(player.username == ""){
 				name = "An unnamed tank";
 			}else{
-				name = play.username;
+				name = player.username;
 			}
 			SOCKET_LIST[i].emit("addToChat", name + ":" + data);
 		};
@@ -213,8 +213,8 @@ var Bullet = function(param){
 	var self = Entity(param);
 	self.id = Math.random();
 	self.angle = param.angle;
-	self.bulletSpd = 15;
-	self.bulletDamage = 1;	//bullets to kill = 10
+	self.bulletSpd = 15;	//------------------------------stats
+	self.bulletDamage = 1;	//------------------------------stats
 	self.scoreIfKill = 1;
 	self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletSpd;
 	self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletSpd;	

@@ -8,17 +8,30 @@ Recordar:
 Para página de inicio: (html y css)
 -Saber que hacer con el footer
 
+Dibujos:
+-Hacer el mapa más grande
+
 Para el juego: (js)
--Detectar qué tipo de colisión fue... (items)
--Cambiar configuración específica si hubo una colisión... (items)
--Movimiento del tanque (cambiar ángulo del chasis y de el arma)-------------------------------------
--Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
--Stats de cada arma, range, damage, rpm, etc.-------------------------RPM
--Dibujar los stats de los tanques (stats)-------------------------
--Saber que arma se escogió-------------------------
--Que el chat sea específifico para cada arena-------------------------
--Añadir más arenas (3)-------------------------
--Poner la tienda (que aparezca y desaparezca)
--Hacer que las teclas no se activen cuando se escribe en el chat
--Crear una leaderboard
--------------------------Que en el chat, si no te pusiste nombre también salga An unnamed tank
+1-Detectar qué tipo de colisión fue... (items)
+2-Cambiar configuración específica si hubo una colisión... (items)
+3-Movimiento del tanque (cambiar ángulo del chasis y de el arma)
+4-Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
+5-Stats de cada arma, range, damage, rpm, etc (podef cambiarlos)
+6-Saber que arma se escogió
+7-Que el chat sea específifico para cada arena
+8-Añadir más arenas (3)
+9-Hacer que las teclas no se activen cuando se escribe en el chat
+10-Crear una leaderboard
+11-Que al principio te spawnes en una localización random
+12-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
+13-Que el damage de las balas sea como su vida:
+	Objeto (tanque u otra bullet) contra Objeto (tanque u otra bullet){	// el comportamiento es igual en ambos lados...
+		vidaAdversario = checa la vida del otro objeto...
+		if(vidaAdversario >= MyVida){
+			desparecer = true;
+		}else{
+			MyVida = MyVida - vidaAdversario;
+		};
+	};
+14- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
+15-Añadir de stat, VIDA
