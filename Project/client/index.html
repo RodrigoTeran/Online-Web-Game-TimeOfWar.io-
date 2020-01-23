@@ -19,14 +19,14 @@
         <!-- width="1532" height="715"-->
         <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
         <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
-        <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">SCOREBOARD</div>
+        <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">LEADERBOARD</div>
         <!--Positions of Scoreboard-->
-        <div id="topPlace" style="position: absolute; top:40px; left:1300px;">No one :P</div>
-        <div id="topPlace" style="position: absolute; top:70px; left:1300px;">No one :P</div>
-        <div id="topPlace" style="position: absolute; top:100px; left:1300px;">No one :P</div>
-        <div id="topPlace" style="position: absolute; top:130px; left:1300px;">No one :P</div>
-        <div id="topPlace" style="position: absolute; top:160px; left:1300px;">No one :P</div>
-        <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 210px; height: 400px; overflow-y: scroll;">
+        <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">No one :P</div>
+        <div id="topPlace" class="t2" style="position: absolute; top:70px; left:1300px;">No one :P</div>
+        <div id="topPlace" class="t3" style="position: absolute; top:100px; left:1300px;">No one :P</div>
+        <div id="topPlace" class="t4" style="position: absolute; top:130px; left:1300px;">No one :P</div>
+        <div id="topPlace" class="t5" style="position: absolute; top:160px; left:1300px;">No one :P</div>
+        <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 210px; height: 450px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
             <input class="chatclass3" onClick="CheckWriteInput();" id ="chat-input" type="text" style="width: 220px;"/>
@@ -791,8 +791,83 @@
                 ctx.font = "15px Arial";
                 var widthText = ctx.measureText(name).width;
                 ctx.fillText(name, x - widthText/2, y - 30);
-            };
+                
+                // Leaderboard
+                var arrScore = function(names){
+                    names.sort()
+                    names.reverse();
+                    for(var i = 0; i < names.length; i++){
+                        var nombre = "";
+                        var cuantoPaso = 1;
+                        var det = 0;
+                        for(var j in names[i]){
+                            if(det == 0){
+                                if(names[i].charAt(j) == ":"){
+                                    det = 1;
+                                    names[i] = names[i].substring(cuantoPaso, names[i].length);
+                                    names[i] = names[i].concat(": " + nombre);
 
+                                }else{
+                                    nombre = nombre + names[i].charAt(j);
+                                    cuantoPaso += 1;
+                                };
+                            };
+                        };
+                    };
+                    return names;
+                };
+                function sortObject(){
+                    var clients = [];
+                    for(var i in Player.list){
+                        var m = Player.list[i].score + ": " + Player.list[i].username;
+                        clients.push(m);
+                    };
+                    return arrScore(clients);
+                };
+                var SCORES = sortObject();
+                var top1 = document.getElementsByClassName("t1")[0];
+                var top2 = document.getElementsByClassName("t2")[0];
+                var top3 = document.getElementsByClassName("t3")[0];
+                var top4 = document.getElementsByClassName("t4")[0];
+                var top5 = document.getElementsByClassName("t5")[0];
+                top1.innerHTML = SCORES[0];
+                if(SCORES.length == 1){
+                    top2.innerHTML = "No one :P";
+                    top3.innerHTML = "No one :P";
+                    top4.innerHTML = "No one :P";
+                    top5.innerHTML = "No one :P";
+                };                
+                if(SCORES.length == 2){
+                    top2.innerHTML = SCORES[1];
+                    top3.innerHTML = "No one :P";
+                    top4.innerHTML = "No one :P";
+                    top5.innerHTML = "No one :P";
+                };
+                if(SCORES.length == 3){
+                    top2.innerHTML = SCORES[1];
+                    top3.innerHTML = SCORES[2];
+                    top4.innerHTML = "No one :P";
+                    top5.innerHTML = "No one :P";                    
+                };
+                if(SCORES.length == 4){
+                    top2.innerHTML = SCORES[1];
+                    top3.innerHTML = SCORES[2];
+                    top4.innerHTML = SCORES[3];
+                    top5.innerHTML = "No one :P"; 
+                };
+                if(SCORES.length == 5){
+                    top2.innerHTML = SCORES[1];
+                    top3.innerHTML = SCORES[2];
+                    top4.innerHTML = SCORES[3];
+                    top5.innerHTML = SCORES[4];
+                };
+                if(SCORES.length >= 6){
+                    top2.innerHTML = SCORES[1];
+                    top3.innerHTML = SCORES[2];
+                    top4.innerHTML = SCORES[3];
+                    top5.innerHTML = SCORES[4];
+                };                                             
+            };
             Player.list[self.id] = self;
             return self;
         };
