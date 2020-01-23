@@ -819,8 +819,14 @@
                 function sortObject(){
                     var clients = [];
                     for(var i in Player.list){
-                        var m = Player.list[i].score + ": " + Player.list[i].username;
-                        clients.push(m);
+                        if(Player.list[i].map == Player.list[selfId].map){
+                            var name = Player.list[i].username;
+                            if(name == ""){
+                                name = "An unnamed tank";
+                            };
+                            var m = Player.list[i].score + ": " + name;
+                            clients.push(m);
+                        };
                     };
                     return arrScore(clients);
                 };
@@ -855,18 +861,12 @@
                     top4.innerHTML = SCORES[3];
                     top5.innerHTML = "No one :P"; 
                 };
-                if(SCORES.length == 5){
+                if(SCORES.length >= 5){
                     top2.innerHTML = SCORES[1];
                     top3.innerHTML = SCORES[2];
                     top4.innerHTML = SCORES[3];
                     top5.innerHTML = SCORES[4];
                 };
-                if(SCORES.length >= 6){
-                    top2.innerHTML = SCORES[1];
-                    top3.innerHTML = SCORES[2];
-                    top4.innerHTML = SCORES[3];
-                    top5.innerHTML = SCORES[4];
-                };                                             
             };
             Player.list[self.id] = self;
             return self;
@@ -994,11 +994,11 @@
                 arena = 2;
             };            
             var realFillArena = "Arena: " + arena;
-            ctx.fillText(realFillArena, 0, 660);
+            ctx.fillText(realFillArena, 0, 500);
             var realFillPlayers = "Number of players: " + howManyPlayers;
-            ctx.fillText(realFillPlayers, 0, 700);
-            ctx.fillText("x: " + player.x, 0, 500);
-            ctx.fillText("y: " + player.y, 0, 550);
+            ctx.fillText(realFillPlayers, 0, 540);
+            ctx.fillText("x: " + player.x, 0, 400);
+            ctx.fillText("y: " + player.y, 0, 450);
             //---------------------------------------------no tiene interes común---------------------------------------------
             if(lastScore === Player.list[selfId].score){
                 return;
@@ -1013,8 +1013,10 @@
         };
         var lastScore = null;
 
-        socket.on("addToChat", function(data){
-            chatText.innerHTML += "<div>" + data + "</div>";
+        socket.on("addToChat", function(data, map){
+            if(map == Player.list[selfId].map){
+                chatText.innerHTML += "<div>" + data + "</div>";                
+            };
         });
         socket.on("evalAnswer", function(data){
             console.log(data);

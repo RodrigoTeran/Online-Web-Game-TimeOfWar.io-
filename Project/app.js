@@ -224,7 +224,7 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 			}else{
 				name = player.username;
 			}
-			SOCKET_LIST[i].emit("addToChat", name + ":" + data);
+			SOCKET_LIST[i].emit("addToChat", name + ":" + data, player.map);
 		};
 	});
 	socket.emit("init", {
