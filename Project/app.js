@@ -57,12 +57,15 @@ var Player = function(param){
 	self.pressingUp = false;
 	self.pressingDown = false;
 	self.pressingAttack = false;			
+	self.angleChasis = 0;
 	self.mouseAngle = 0;		
 	self.maxSpd = 10;	//------------------------------stats
 	self.hp = 10;
 	self.hpMax = 10;	//------------------------------stats
 	self.score = 0;
 	self.username = param.username;
+	self.tankColor = param.tankColor;	
+	self.tankWeapon = param.tankWeapon;
 	
 	var super_update = self.update;
 	self.update = function(){
@@ -121,11 +124,15 @@ var Player = function(param){
 			x:self.x,
 			y:self.y,
 			number:self.number,
+			mouseAngle:self.mouseAngle,
 			hp:self.hp,
 			hpMax:self.hpMax,
 			score:self.score,
 			map:self.map,
 			username:self.username,
+			tankColor:self.tankColor,
+			tankWeapon:self.tankWeapon,
+			angleChasis:self.angleChasis,
 		};
 	};
 	self.getUpdatePack = function(){
@@ -133,8 +140,10 @@ var Player = function(param){
 			id:self.id,
 			x:self.x,
 			y:self.y,
+			mouseAngle:self.mouseAngle,
 			hp:self.hp,
 			score:self.score,
+			angleChasis:self.angleChasis,
 		};
 	};
 	Player.list[self.id] = self;
@@ -142,7 +151,7 @@ var Player = function(param){
 	return self;
 };
 Player.list = {};
-Player.onConnect = function(socket, username){
+Player.onConnect = function(socket, username, tankColor, tankWeapon){
 	var map = "map1";
 	if(Math.random() > .5){
 		map = "map2";
@@ -151,24 +160,60 @@ Player.onConnect = function(socket, username){
 		id:socket.id,
 		username:username,
 		map:map,
+		tankColor:tankColor,
+		tankWeapon:tankWeapon,
 	});
+	var detKeys = [0,0,0,0];
 	socket.on("keyPress", function(data){ // (name important)
 		if(data.inputId === "left"){
 			player.pressingLeft = data.state;
-		};		
+			if(data.state == true){
+				detKeys[0] = 1;
+			}else{
+				detKeys[0] = 0;
+			};
+		};
 		if(data.inputId === "right"){
 			player.pressingRight = data.state;
+			if(data.state == true){
+				detKeys[1] = 1;
+			}else{
+				detKeys[1] = 0;
+			};
 		};
 		if(data.inputId === "up"){
 			player.pressingUp = data.state;
-		};				
+			if(data.state == true){
+				detKeys[2] = 1;
+			}else{
+				detKeys[2] = 0;
+			};
+		};
 		if(data.inputId === "down"){
 			player.pressingDown = data.state;
-		};	
+			if(data.state == true){
+				detKeys[3] = 1;
+			}else{
+				detKeys[3] = 0;
+			};
+		};
 		if(data.inputId === "attack")
 			player.pressingAttack = data.state;
 		if(data.inputId === "mouseAngle")
-			player.mouseAngle = data.state;															
+			player.mouseAngle = data.state;
+		// chacar ángulo chasis
+		if((detKeys[2] == 1 && detKeys[0] == 1) || (detKeys[1] == 1 && detKeys[3] == 1)){
+			player.angleChasis = -45;
+		}
+		else if((detKeys[2] == 1 && detKeys[1] == 1) || (detKeys[3] == 1 && detKeys[0] == 1)){
+			player.angleChasis = 45;
+		}
+		else if(detKeys[2] == 1 || detKeys[3] == 1){
+			player.angleChasis = 0;
+		}
+		else if(detKeys[0] == 1 || detKeys[1] == 1){
+			player.angleChasis = 90;
+		};		
 	});
 	socket.on("sendMsgToServer", function(data){
 		for(var i in SOCKET_LIST){
@@ -218,6 +263,8 @@ var Bullet = function(param){
 	self.scoreIfKill = 1;
 	self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletSpd;
 	self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletSpd;	
+	self.x = self.x + self.spdX * 5;
+	self.y = self.y + self.spdY * 5;
 	self.parent = param.parent;
 	self.timer = 0;
 	self.toRemove = false;
@@ -296,7 +343,7 @@ io.sockets.on("connection", function(socket){
 	SOCKET_LIST[socket.id] = socket;
 
 	socket.on("SignIn", function(data){ // gets username
-		Player.onConnect(socket, data.username);
+		Player.onConnect(socket, data.username, data.tankColor, data.tankWeapon);
 	});
 	socket.on("disconnect", function(){ // (name important)
 		delete SOCKET_LIST[socket.id];

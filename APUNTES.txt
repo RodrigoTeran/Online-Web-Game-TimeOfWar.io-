@@ -14,17 +14,14 @@ Dibujos:
 Para el juego: (js)
 1-Detectar qué tipo de colisión fue... (items)
 2-Cambiar configuración específica si hubo una colisión... (items)
-3-Movimiento del tanque (cambiar ángulo del chasis y de el arma)
-4-Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
-5-Stats de cada arma, range, damage, rpm, etc (podef cambiarlos)
-6-Saber que arma se escogió
-7-Que el chat sea específifico para cada arena
-8-Añadir más arenas (3)
-9-Hacer que las teclas no se activen cuando se escribe en el chat
-10-Crear una leaderboard
-11-Que al principio te spawnes en una localización random
-12-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
-13-Que el damage de las balas sea como su vida:
+3-Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
+4-Stats de cada arma, range, damage, rpm, etc (poder cambiarlos)
+5-Que el chat sea específifico para cada arena
+6-Añadir más arenas (3)
+7-Crear una leaderboard
+8-Que al principio te spawnes en una localización random
+9-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
+10-Que el damage de las balas sea como su vida:
 	Objeto (tanque u otra bullet) contra Objeto (tanque u otra bullet){	// el comportamiento es igual en ambos lados...
 		vidaAdversario = checa la vida del otro objeto...
 		if(vidaAdversario >= MyVida){
@@ -33,5 +30,6 @@ Para el juego: (js)
 			MyVida = MyVida - vidaAdversario;
 		};
 	};
-14- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
-15-Añadir de stat, VIDA
+11- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
+12-Añadir de stat, VIDA
+13-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente

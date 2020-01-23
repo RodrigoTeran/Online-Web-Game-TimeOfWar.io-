@@ -18,11 +18,11 @@
         <!--<button onclick="finish();">putos</button>-->
         <!-- width="1532" height="715"-->
         <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
-        <canvas class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
-        <div class="chatclass" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
+        <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
+        <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
-            <input class="chatclass3" id ="chat-input" type="text" style="width: 220px;"/>
+            <input class="chatclass3" onClick="CheckWriteInput();" id ="chat-input" type="text" style="width: 220px;"/>
         </form>
         <div id="stats" style="position:absolute;left:-450px; top:590px;border:1px solid #000; background-color:transparent;">
             <div id="rpm" style="position:absolute;">
@@ -30,28 +30,28 @@
                 <div id="imagerpm">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttonrpm" onClick="var b = play(); changeStats(0); return b" style="position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+                <button class="circlebutton" id="buttonrpm" onClick="var b = changeStats(0); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
             </div>
             <div id="damage" style="position:absolute;top:30px;">
                 <div id="namedamage" style="position:absolute; left:140px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">DAMAGE</div>
                 <div id="imagedamage">
                 <img src="css/keys/images/stat0.png"  width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttondamage" onClick="var b = play(); changeStats(1); return b" style="position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+                <button class="circlebutton" id="buttondamage" onClick="var b = changeStats(1); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
             </div>
             <div id="tankspeed" style="position:absolute;top:60px;">
                 <div id="nametankspeed" style="position:absolute; left:126px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">TANK SPEED</div>
                 <div id="imagetankspeed">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>                
-                <button class="circlebutton" id="buttontankspeed" onClick="var b = play(); changeStats(2); return b" style="position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+                <button class="circlebutton" id="buttontankspeed" onClick="var b = changeStats(2); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
             </div>
             <div id="bulletspeed" style="position:absolute;top:90px;">
                 <div id="namebulletspeed" style="position:absolute; left:122px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">BULLET SPEED</div>
                 <div id="imagebulletspeed">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>                
-                <button class="circlebutton" id="buttonbulletspeed" onClick="var b = play(); changeStats(3); return b" style="position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+                <button class="circlebutton" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
             </div>                                    
         </div>
     </div>
@@ -250,15 +250,19 @@
                 if(listOfStats[0] == 0){
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[0] = 1;
+                    play();
                 }
                 else if(listOfStats[0] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[0] = 2;
+                    play();
                 }
                 else if(listOfStats[0] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
                     listOfStats[0] = 3;
                     button.className = "circlebutton2";  
+                    button.style.cursor = "default";
+                    play();
                 }
                 else if(listOfStats[0] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -271,15 +275,19 @@
                 if(listOfStats[1] == 0){
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[1] = 1;
+                    play();
                 }
                 else if(listOfStats[1] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[1] = 2;
+                    play();
                 }
                 else if(listOfStats[1] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
                     listOfStats[1] = 3;
                     button.className = "circlebutton2";  
+                    button.style.cursor = "default";
+                    play();
                 }
                 else if(listOfStats[1] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';           
@@ -292,15 +300,19 @@
                 if(listOfStats[2] == 0){
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[2] = 1;
+                    play();
                 }
                 else if(listOfStats[2] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[2] = 2;
+                    play();
                 }
                 else if(listOfStats[2] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
                     listOfStats[2] = 3;
                     button.className = "circlebutton2";  
+                    button.style.cursor = "default";                    
+                    play();
                 }
                 else if(listOfStats[2] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';         
@@ -313,15 +325,19 @@
                 if(listOfStats[3] == 0){
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[3] = 1;
+                    play();
                 }
                 else if(listOfStats[3] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[3] = 2;
+                    play();
                 }
                 else if(listOfStats[3] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
                     listOfStats[3] = 3;
-                    button.className = "circlebutton2";    
+                    button.className = "circlebutton2";  
+                    button.style.cursor = "default";
+                    play();
                 }
                 else if(listOfStats[3] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
@@ -591,6 +607,8 @@
         var SignIn = function(){
             socket.emit("SignIn", {
                 username:getname_(),
+                tankColor:know_tank_2(),
+                tankWeapon:know_tank_3(),
             })
         };
         function start2(){
@@ -647,10 +665,11 @@
 
         var Img = {};
         Img.player = new Image();
-        Img.player.src = "css/keys/tanks/red/r_b.png";
+        Img.playerW = new Image();        
         Img.bullet = new Image();
         Img.bullet.src = "/client/css/keys/images/nuke.png";
         Img.map = {};
+        var angle = 0;
 
         Img.map["map1"] = new Image();
         Img.map["map1"].src = "/client/css/keys/images/map1.png";
@@ -664,23 +683,39 @@
         var chatInput = document.getElementById("chat-input");
         var chatForm = document.getElementById("chat-form");
 
-        /*var getAgainTank = function(){
-            Img.player.src = know_tank_2();
-        };*/
-
         var Player = function(initPack){
             var self = {};
             self.id = initPack.id;
             self.number = initPack.number;
+            self.tankColor = initPack.tankColor;
+            self.tankWeapon  = initPack.tankWeapon;
             self.x = initPack.x;
             self.y = initPack.y;          
             self.hp = initPack.hp;
+            self.angleChasis = initPack.angleChasis;
             self.hpMax = initPack.hpMax;
+            self.mouseAngle = initPack.mouseAngle;
             self.score = initPack.score;
             self.map = initPack.map;
             self.username = initPack.username;
 
             self.draw = function(){
+                function drawImageR(context, image, sx, sy, swidth, sheight, x, y, width_i, height_i, angle, det){
+                    context.save();
+                    if(det == 0){
+                        context.translate(x + (width_i / 2), y + (height_i / 2));
+                        context.rotate((angle*Math.PI)/180);
+                        context.drawImage(image, sx, sy, swidth, sheight, (-width_i / 2), (-height_i / 2), width_i, height_i);
+                        context.restore();
+                    }else{
+                        context.translate((x-29) + (width_i / 2), (y+60) + (height_i / 2));
+                        context.rotate((angle*Math.PI)/180);
+                        context.drawImage(image, sx, sy, swidth, sheight, (-width_i / 2 + width_i/4), (-height_i / 2 - height_i/2 + 10), width_i, height_i);
+                        context.restore();
+                    };
+                };                
+                Img.player.src = self.tankColor;
+                Img.playerW.src = self.tankWeapon;                
                 ctx.fillStyle = "black";
                 ctx.font = "15px Arial";
                 if(Player.list[selfId].map !== self.map){
@@ -700,11 +735,13 @@
                 };
                 
                 var width = Img.player.width/4;
-                var height = Img.player.height/4;           
+                var height = Img.player.height/4;    
 
-                ctx.drawImage(Img.player, 0,0,Img.player.width, Img.player.height,
-                    x-width/2, y-height/2, width, height);
+                var widthW = Img.playerW.width/2;
+                var heightW = Img.playerW.height/5;
 
+                drawImageR(ctx, Img.player, 0,0,Img.player.width, Img.player.height, x-width/2, y-height/2, width, height, self.angleChasis, 0);
+                drawImageR(ctx, Img.playerW, 0,0,Img.player.width, Img.player.height, x-widthW/2 + 29, y-heightW/2 - 60, widthW, heightW, self.mouseAngle +90, 1);
                 var name = "";
                 if(self.username == ""){
                     name = "An unnamed tank";
@@ -742,7 +779,6 @@
                 ctx.drawImage(Img.bullet, 0,0,Img.bullet.width, Img.bullet.height, 
                     x-width/2, y-height/2, width, height);
             };
-
             Bullet.list[self.id] = self;
             return self;
         };
@@ -771,7 +807,11 @@
                     if(pack.hp !== undefined)
                         p.hp = pack.hp;             
                     if(pack.score !== undefined)
-                        p.score = pack.score;               
+                        p.score = pack.score;       
+                    if(pack.mouseAngle !== undefined)
+                        p.mouseAngle = pack.mouseAngle;   
+                    if(pack.angleChasis !== undefined)
+                        p.angleChasis = pack.angleChasis;                                                       
                 };
             };
             for(var i = 0; i< data.bullet.length; i++){
@@ -873,33 +913,44 @@
                 socket.emit("sendMsgToServer", chatInput.value);
             chatInput.value = "";
         };
+        var detChatTusa = true;
+        var CheckWriteInput= function(){
+            detChatTusa = false;
+        };
+        var CheckWriteInputNo= function(){
+            detChatTusa = true;
+        };        
         document.onkeydown = function(event){
             var player = Player.list[selfId];
-            if(DetGame == true){
-                if(event.keyCode === 65)   //a
-                    socket.emit("keyPress", {inputId:"left", state:true});
-                else if(event.keyCode === 68)    //d
-                    socket.emit("keyPress", {inputId:"right", state:true}); 
-                else if(event.keyCode === 87)   //w
-                    socket.emit("keyPress", {inputId:"up", state:true}); 
-                else if(event.keyCode === 83)   //s
-                    socket.emit("keyPress", {inputId:"down", state:true});                                         
-                if(event.keyCode === 84)    //t
-                    chatHideShow();             
-                if(event.keyCode === 82)    //t
-                    animaStats();                    
+            if(detChatTusa == true){
+                if(DetGame == true){
+                    if(event.keyCode === 65)   //a
+                        socket.emit("keyPress", {inputId:"left", state:true});
+                    else if(event.keyCode === 68)    //d
+                        socket.emit("keyPress", {inputId:"right", state:true}); 
+                    else if(event.keyCode === 87)   //w
+                        socket.emit("keyPress", {inputId:"up", state:true}); 
+                    else if(event.keyCode === 83)   //s
+                        socket.emit("keyPress", {inputId:"down", state:true});                                         
+                    if(event.keyCode === 84)    //t
+                        chatHideShow();             
+                    if(event.keyCode === 82)    //t
+                        animaStats();                    
+                };
             };
         };
         document.onkeyup = function(event){
-            if(DetGame == true){
-                if(event.keyCode === 68)    //d
-                    socket.emit("keyPress", {inputId:"right", state:false});
-                else if(event.keyCode === 83)   //s
-                    socket.emit("keyPress", {inputId:"down", state:false});
-                else if(event.keyCode === 65)   //a
-                    socket.emit("keyPress", {inputId:"left", state:false});
-                else if(event.keyCode === 87)   //w
-                    socket.emit("keyPress", {inputId:"up", state:false});
+            if(detChatTusa == true){
+                if(DetGame == true){
+                    if(event.keyCode === 68)    //d
+                        socket.emit("keyPress", {inputId:"right", state:false});
+                    else if(event.keyCode === 83)   //s
+                        socket.emit("keyPress", {inputId:"down", state:false});
+                    else if(event.keyCode === 65)   //a
+                        socket.emit("keyPress", {inputId:"left", state:false});
+                    else if(event.keyCode === 87)   //w
+                        socket.emit("keyPress", {inputId:"up", state:false});
+                };                        
             };
         };  
         document.onmousedown = function(event){
@@ -911,12 +962,12 @@
             if(DetGame == true){
                 socket.emit("keyPress", {inputId:"attack", state:false})
             };
-        };  
+        };
         document.onmousemove = function(event){
             if(DetGame == true){
                 var x = -766 + event.clientX - 8;
                 var y = -358 + event.clientY - 8;       
-                var angle = Math.atan2(y, x) / Math.PI * 180;
+                angle = Math.atan2(y, x) / Math.PI * 180;
                 socket.emit("keyPress", {inputId:"mouseAngle", state:angle})
             };
         };
