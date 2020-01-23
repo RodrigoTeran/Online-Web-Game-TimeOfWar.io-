@@ -31,5 +31,4 @@ Para el juego: (js)
 		};
 	};
 11- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
-12-Añadir de stat, VIDA
-13-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente
+12-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente

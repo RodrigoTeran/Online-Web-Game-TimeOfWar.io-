@@ -19,12 +19,19 @@
         <!-- width="1532" height="715"-->
         <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
         <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
-        <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 220px; height: 640px; overflow-y: scroll;">
+        <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">SCOREBOARD</div>
+        <!--Positions of Scoreboard-->
+        <div id="topPlace" style="position: absolute; top:40px; left:1300px;">No one :P</div>
+        <div id="topPlace" style="position: absolute; top:70px; left:1300px;">No one :P</div>
+        <div id="topPlace" style="position: absolute; top:100px; left:1300px;">No one :P</div>
+        <div id="topPlace" style="position: absolute; top:130px; left:1300px;">No one :P</div>
+        <div id="topPlace" style="position: absolute; top:160px; left:1300px;">No one :P</div>
+        <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 210px; height: 400px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
             <input class="chatclass3" onClick="CheckWriteInput();" id ="chat-input" type="text" style="width: 220px;"/>
         </form>
-        <div id="stats" style="position:absolute;left:-450px; top:590px;border:1px solid #000; background-color:transparent;">
+        <div id="stats" style="position:absolute;left:-450px; top:563px;border:1px solid #000; background-color:transparent;">          
             <div id="rpm" style="position:absolute;">
                 <div id="namerpm" style="position:absolute; left:151px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">RPM</div>
                 <div id="imagerpm">
@@ -52,7 +59,14 @@
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>                
                 <button class="circlebutton" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
-            </div>                                    
+            </div>     
+            <div id="life" style="position:absolute;top:120px;">
+                <div id="namelife" style="position:absolute; left:152px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">LIFE</div>
+                <div id="imagelife">
+                <img src="css/keys/images/stat0.png" width="330" height="25">                    
+                </div>
+                <button class="circlebutton" id="buttonlife" onClick="var b = changeStats(4); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+            </div>                             
         </div>
     </div>
     <div id="part1">
@@ -122,7 +136,7 @@
                 <div class="start"> 
                     <section class="playername">
                         <label>PLAYER NAME</label>
-                        <input maxlength="20" class="inputname" type="text" name="nameplayer"/>
+                        <input maxlength="16" class="inputname" type="text" name="nameplayer"/>
                     </section> 
                     <section>
                         <button class="startbutton" onClick="var b = play(); start(); return b">START GAME</button>
@@ -241,7 +255,7 @@
                 detStats = 0;
             };
         };
-        var listOfStats = [0,0,0,0];
+        var listOfStats = [0,0,0,0,0];
         var changeStats = function(det){
             if(det == 0){   //Rpm
                 var image = document.getElementById("imagerpm");
@@ -343,6 +357,31 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
                 };  
             };
+            if(det == 4){ //Bulet speed
+                var image = document.getElementById("imagelife");
+                var button = document.getElementById("buttonlife");
+                image.innerHTML='';
+                if(listOfStats[4] == 0){
+                    image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
+                    listOfStats[4] = 1;
+                    play();
+                }
+                else if(listOfStats[4] == 1){
+                    image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
+                    listOfStats[4] = 2;
+                    play();
+                }
+                else if(listOfStats[4] == 2){
+                    image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
+                    listOfStats[4] = 3;
+                    button.className = "circlebutton2";  
+                    button.style.cursor = "default";
+                    play();
+                }
+                else if(listOfStats[4] == 3){
+                    image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
+                };  
+            };            
         };
         // --------------------------------------------------------------------VARIABLES
         var names_of_weapon_list = ["SINGLE SHOT", "MACHINE GUN", "BOMB"];

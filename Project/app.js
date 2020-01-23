@@ -16,8 +16,8 @@ console.log("Starting Server..."); // When the server is started
 var SOCKET_LIST = {}; 
 var Entity = function(param){
 	var self = {
-		x:766,
-		y:358,
+		x:Math.random() * 3725 + 25,
+		y:Math.random() * 900 + 20,
 		spdX:0,
 		spdY:0,
 		id:"",
@@ -58,7 +58,8 @@ var Player = function(param){
 	self.pressingDown = false;
 	self.pressingAttack = false;			
 	self.angleChasis = 0;
-	self.mouseAngle = 0;		
+	self.mouseAngle = 0;
+	//Stats		
 	self.maxSpd = 10;	//------------------------------stats
 	self.hp = 10;
 	self.hpMax = 10;	//------------------------------stats
@@ -243,7 +244,6 @@ Player.getAllInitPack = function(){
 Player.onDisconnect = function(socket){
 	delete Player.list[socket.id];
 	removePack.player.push(socket.id);
-
 };
 Player.update = function(){
 	var pack = [];
@@ -291,7 +291,7 @@ var Bullet = function(param){
 					};
 					if(p.y <= 20){
 						p.y = 20;
-					};					
+					};
 				};
 				self.toRemove = true;
 			};
