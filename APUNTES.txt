@@ -7,6 +7,7 @@ Recordar:
 ---------------------------------------------------------Por hacer--------------------------------------------------------
 Para página de inicio: (html y css)
 -Saber que hacer con el footer
+-Cambiar el tutorial
 
 Dibujos:
 -Hacer el mapa más grande
@@ -15,11 +16,9 @@ Para el juego: (js)
 1-Detectar qué tipo de colisión fue... (items)
 2-Cambiar configuración específica si hubo una colisión... (items)
 3-Disparos del tanque (los tres), que la bala cambie de imagen en cada tanque
-4-Stats de cada arma, range, damage, rpm, etc (poder cambiarlos)
-5-Añadir más arenas (3)
-6-Que al principio te spawnes en una localización random
-7-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
-8-Que el damage de las balas sea como su vida:
+4-Añadir más arenas (3)
+5-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
+6-Que el damage de las balas sea como su vida:
 	Objeto (tanque u otra bullet) contra Objeto (tanque u otra bullet){	// el comportamiento es igual en ambos lados...
 		vidaAdversario = checa la vida del otro objeto...
 		if(vidaAdversario >= MyVida){
@@ -28,5 +27,5 @@ Para el juego: (js)
 			MyVida = MyVida - vidaAdversario;
 		};
 	};
-9- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
-10-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente
+7- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
+8-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente

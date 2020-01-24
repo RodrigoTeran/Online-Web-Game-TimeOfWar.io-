@@ -59,9 +59,10 @@ var Player = function(param){
 	self.pressingAttack = false;			
 	self.angleChasis = 0;
 	self.mouseAngle = 0;
+	self.hp = 10;
 	//Stats		
 	self.maxSpd = 10;	//------------------------------stats
-	self.hp = 10;
+	self.bulletRPM = 0;	//------------------------------stats
 	self.hpMax = 10;	//------------------------------stats
 	self.score = 0;
 	self.username = param.username;
@@ -90,14 +91,35 @@ var Player = function(param){
 			};
 		};
 	};
+	var detRPM = 0;
 	self.shootBullet = function(angle){
-		Bullet({
-			parent:self.id,
-			angle:angle,
-			x:self.x,
-			y:self.y,
-			map:self.map,
-		});		
+		if(self.bulletRPM == 0){
+			Bullet({
+				parent:self.id,
+				angle:angle,
+				x:self.x,
+				y:self.y,
+				map:self.map,
+			});
+		}else{
+			if(detRPM == 0){
+				detRPM = 1;
+				Bullet({
+					parent:self.id,
+					angle:angle,
+					x:self.x,
+					y:self.y,
+					map:self.map,
+				});		
+			}
+			else if(detRPM != 0){
+				if(detRPM == self.bulletRPM){
+					detRPM = 0;
+				}else{
+					detRPM += 1;
+				};
+			};
+		};
 	};
 	self.updateSpd = function(){
 		if(self.pressingRight){
@@ -165,7 +187,7 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 		tankWeapon:tankWeapon,
 	});
 	var detKeys = [0,0,0,0];
-	socket.on("keyPress", function(data){ // (name important)
+	socket.on("keyPress", function(data){
 		if(data.inputId === "left"){
 			player.pressingLeft = data.state;
 			if(data.state == true){
@@ -263,13 +285,12 @@ var Bullet = function(param){
 	self.scoreIfKill = 1;
 	self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletSpd;
 	self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletSpd;	
-	self.x = self.x + self.spdX * 5;
-	self.y = self.y + self.spdY * 5;
+	self.x = self.x + self.spdX * 60/self.bulletSpd;
+	self.y = self.y + self.spdY * 60/self.bulletSpd;
 	self.parent = param.parent;
 	self.timer = 0;
 	self.toRemove = false;
 	var super_update = self.update;
-	var det = 0;
 	self.update = function(){
 		if(self.timer++ > 100){
 			self.toRemove = true;

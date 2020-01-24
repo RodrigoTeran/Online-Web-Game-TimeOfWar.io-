@@ -21,11 +21,11 @@
         <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
         <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">LEADERBOARD</div>
         <!--Positions of Scoreboard-->
-        <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">No one :P</div>
-        <div id="topPlace" class="t2" style="position: absolute; top:70px; left:1300px;">No one :P</div>
-        <div id="topPlace" class="t3" style="position: absolute; top:100px; left:1300px;">No one :P</div>
-        <div id="topPlace" class="t4" style="position: absolute; top:130px; left:1300px;">No one :P</div>
-        <div id="topPlace" class="t5" style="position: absolute; top:160px; left:1300px;">No one :P</div>
+        <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">No one XD</div>
+        <div id="topPlace" class="t2" style="position: absolute; top:70px; left:1300px;">No one XD</div>
+        <div id="topPlace" class="t3" style="position: absolute; top:100px; left:1300px;">No one XD</div>
+        <div id="topPlace" class="t4" style="position: absolute; top:130px; left:1300px;">No one XD</div>
+        <div id="topPlace" class="t5" style="position: absolute; top:160px; left:1300px;">No one XD</div>
         <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 210px; height: 450px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
@@ -709,6 +709,7 @@
         Img.bullet.src = "/client/css/keys/images/nuke.png";
         Img.map = {};
         var angle = 0;
+        var messageScore = "No one XD";
 
         Img.map["map1"] = new Image();
         Img.map["map1"].src = "/client/css/keys/images/map1.png";
@@ -828,28 +829,28 @@
                 var top5 = document.getElementsByClassName("t5")[0];
                 top1.innerHTML = SCORES[0].user + ": " + SCORES[0].score;
                 if(SCORES.length == 1){
-                    top2.innerHTML = "No one :P";
-                    top3.innerHTML = "No one :P";
-                    top4.innerHTML = "No one :P";
-                    top5.innerHTML = "No one :P";
+                    top2.innerHTML = messageScore;
+                    top3.innerHTML = messageScore;
+                    top4.innerHTML = messageScore;
+                    top5.innerHTML = messageScore;
                 };                
                 if(SCORES.length == 2){
                     top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
-                    top3.innerHTML = "No one :P";
-                    top4.innerHTML = "No one :P";
-                    top5.innerHTML = "No one :P";
+                    top3.innerHTML = messageScore;
+                    top4.innerHTML = messageScore;
+                    top5.innerHTML = messageScore;
                 };
                 if(SCORES.length == 3){
                     top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
                     top3.innerHTML = SCORES[2].user + ": " + SCORES[2].score;
-                    top4.innerHTML = "No one :P";
-                    top5.innerHTML = "No one :P";                    
+                    top4.innerHTML = messageScore;
+                    top5.innerHTML = messageScore;                 
                 };
                 if(SCORES.length == 4){
                     top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
                     top3.innerHTML = SCORES[2].user + ": " + SCORES[2].score;
                     top4.innerHTML = SCORES[3].user + ": " + SCORES[3].score;
-                    top5.innerHTML = "No one :P"; 
+                    top5.innerHTML = messageScore;
                 };
                 if(SCORES.length >= 5){
                     top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
@@ -874,8 +875,8 @@
                 if(Player.list[selfId].map !== self.map){
                     return;
                 };
-                var width = Img.bullet.width/25;
-                var height = Img.bullet.height/25;
+                var width = Img.bullet.width/10;
+                var height = Img.bullet.height/10;
 
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
@@ -966,7 +967,7 @@
             ctxUi.fillStyle = "black";
             ctxUi.font = "30px Arial";         
             //---------------------------------------------no tiene interes común---------------------------------------------
-            ctx.fillStyle = "black";
+            /*ctx.fillStyle = "black";
             ctx.font = "30px Arial";   
             var howManyPlayers = 0;
             var player = Player.list[selfId];
@@ -987,7 +988,7 @@
             var realFillPlayers = "Number of players: " + howManyPlayers;
             ctx.fillText(realFillPlayers, 0, 540);
             ctx.fillText("x: " + player.x, 0, 400);
-            ctx.fillText("y: " + player.y, 0, 450);
+            ctx.fillText("y: " + player.y, 0, 450);*/
             //---------------------------------------------no tiene interes común---------------------------------------------
             if(lastScore === Player.list[selfId].score){
                 return;
@@ -996,6 +997,7 @@
             ctxUi.clearRect(0, 0, 1532, 715);
             var realScore = "Score: " + Player.list[selfId].score;
             ctxUi.fillText(realScore, 0, 30);   
+            ctxUi.fillText("Bullets: 999", 0, 65);   
 
             var widthText = ctx.measureText("LIFE").width;
             ctxUi.fillText("LIFE", WIDTH/2 - widthText/2, 680);  
