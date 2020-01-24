@@ -639,7 +639,7 @@
         var DetGame = false;
         var socket = io(); // Sends package connection to the server
 
-        function getname_(){    //need to evaluate
+        function getname_(){
             var nameplayer = document.getElementsByName("nameplayer")[0].value;
             return nameplayer;
         };
@@ -666,10 +666,10 @@
             $("#part2").fadeOut("slow");
             finish2();
         };
-        var new_block = document.getElementById("chat-text");   // poner info
+        var new_block = document.getElementById("chat-text");  
         var new_block_2 = document.getElementById("chat-form"); 
         var new_block_3 = document.getElementById("chat-input");
-        function chatHideShow(){  //hide and show the chat section  
+        function chatHideShow(){
             if(new_block.className == 'chatclass'){
                 new_block.className = '';
                 new_block_2.className = '';
@@ -794,49 +794,39 @@
                 
                 // Leaderboard
                 var arrScore = function(names){
-                    names.sort()
-                    names.reverse();
-                    for(var i = 0; i < names.length; i++){
-                        var nombre = "";
-                        var cuantoPaso = 1;
-                        var det = 0;
-                        for(var j in names[i]){
-                            if(det == 0){
-                                if(names[i].charAt(j) == ":"){
-                                    det = 1;
-                                    names[i] = names[i].substring(cuantoPaso, names[i].length);
-                                    names[i] = names[i].concat(": " + nombre);
-
-                                }else{
-                                    nombre = nombre + names[i].charAt(j);
-                                    cuantoPaso += 1;
-                                };
-                            };
-                        };
+                    function compare(a,b){
+                        return b.score - a.score;
                     };
+                    names.sort(compare);
                     return names;
                 };
                 function sortObject(){
                     var clients = [];
+                    var detOrder = 0;
                     for(var i in Player.list){
                         if(Player.list[i].map == Player.list[selfId].map){
                             var name = Player.list[i].username;
                             if(name == ""){
                                 name = "An unnamed tank";
                             };
-                            var m = Player.list[i].score + ": " + name;
-                            clients.push(m);
+                            var object = {
+                                score:Player.list[i].score,
+                                user:name,
+                            }
+                            clients.push(object);
                         };
+                        detOrder ++;
                     };
                     return arrScore(clients);
                 };
                 var SCORES = sortObject();
+                //console.log(SCORES[0].user + ": " + SCORES[0].score);
                 var top1 = document.getElementsByClassName("t1")[0];
                 var top2 = document.getElementsByClassName("t2")[0];
                 var top3 = document.getElementsByClassName("t3")[0];
                 var top4 = document.getElementsByClassName("t4")[0];
                 var top5 = document.getElementsByClassName("t5")[0];
-                top1.innerHTML = SCORES[0];
+                top1.innerHTML = SCORES[0].user + ": " + SCORES[0].score;
                 if(SCORES.length == 1){
                     top2.innerHTML = "No one :P";
                     top3.innerHTML = "No one :P";
@@ -844,28 +834,28 @@
                     top5.innerHTML = "No one :P";
                 };                
                 if(SCORES.length == 2){
-                    top2.innerHTML = SCORES[1];
+                    top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
                     top3.innerHTML = "No one :P";
                     top4.innerHTML = "No one :P";
                     top5.innerHTML = "No one :P";
                 };
                 if(SCORES.length == 3){
-                    top2.innerHTML = SCORES[1];
-                    top3.innerHTML = SCORES[2];
+                    top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
+                    top3.innerHTML = SCORES[2].user + ": " + SCORES[2].score;
                     top4.innerHTML = "No one :P";
                     top5.innerHTML = "No one :P";                    
                 };
                 if(SCORES.length == 4){
-                    top2.innerHTML = SCORES[1];
-                    top3.innerHTML = SCORES[2];
-                    top4.innerHTML = SCORES[3];
+                    top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
+                    top3.innerHTML = SCORES[2].user + ": " + SCORES[2].score;
+                    top4.innerHTML = SCORES[3].user + ": " + SCORES[3].score;
                     top5.innerHTML = "No one :P"; 
                 };
                 if(SCORES.length >= 5){
-                    top2.innerHTML = SCORES[1];
-                    top3.innerHTML = SCORES[2];
-                    top4.innerHTML = SCORES[3];
-                    top5.innerHTML = SCORES[4];
+                    top2.innerHTML = SCORES[1].user + ": " + SCORES[1].score;
+                    top3.innerHTML = SCORES[2].user + ": " + SCORES[2].score;
+                    top4.innerHTML = SCORES[3].user + ": " + SCORES[3].score;
+                    top5.innerHTML = SCORES[4].user + ": " + SCORES[4].score;
                 };
             };
             Player.list[self.id] = self;
@@ -954,7 +944,6 @@
                 return;
             }else{
                 ctx.clearRect(0, 0, 1532, 715);
-                //getAgainTank();
                 drawMap();
                 drawScore();
                 for(var i in Bullet.list){
