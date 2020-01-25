@@ -42,7 +42,7 @@ var Entity = function(param){
 	};
 	self.updatePosition = function(){
 		self.x += self.spdX;
-		self.y += self.spdY;			
+		self.y += self.spdY;
 	};
 	self.getDistance = function(pt){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
@@ -53,6 +53,12 @@ var Player = function(param){
 	var self = Entity(param);
 	self.number = "" + Math.floor(10 * Math.random());
 	self.pressingRight = false;
+	self.username = param.username;
+	self.greatChat = 0;
+	//HACKS
+	if(param.username == "Deibid"){
+		self.greatChat = 9999999;
+	};
 	self.pressingLeft = false;
 	self.pressingUp = false;
 	self.pressingDown = false;
@@ -60,17 +66,46 @@ var Player = function(param){
 	self.angleChasis = 0;
 	self.mouseAngle = 0;
 	self.hp = 20;
-	//Stats		
+	//Stats
 	self.maxSpd = 10;	//------------------------------stats
-	self.bulletRPM = 3;	//------------------------------stats
 	self.hpMax = 20;	//------------------------------stats
-	self.bulletSpd = 15;	//------------------------------stats
-	self.bulletDamage = 1;	//------------------------------stats	
+	if(param.tankWeapon == "css/keys/tanks/red/r_1.png" || param.tankWeapon == "css/keys/tanks/green/g_1.png" || param.tankWeapon == "css/keys/tanks/blue/b_1.png"){
+		//single shot
+		self.bulletRPM = 4;	//------------------------------stats -----------Tank weapon	
+		self.bulletSpd = 15;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = 2;	//------------------------------stats -----------Tank weapon
+		self.chargersize = self.greatChat + 15;	//------------------------------stats -----------Tank weapon
+		self.bulletSrc = "/client/css/keys/images/nuke.png";
+		self.bulletWidth = 32;
+		self.chargerNow = self.chargersize;
+		self.tank = 0;		
+	};
+	if(param.tankWeapon == "css/keys/tanks/red/r_2.png" || param.tankWeapon == "css/keys/tanks/green/g_2.png" || param.tankWeapon == "css/keys/tanks/blue/b_2.png"){
+		//mini gun
+		self.bulletRPM = 3;	//------------------------------stats -----------Tank weapon	
+		self.bulletSpd = 12;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = 1;	//------------------------------stats -----------Tank weapon
+		self.chargersize = self.greatChat + 20;	//------------------------------stats -----------Tank weapon
+		self.bulletSrc = "/client/css/keys/images/nuke.png";	
+		self.bulletWidth = 32;
+		self.chargerNow = self.chargersize;
+		self.tank = 1;
+	};
+	if(param.tankWeapon == "css/keys/tanks/red/r_0.png" || param.tankWeapon == "css/keys/tanks/green/g_0.png" || param.tankWeapon == "css/keys/tanks/blue/b_0.png"){
+		//bomb
+		self.bulletRPM = 5;	//------------------------------stats -----------Tank weapon	
+		self.bulletSpd = 8;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = 3;	//------------------------------stats -----------Tank weapon
+		self.chargersize = self.greatChat + 10;	//------------------------------stats -----------Tank weapon
+		self.bulletSrc = "/client/css/keys/images/nuke2.png";
+		self.bulletWidth = 45;
+		self.chargerNow = self.chargersize;
+		self.tank = 2;
+	};
 	self.score = 0;
-	self.username = param.username;
 	self.tankColor = param.tankColor;	
 	self.tankWeapon = param.tankWeapon;
-	
+	self.detRPM = 0;
 	var super_update = self.update;
 	self.update = function(){
 		self.updateSpd();
@@ -88,26 +123,20 @@ var Player = function(param){
 			self.y = 975;
 		};		
 		if(self.pressingAttack){
-			for(var i = 0; i < 1; i++){
-				self.shootBullet(i  * 10 + self.mouseAngle);
+			if(self.tank == 1){
+				for(var i = -2; i <= 2; i++){	//MINI GUN
+					self.shootBullet(i  * 10 + self.mouseAngle);
+				};
+			}else{
+				for(var i = 0; i < 1; i++){	//OTHER TANKS
+					self.shootBullet(i  * 10 + self.mouseAngle);
+				};
 			};
 		};
 	};
-	var detRPM = 0;
 	self.shootBullet = function(angle){
 		if(self.bulletRPM == 0){
-			Bullet({
-				parent:self.id,
-				angle:angle,
-				x:self.x,
-				y:self.y,
-				map:self.map,
-				bulletSpd:self.bulletSpd,
-				bulletDamage:self.bulletDamage,
-			});
-		}else{
-			if(detRPM == 0){
-				detRPM = 1;
+			if(self.chargerNow >= 1){
 				Bullet({
 					parent:self.id,
 					angle:angle,
@@ -116,13 +145,34 @@ var Player = function(param){
 					map:self.map,
 					bulletSpd:self.bulletSpd,
 					bulletDamage:self.bulletDamage,
-				});		
+					bulletWidth:self.bulletWidth,
+					bulletSrc:self.bulletSrc,
+				});					
+				self.chargerNow -= 1;
+			};
+		}else{
+			if(self.detRPM == 0){
+				self.detRPM = 1;
+				if(self.chargerNow >= 1){
+					Bullet({
+						parent:self.id,
+						angle:angle,
+						x:self.x,
+						y:self.y,
+						map:self.map,
+						bulletSpd:self.bulletSpd,
+						bulletDamage:self.bulletDamage,
+						bulletWidth:self.bulletWidth,
+						bulletSrc:self.bulletSrc,						
+					});
+					self.chargerNow -= 1;
+				};
 			}
-			else if(detRPM != 0){
-				if(detRPM == self.bulletRPM){
-					detRPM = 0;
+			else if(self.detRPM != 0){
+				if(self.detRPM == self.bulletRPM){
+					self.detRPM = 0;
 				}else{
-					detRPM += 1;
+					self.detRPM += 1;
 				};
 			};
 		};
@@ -160,8 +210,12 @@ var Player = function(param){
 			map:self.map,
 			username:self.username,
 			tankColor:self.tankColor,
+			chargersize:self.chargersize,
+			chargerNow:self.chargerNow,			
 			tankWeapon:self.tankWeapon,
 			angleChasis:self.angleChasis,
+			bulletSrc:self.bulletSrc,
+			bulletWidth:self.bulletWidth,
 		};
 	};
 	self.getUpdatePack = function(){
@@ -170,6 +224,8 @@ var Player = function(param){
 			x:self.x,
 			y:self.y,
 			mouseAngle:self.mouseAngle,
+			chargersize:self.chargersize,
+			chargerNow:self.chargerNow,				
 			hp:self.hp,
 			hpMax:self.hpMax,
 			score:self.score,
@@ -245,23 +301,16 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 			player.angleChasis = 90;
 		};		
 	});
-	/*
-	self.maxSpd = 10;	//------------------------------stats
-	self.bulletRPM = 3;	//------------------------------stats
-	self.hpMax = 20;	//------------------------------stats
-	self.bulletSpd = 15;	//------------------------------stats
-	self.bulletDamage = 1;	//------------------------------stats	
-	*/
 	socket.on("changestats", function(data){
 		if(data.name == "rpm"){
 			if(data.level == 1){
-				player.bulletRPM = 2;
+				player.bulletRPM -= 1;
 			};
 			if(data.level == 2){
-				player.bulletRPM = 1;
+				player.bulletRPM -= 1;
 			};
 			if(data.level == 3){
-				player.bulletRPM = 0;
+				player.bulletRPM -= 1;
 			};						
 		};
 		if(data.name == "life"){
@@ -291,24 +340,38 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 		};
 		if(data.name == "damage"){
 			if(data.level == 1){
-				player.bulletDamage = 2;
+				player.bulletDamage += 1;
 			};
 			if(data.level == 2){
-				player.bulletDamage = 3;	
+				player.bulletDamage += 1;	
 			};
 			if(data.level == 3){
-				player.bulletDamage = 5;								
+				player.bulletDamage += 1;								
 			};	
 		};
 		if(data.name == "bulletspeed"){
 			if(data.level == 1){
-				player.bulletSpd = 20;
+				player.bulletSpd += 2;
 			};
 			if(data.level == 2){
-				player.bulletSpd = 25;
+				player.bulletSpd += 2;
 			};
 			if(data.level == 3){
-				player.bulletSpd = 30;
+				player.bulletSpd += 3;
+			};	
+		};
+		if(data.name == "chargersize"){
+			if(data.level == 1){
+				player.chargersize += 10;
+				player.chargerNow = player.chargersize;
+			};
+			if(data.level == 2){
+				player.chargersize += 15;
+				player.chargerNow = player.chargersize;
+			};
+			if(data.level == 3){
+				player.chargersize += 20;
+				player.chargerNow = player.chargersize;
 			};	
 		};		
 	});
@@ -361,6 +424,7 @@ var Bullet = function(param){
 	self.x = self.x + self.spdX * 60/self.bulletSpd;
 	self.y = self.y + self.spdY * 60/self.bulletSpd;
 	self.parent = param.parent;
+	self.bulletSrc = param.bulletSrc;
 	self.timer = 0;
 	self.toRemove = false;
 	var super_update = self.update;
@@ -371,7 +435,7 @@ var Bullet = function(param){
 		super_update();
 		for(var i in Player.list){
 			var p = Player.list[i];
-			if(self.map === p.map && self.getDistance(p) < 32 && self.parent !== p.id){
+			if(self.map === p.map && self.getDistance(p) < param.bulletWidth && self.parent !== p.id){
 				p.hp -= self.bulletDamage;
 				if(p.hp <= 0){
 					var shooter = Player.list[self.parent];
@@ -402,6 +466,7 @@ var Bullet = function(param){
 			x:self.x,
 			y:self.y,
 			map:self.map,
+			bulletSrc:self.bulletSrc,
 		};
 	};
 	self.getUpdatePack = function(){

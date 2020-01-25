@@ -18,7 +18,7 @@
         <!--<button onclick="finish();">putos</button>-->
         <!-- width="1532" height="715"-->
         <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
-        <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>
+        <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>     
         <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">LEADERBOARD</div>
         <!--Positions of Scoreboard-->
         <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">No one XD</div>
@@ -818,7 +818,8 @@
         Img.player = new Image();
         Img.playerW = new Image();        
         Img.bullet = new Image();
-        Img.bullet.src = "/client/css/keys/images/nuke.png";
+        Img.bullets = new Image();
+        Img.life = new Image();        
         Img.map = {};
         var angle = 0;
         var messageScore = "No one XD";
@@ -829,7 +830,6 @@
         Img.map["map2"] = new Image();
         Img.map["map2"].src = "/client/css/keys/images/map1.png";        
 
-        var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
         var ctxUi = document.getElementsByClassName("ctx-score")[0].getContext("2d");
         var chatText = document.getElementById("chat-text");
         var chatInput = document.getElementById("chat-input");
@@ -844,7 +844,9 @@
             self.x = initPack.x;
             self.y = initPack.y;          
             self.hp = initPack.hp;
+            self.chargersize = initPack.chargersize;
             self.angleChasis = initPack.angleChasis;
+            self.chargerNow = initPack.chargerNow;
             self.hpMax = initPack.hpMax;
             self.mouseAngle = initPack.mouseAngle;
             self.score = initPack.score;
@@ -982,6 +984,7 @@
             self.x = initPack.x;
             self.y = initPack.y;
             self.map = initPack.map;
+            self.bulletSrc = initPack.bulletSrc;
 
             self.draw = function(){
                 if(Player.list[selfId].map !== self.map){
@@ -992,6 +995,8 @@
 
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+                Img.bullet.src = self.bulletSrc;
 
                 ctx.drawImage(Img.bullet, 0,0,Img.bullet.width, Img.bullet.height, 
                     x-width/2, y-height/2, width, height);
@@ -1030,7 +1035,11 @@
                     if(pack.angleChasis !== undefined)
                         p.angleChasis = pack.angleChasis;       
                     if(pack.hpMax !== undefined)
-                        p.hpMax = pack.hpMax;                                                                           
+                        p.hpMax = pack.hpMax;     
+                    if(pack.chargersize !== undefined)
+                        p.chargersize = pack.chargersize;       
+                    if(pack.chargerNow !== undefined)
+                        p.chargerNow = pack.chargerNow;
                 };
             };
             for(var i = 0; i< data.bullet.length; i++){
@@ -1051,7 +1060,7 @@
             for(var i = 0; i < data.bullet.length; i++){
                 delete Bullet.list[data.bullet[i]];
             };
-        });
+        });      
         setInterval(function(){
             if(!selfId)
                 return;
@@ -1061,6 +1070,7 @@
                 ctx.clearRect(0, 0, 1532, 715);
                 drawMap();
                 drawScore();
+                drawCharger();
                 for(var i in Bullet.list){
                     Bullet.list[i].draw();
                 };                  
@@ -1076,47 +1086,39 @@
             var y = HEIGHT/2 - player.y;
             ctx.drawImage(Img.map[player.map], x, y);
         };
-
         var drawScore = function(){
             ctxUi.fillStyle = "black";
             ctxUi.font = "30px Arial";         
-            //---------------------------------------------no tiene interes común---------------------------------------------
-            /*ctx.fillStyle = "black";
-            ctx.font = "30px Arial";   
-            var howManyPlayers = 0;
-            var player = Player.list[selfId];
-             for (key in Player.list){
-                if(Player.list[key].map == player.map){
-                    howManyPlayers ++;
-                };
-            };
-            var arena = 0;
-            if(player.map == "map1"){
-                arena = 1;
-            };
-            if(player.map == "map2"){
-                arena = 2;
-            };            
-            var realFillArena = "Arena: " + arena;
-            ctx.fillText(realFillArena, 0, 500);
-            var realFillPlayers = "Number of players: " + howManyPlayers;
-            ctx.fillText(realFillPlayers, 0, 540);
-            ctx.fillText("x: " + player.x, 0, 400);
-            ctx.fillText("y: " + player.y, 0, 450);*/
-            //---------------------------------------------no tiene interes común---------------------------------------------
             if(lastScore === Player.list[selfId].score){
                 return;
             };
             lastScore = Player.list[selfId].score;
             ctxUi.clearRect(0, 0, 1532, 715);
             var realScore = "Score: " + Player.list[selfId].score;
-            ctxUi.fillText(realScore, 0, 30);   
-            ctxUi.fillText("Bullets: 999", 0, 65);   
-
+            ctxUi.fillText(realScore, 0, 30);
             var widthText = ctx.measureText("LIFE").width;
             ctxUi.fillText("LIFE", WIDTH/2 - widthText/2, 680);  
+            ctxUi.fillText("Bullets: " + Player.list[selfId].chargerNow + "/" + Player.list[selfId].chargersize, 0, 65);                 
         };
         var lastScore = null;
+
+
+        var drawCharger = function(){
+            ctxUi.fillStyle = "black";
+            ctxUi.font = "30px Arial";         
+            if(lastCharger === Player.list[selfId].chargerNow){
+                return;
+            };
+            lastCharger = Player.list[selfId].chargerNow;
+            ctxUi.clearRect(0, 0, 1532, 715);
+            var realScore = "Score: " + Player.list[selfId].score;
+            ctxUi.fillText(realScore, 0, 30);
+            var widthText = ctx.measureText("LIFE").width;
+            ctxUi.fillText("LIFE", WIDTH/2 - widthText/2, 680);              
+            ctxUi.fillText(realScore, 0, 30);   
+            ctxUi.fillText("Bullets: " + Player.list[selfId].chargerNow + "/" + Player.list[selfId].chargersize, 0, 65);   
+        };
+        var lastCharger = null;        
 
         socket.on("addToChat", function(data, map){
             if(map == Player.list[selfId].map){
