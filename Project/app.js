@@ -59,11 +59,13 @@ var Player = function(param){
 	self.pressingAttack = false;			
 	self.angleChasis = 0;
 	self.mouseAngle = 0;
-	self.hp = 10;
+	self.hp = 20;
 	//Stats		
 	self.maxSpd = 10;	//------------------------------stats
-	self.bulletRPM = 0;	//------------------------------stats
-	self.hpMax = 10;	//------------------------------stats
+	self.bulletRPM = 3;	//------------------------------stats
+	self.hpMax = 20;	//------------------------------stats
+	self.bulletSpd = 15;	//------------------------------stats
+	self.bulletDamage = 1;	//------------------------------stats	
 	self.score = 0;
 	self.username = param.username;
 	self.tankColor = param.tankColor;	
@@ -100,6 +102,8 @@ var Player = function(param){
 				x:self.x,
 				y:self.y,
 				map:self.map,
+				bulletSpd:self.bulletSpd,
+				bulletDamage:self.bulletDamage,
 			});
 		}else{
 			if(detRPM == 0){
@@ -110,6 +114,8 @@ var Player = function(param){
 					x:self.x,
 					y:self.y,
 					map:self.map,
+					bulletSpd:self.bulletSpd,
+					bulletDamage:self.bulletDamage,
 				});		
 			}
 			else if(detRPM != 0){
@@ -165,6 +171,7 @@ var Player = function(param){
 			y:self.y,
 			mouseAngle:self.mouseAngle,
 			hp:self.hp,
+			hpMax:self.hpMax,
 			score:self.score,
 			angleChasis:self.angleChasis,
 		};
@@ -238,6 +245,73 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 			player.angleChasis = 90;
 		};		
 	});
+	/*
+	self.maxSpd = 10;	//------------------------------stats
+	self.bulletRPM = 3;	//------------------------------stats
+	self.hpMax = 20;	//------------------------------stats
+	self.bulletSpd = 15;	//------------------------------stats
+	self.bulletDamage = 1;	//------------------------------stats	
+	*/
+	socket.on("changestats", function(data){
+		if(data.name == "rpm"){
+			if(data.level == 1){
+				player.bulletRPM = 2;
+			};
+			if(data.level == 2){
+				player.bulletRPM = 1;
+			};
+			if(data.level == 3){
+				player.bulletRPM = 0;
+			};						
+		};
+		if(data.name == "life"){
+			if(data.level == 1){
+				player.hpMax = 40;
+				player.hp = player.hpMax;
+			};
+			if(data.level == 2){
+				player.hpMax = 60;	
+				player.hp = player.hpMax;				
+			};
+			if(data.level == 3){
+				player.hpMax = 80;	
+				player.hp = player.hpMax;				
+			};	
+		};
+		if(data.name == "tankspeed"){
+			if(data.level == 1){
+				player.maxSpd = 12;
+			};
+			if(data.level == 2){
+				player.maxSpd = 13;
+			};
+			if(data.level == 3){
+				player.maxSpd = 15;
+			};	
+		};
+		if(data.name == "damage"){
+			if(data.level == 1){
+				player.bulletDamage = 2;
+			};
+			if(data.level == 2){
+				player.bulletDamage = 3;	
+			};
+			if(data.level == 3){
+				player.bulletDamage = 5;								
+			};	
+		};
+		if(data.name == "bulletspeed"){
+			if(data.level == 1){
+				player.bulletSpd = 20;
+			};
+			if(data.level == 2){
+				player.bulletSpd = 25;
+			};
+			if(data.level == 3){
+				player.bulletSpd = 30;
+			};	
+		};		
+	});
 	socket.on("sendMsgToServer", function(data){
 		for(var i in SOCKET_LIST){
 			var name = "";
@@ -280,9 +354,8 @@ var Bullet = function(param){
 	var self = Entity(param);
 	self.id = Math.random();
 	self.angle = param.angle;
-	self.bulletSpd = 15;	//------------------------------stats
-	self.bulletDamage = 1;	//------------------------------stats
-	self.scoreIfKill = 1;
+	self.bulletSpd = param.bulletSpd;	//------------------------------stats
+	self.bulletDamage = param.bulletDamage;	//------------------------------stats
 	self.spdX = Math.cos(param.angle/180*Math.PI) * self.bulletSpd;
 	self.spdY = Math.sin(param.angle/180*Math.PI) * self.bulletSpd;	
 	self.x = self.x + self.spdX * 60/self.bulletSpd;
@@ -303,8 +376,13 @@ var Bullet = function(param){
 				if(p.hp <= 0){
 					var shooter = Player.list[self.parent];
 					if(shooter)
-						shooter.score += self.scoreIfKill;
+						if(p.score == 0){
+							shooter.score += 1;
+						}else{
+							shooter.score += p.score;
+						};
 					p.hp = p.hpMax;
+					p.score = 0;
 					p.x = Math.random() * 3750;
 					p.y = Math.random() * 920;
 					if(p.x <= 25){
@@ -342,7 +420,7 @@ Bullet.update = function(){
 	var pack = [];
 	for(var i in Bullet.list){
 		var bullet = Bullet.list[i];
-		bullet.update(); // que este no se haga esperando el rpm
+		bullet.update(); 
 		if(bullet.toRemove){
 			delete Bullet.list[i];
 			removePack.bullet.push(bullet.id);

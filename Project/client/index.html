@@ -31,42 +31,57 @@
         <form class="chatclass2" id="chat-form">
             <input class="chatclass3" onClick="CheckWriteInput();" id ="chat-input" type="text" style="width: 220px;"/>
         </form>
-        <div id="stats" style="position:absolute;left:-450px; top:563px;border:1px solid #000; background-color:transparent;">          
-            <div id="rpm" style="position:absolute;">
-                <div id="namerpm" style="position:absolute; left:151px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">RPM</div>
-                <div id="imagerpm">
-                <img src="css/keys/images/stat0.png" width="330" height="25">                    
-                </div>
-                <button class="circlebutton" id="buttonrpm" onClick="var b = changeStats(0); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
-            </div>
-            <div id="damage" style="position:absolute;top:30px;">
-                <div id="namedamage" style="position:absolute; left:140px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">DAMAGE</div>
-                <div id="imagedamage">
-                <img src="css/keys/images/stat0.png"  width="330" height="25">                    
-                </div>
-                <button class="circlebutton" id="buttondamage" onClick="var b = changeStats(1); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
-            </div>
-            <div id="tankspeed" style="position:absolute;top:60px;">
-                <div id="nametankspeed" style="position:absolute; left:126px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">TANK SPEED</div>
-                <div id="imagetankspeed">
-                <img src="css/keys/images/stat0.png" width="330" height="25">                    
-                </div>                
-                <button class="circlebutton" id="buttontankspeed" onClick="var b = changeStats(2); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
-            </div>
-            <div id="bulletspeed" style="position:absolute;top:90px;">
-                <div id="namebulletspeed" style="position:absolute; left:122px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">BULLET SPEED</div>
-                <div id="imagebulletspeed">
-                <img src="css/keys/images/stat0.png" width="330" height="25">                    
-                </div>                
-                <button class="circlebutton" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
-            </div>     
-            <div id="life" style="position:absolute;top:120px;">
+        <!--
+        LIFE-4
+        DAMAGE-1
+        RPM-0
+        TANK SPEED-2
+        BULLET SPEED-3
+        CHARGER SIZE-5
+        -->
+        <div id="stats" style="position:absolute;left:-450px; top:533px;border:1px solid #000; background-color:transparent;">          
+            <div id="life" style="position:absolute;">
                 <div id="namelife" style="position:absolute; left:152px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">LIFE</div>
                 <div id="imagelife">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>
                 <button class="circlebutton" id="buttonlife" onClick="var b = changeStats(4); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
-            </div>                             
+            </div>
+            <div id="tankspeed" style="position:absolute;top:30px;">
+                <div id="nametankspeed" style="position:absolute; left:126px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">TANK SPEED</div>
+                <div id="imagetankspeed">
+                <img src="css/keys/images/stat0.png"  width="330" height="25">                    
+                </div>
+                <button class="circlebutton" id="buttontankspeed" onClick="var b = changeStats(2); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+            </div>
+            <div id="damage" style="position:absolute;top:60px;">
+                <div id="namedamage" style="position:absolute; left:140px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">DAMAGE</div>
+                <div id="imagedamage">
+                <img src="css/keys/images/stat0.png" width="330" height="25">                    
+                </div>                
+                <button class="circlebutton" id="buttondamage" onClick="var b = changeStats(1); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+            </div>
+            <div id="rpm" style="position:absolute;top:90px;">
+                <div id="namerpm" style="position:absolute; left:151px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">RPM</div>
+                <div id="imagerpm">
+                <img src="css/keys/images/stat0.png" width="330" height="25">                    
+                </div>                
+                <button class="circlebutton" id="buttonrpm" onClick="var b = changeStats(0); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+            </div>     
+            <div id="bulletspeed" style="position:absolute;top:120px;">
+                <div id="namebulletspeed" style="position:absolute; left:122px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">BULLET SPEED</div>
+                <div id="imagebulletspeed">
+                <img src="css/keys/images/stat0.png" width="330" height="25">                    
+                </div>
+                <button class="circlebutton" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+            </div>
+            <div id="chargersize" style="position:absolute;top:150px;">
+                <div id="namechargersize" style="position:absolute; left:121px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">CHARGER SIZE</div>
+                <div id="imagechargersize">
+                <img src="css/keys/images/stat0.png" width="330" height="25">                    
+                </div>
+                <button class="circlebutton" id="buttonchargersize" onClick="var b = changeStats(5); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+            </div>                                       
         </div>
     </div>
     <div id="part1">
@@ -102,7 +117,7 @@
                 </div>
                 <div class="weaponstats">
                     <div>
-                        <span class="range">RANGE</span><br>
+                        <span class="range">BULLET SPEED</span><br>
                         <div>
                             <canvas class="rangebarcanvas" width="430" height="10" style="margin-left:5px;"></canvas>
                         </div>
@@ -255,7 +270,7 @@
                 detStats = 0;
             };
         };
-        var listOfStats = [0,0,0,0,0];
+        var listOfStats = [0,0,0,0,0,0];
         var changeStats = function(det){
             if(det == 0){   //Rpm
                 var image = document.getElementById("imagerpm");
@@ -265,11 +280,19 @@
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[0] = 1;
                     play();
+                    socket.emit("changestats", {
+                        name:"rpm",
+                        level:1,
+                    });
                 }
                 else if(listOfStats[0] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[0] = 2;
                     play();
+                    socket.emit("changestats", {
+                        name:"rpm",
+                        level:2,
+                    });                   
                 }
                 else if(listOfStats[0] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -277,6 +300,10 @@
                     button.className = "circlebutton2";  
                     button.style.cursor = "default";
                     play();
+                    socket.emit("changestats", {
+                        name:"rpm",
+                        level:3,
+                    });                   
                 }
                 else if(listOfStats[0] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -290,11 +317,19 @@
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[1] = 1;
                     play();
+                    socket.emit("changestats", {
+                        name:"damage",
+                        level:1,
+                    });           
                 }
                 else if(listOfStats[1] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[1] = 2;
                     play();
+                    socket.emit("changestats", {
+                        name:"damage",
+                        level:2,
+                    });                      
                 }
                 else if(listOfStats[1] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -302,6 +337,10 @@
                     button.className = "circlebutton2";  
                     button.style.cursor = "default";
                     play();
+                    socket.emit("changestats", {
+                        name:"damage",
+                        level:3,
+                    });                      
                 }
                 else if(listOfStats[1] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';           
@@ -315,11 +354,19 @@
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[2] = 1;
                     play();
+                    socket.emit("changestats", {
+                        name:"tankspeed",
+                        level:1,
+                    });                      
                 }
                 else if(listOfStats[2] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[2] = 2;
                     play();
+                    socket.emit("changestats", {
+                        name:"tankspeed",
+                        level:2,
+                    });                      
                 }
                 else if(listOfStats[2] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -327,6 +374,10 @@
                     button.className = "circlebutton2";  
                     button.style.cursor = "default";                    
                     play();
+                    socket.emit("changestats", {
+                        name:"tankspeed",
+                        level:3,
+                    });                                          
                 }
                 else if(listOfStats[2] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';         
@@ -340,11 +391,19 @@
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[3] = 1;
                     play();
+                    socket.emit("changestats", {
+                        name:"bulletspeed",
+                        level:1,
+                    });                      
                 }
                 else if(listOfStats[3] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[3] = 2;
                     play();
+                    socket.emit("changestats", {
+                        name:"bulletspeed",
+                        level:2,
+                    });                        
                 }
                 else if(listOfStats[3] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -352,12 +411,16 @@
                     button.className = "circlebutton2";  
                     button.style.cursor = "default";
                     play();
+                    socket.emit("changestats", {
+                        name:"bulletspeed",
+                        level:3,
+                    });                        
                 }
                 else if(listOfStats[3] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
                 };  
             };
-            if(det == 4){ //Bulet speed
+            if(det == 4){ //Life
                 var image = document.getElementById("imagelife");
                 var button = document.getElementById("buttonlife");
                 image.innerHTML='';
@@ -365,11 +428,19 @@
                     image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
                     listOfStats[4] = 1;
                     play();
+                    socket.emit("changestats", {
+                        name:"life",
+                        level:1,
+                    });                        
                 }
                 else if(listOfStats[4] == 1){
                     image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
                     listOfStats[4] = 2;
                     play();
+                    socket.emit("changestats", {
+                        name:"life",
+                        level:2,
+                    });                       
                 }
                 else if(listOfStats[4] == 2){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
@@ -377,11 +448,52 @@
                     button.className = "circlebutton2";  
                     button.style.cursor = "default";
                     play();
+                    socket.emit("changestats", {
+                        name:"life",
+                        level:3,
+                    });                       
                 }
                 else if(listOfStats[4] == 3){
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
                 };  
-            };            
+            };
+            if(det == 5){ //charger size
+                var image = document.getElementById("imagechargersize");
+                var button = document.getElementById("buttonchargersize");
+                image.innerHTML='';
+                if(listOfStats[5] == 0){
+                    image.innerHTML='<img src="css/keys/images/stat1.png"  width="330" height="25">';
+                    listOfStats[5] = 1;
+                    play();
+                    socket.emit("changestats", {
+                        name:"chargersize",
+                        level:1,
+                    });                        
+                }
+                else if(listOfStats[5] == 1){
+                    image.innerHTML='<img src="css/keys/images/stat2.png"  width="330" height="25">';
+                    listOfStats[5] = 2;
+                    play();
+                    socket.emit("changestats", {
+                        name:"chargersize",
+                        level:2,
+                    });                       
+                }
+                else if(listOfStats[5] == 2){
+                    image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
+                    listOfStats[5] = 3;
+                    button.className = "circlebutton2";  
+                    button.style.cursor = "default";
+                    play();
+                    socket.emit("changestats", {
+                        name:"chargersize",
+                        level:3,
+                    });                       
+                }
+                else if(listOfStats[5] == 3){
+                    image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
+                };  
+            };                      
         };
         // --------------------------------------------------------------------VARIABLES
         var names_of_weapon_list = ["SINGLE SHOT", "MACHINE GUN", "BOMB"];
@@ -519,13 +631,13 @@
                 howmuch_charger = 150;
             };
             if(insidelistposition == 1){    //"MACHINE GUN"
-                howmuch_range = 100;
+                howmuch_range = 250;
                 howmuch_rpm = 400;
                 howmuch_damage = 70;
                 howmuch_charger = 200;
             };
             if(insidelistposition == 2){    //"BOMB"
-                howmuch_range = 250;
+                howmuch_range = 100;
                 howmuch_rpm = 50;
                 howmuch_damage = 400;
                 howmuch_charger = 50;
@@ -912,11 +1024,13 @@
                     if(pack.hp !== undefined)
                         p.hp = pack.hp;             
                     if(pack.score !== undefined)
-                        p.score = pack.score;       
+                        p.score = pack.score;
                     if(pack.mouseAngle !== undefined)
                         p.mouseAngle = pack.mouseAngle;   
                     if(pack.angleChasis !== undefined)
-                        p.angleChasis = pack.angleChasis;                                                       
+                        p.angleChasis = pack.angleChasis;       
+                    if(pack.hpMax !== undefined)
+                        p.hpMax = pack.hpMax;                                                                           
                 };
             };
             for(var i = 0; i< data.bullet.length; i++){
