@@ -45,42 +45,42 @@
                 <div id="imagelife">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttonlife" onClick="var b = changeStats(4); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+                <button class="circlebutton2" id="buttonlife" onClick="var b = changeStats(4); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
             </div>
             <div id="tankspeed" style="position:absolute;top:30px;">
                 <div id="nametankspeed" style="position:absolute; left:126px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">TANK SPEED</div>
                 <div id="imagetankspeed">
                 <img src="css/keys/images/stat0.png"  width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttontankspeed" onClick="var b = changeStats(2); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+                <button class="circlebutton2" id="buttontankspeed" onClick="var b = changeStats(2); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
             </div>
             <div id="damage" style="position:absolute;top:60px;">
                 <div id="namedamage" style="position:absolute; left:140px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">DAMAGE</div>
                 <div id="imagedamage">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>                
-                <button class="circlebutton" id="buttondamage" onClick="var b = changeStats(1); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+                <button class="circlebutton2" id="buttondamage" onClick="var b = changeStats(1); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
             </div>
             <div id="rpm" style="position:absolute;top:90px;">
                 <div id="namerpm" style="position:absolute; left:151px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">RPM</div>
                 <div id="imagerpm">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>                
-                <button class="circlebutton" id="buttonrpm" onClick="var b = changeStats(0); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
-            </div>     
+                <button class="circlebutton2" id="buttonrpm" onClick="var b = changeStats(0); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button>                 
+            </div>
             <div id="bulletspeed" style="position:absolute;top:120px;">
                 <div id="namebulletspeed" style="position:absolute; left:122px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">BULLET SPEED</div>
                 <div id="imagebulletspeed">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+                <button class="circlebutton2" id="buttonbulletspeed" onClick="var b = changeStats(3); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
             </div>
             <div id="chargersize" style="position:absolute;top:150px;">
                 <div id="namechargersize" style="position:absolute; left:121px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">CHARGER SIZE</div>
                 <div id="imagechargersize">
                 <img src="css/keys/images/stat0.png" width="330" height="25">                    
                 </div>
-                <button class="circlebutton" id="buttonchargersize" onClick="var b = changeStats(5); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
+                <button class="circlebutton2" id="buttonchargersize" onClick="var b = changeStats(5); return b" style="cursor:pointer;position:absolute;left:335px;top:1px;font-family:'Arial';font-weight: bold;font-size:18px;">+</button> 
             </div>                                       
         </div>
     </div>
@@ -1171,6 +1171,11 @@
         });
         socket.on("evalAnswer", function(data){
             console.log(data);
+        });
+        socket.on("Die", function(data){
+            if(data.id == Player.list[selfId].id){
+                finish();
+            };  
         });
         chatForm.onsubmit = function(e){
             e.preventDefault();

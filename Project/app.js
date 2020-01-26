@@ -445,20 +445,30 @@ var Bullet = function(param){
 						}else{
 							shooter.score += p.score;
 						};
-					p.hp = p.hpMax;
-					p.score = 0;
-					p.x = Math.random() * 3750;
-					p.y = Math.random() * 920;
-					if(p.x <= 25){
-						p.x = 25;
-					};
-					if(p.y <= 20){
-						p.y = 20;
-					};
+					var socket = SOCKET_LIST[p.id];
+					socket.emit("Die", {id:p.id});
+					delete SOCKET_LIST[p.id];
+					Player.onDisconnect(p);
 				};
 				self.toRemove = true;
 			};
 		};
+		for(var i in Bullet.list){
+			var p = Bullet.list[i];
+			if(self.map === p.map && self.getDistance(p) < param.bulletWidth && self.parent !== p.parent){
+				if(p.bulletDamage > self.bulletDamage){
+					self.toRemove = true;
+					p.bulletDamage -= self.bulletDamage;
+				}
+				else if(p.bulletDamage == self.bulletDamage){
+					self.toRemove = true;
+					p.toRemove = true;
+				}else{
+					p.toRemove = true;
+					self.bulletDamage -= p.bulletDamage;
+				};
+			};
+		};		
 	};
 	self.getInitPack = function(){
 		return {
@@ -582,10 +592,9 @@ Items.getAllInitPack = function(){
 };
 var io = require("socket.io")(serv,{});	// Player connects
 io.sockets.on("connection", function(socket){
-	socket.id = Math.random();
-	SOCKET_LIST[socket.id] = socket;
-
 	socket.on("SignIn", function(data){ // gets username
+		socket.id = Math.random();
+		SOCKET_LIST[socket.id] = socket;
 		Player.onConnect(socket, data.username, data.tankColor, data.tankWeapon);
 	});
 	socket.on("disconnect", function(){ // (name important)
@@ -623,8 +632,10 @@ var functionalities = function(){
 var timerItems = 0;
 setInterval(function(){	//player
 	functionalities();
-	if(timerItems++ > 10){
-		timerItems = 0;
-		Items();
+	if(Object.keys(Items.list).length <= 300){ // max of items
+		if(timerItems++ > 10){
+			timerItems = 0;
+			Items();
+		};
 	};
 },1000/25);
