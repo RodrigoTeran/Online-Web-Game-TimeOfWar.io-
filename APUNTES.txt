@@ -2,9 +2,5 @@ Colores importantes:
 -#2F2F2F	(background)
 
 ---------------------------------------------------------Por hacer--------------------------------------------------------
-Para página de inicio: (html y css)
--Saber que hacer con el footer
--Cambiar el tutorial
-
-Dibujos:
--Hacer el mapa más grande
+-Anuncios
+-Facebook Page

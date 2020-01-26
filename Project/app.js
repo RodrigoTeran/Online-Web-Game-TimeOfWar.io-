@@ -71,8 +71,8 @@ var Player = function(param){
 	self.hpMax = 20;	//------------------------------stats
 	if(param.tankWeapon == "css/keys/tanks/red/r_1.png" || param.tankWeapon == "css/keys/tanks/green/g_1.png" || param.tankWeapon == "css/keys/tanks/blue/b_1.png"){
 		//single shot
-		self.bulletRPM = 4;	//------------------------------stats -----------Tank weapon	
-		self.bulletSpd = 15;	//------------------------------stats -----------Tank weapon
+		self.bulletRPM = 5;	//------------------------------stats -----------Tank weapon	
+		self.bulletSpd = 18;	//------------------------------stats -----------Tank weapon
 		self.bulletDamage = 2;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 15;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke.png";
@@ -84,7 +84,7 @@ var Player = function(param){
 		//mini gun
 		self.bulletRPM = 3;	//------------------------------stats -----------Tank weapon	
 		self.bulletSpd = 12;	//------------------------------stats -----------Tank weapon
-		self.bulletDamage = 1;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = .5;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 20;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke.png";	
 		self.bulletWidth = 32;
@@ -93,12 +93,12 @@ var Player = function(param){
 	};
 	if(param.tankWeapon == "css/keys/tanks/red/r_0.png" || param.tankWeapon == "css/keys/tanks/green/g_0.png" || param.tankWeapon == "css/keys/tanks/blue/b_0.png"){
 		//bomb
-		self.bulletRPM = 5;	//------------------------------stats -----------Tank weapon	
+		self.bulletRPM = 6;	//------------------------------stats -----------Tank weapon	
 		self.bulletSpd = 8;	//------------------------------stats -----------Tank weapon
-		self.bulletDamage = 3;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = 5;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 10;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke2.png";
-		self.bulletWidth = 45;
+		self.bulletWidth = 50;
 		self.chargerNow = self.chargersize;
 		self.tank = 2;
 	};
@@ -125,8 +125,8 @@ var Player = function(param){
 		};		
 		if(self.pressingAttack){
 			if(self.tank == 1){
-				for(var i = -2; i <= 2; i++){	//MINI GUN
-					self.shootBullet(i  * 10 + self.mouseAngle);
+				for(var i = -1; i <= 1; i++){	//MINI GUN
+					self.shootBullet(i  * 3 + self.mouseAngle);
 				};
 			}else{
 				for(var i = 0; i < 1; i++){	//OTHER TANKS
@@ -618,10 +618,6 @@ io.sockets.on("connection", function(socket){
 	socket.on("disconnect", function(){ // (name important)
 		delete SOCKET_LIST[socket.id];
 		Player.onDisconnect(socket);
-	});
-	socket.on("evalServer", function(data){
-		var res = eval(data);		
-		socket.emit("evalAnswer", res);
 	});
 });
 
