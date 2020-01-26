@@ -427,9 +427,10 @@ header .logo{
 .finalfooter{
 	background-color:#000;
 	clear:both;
-	margin-top:115px;
+	margin-top:150px;
 	text-align:left;
-	color:#FFF;
+	color:#000;
+	min-height: 100px;
 }
 /*-----------------------------------------------ANIMATIONS-----------------------------------------------*/		
 /*ANIMATIONS*/
@@ -511,6 +512,7 @@ header .logo{
 	border: 0px solid #000000;
 	background-color:#870526;
 	color:#FFF;
+	cursor:pointer;
 }
 .circlebutton:hover{
 	transform:scale(1.3);

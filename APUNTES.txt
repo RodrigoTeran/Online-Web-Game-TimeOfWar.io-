@@ -1,9 +1,6 @@
 Colores importantes:
 -#2F2F2F	(background)
 
-Recordar:
--Cambiar los meta
-
 ---------------------------------------------------------Por hacer--------------------------------------------------------
 Para página de inicio: (html y css)
 -Saber que hacer con el footer
@@ -11,6 +8,3 @@ Para página de inicio: (html y css)
 
 Dibujos:
 -Hacer el mapa más grande
-
-Para el juego: (js)
-1-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente

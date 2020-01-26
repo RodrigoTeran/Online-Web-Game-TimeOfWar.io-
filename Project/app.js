@@ -103,6 +103,7 @@ var Player = function(param){
 		self.tank = 2;
 	};
 	self.score = 0;
+	self.money = 0 + self.greatChat;
 	self.tankColor = param.tankColor;	
 	self.tankWeapon = param.tankWeapon;
 	self.detRPM = 0;
@@ -216,6 +217,7 @@ var Player = function(param){
 			angleChasis:self.angleChasis,
 			bulletSrc:self.bulletSrc,
 			bulletWidth:self.bulletWidth,
+			money:self.money,
 		};
 	};
 	self.getUpdatePack = function(){
@@ -228,6 +230,7 @@ var Player = function(param){
 			chargerNow:self.chargerNow,				
 			hp:self.hp,
 			hpMax:self.hpMax,
+			money:self.money,			
 			score:self.score,
 			angleChasis:self.angleChasis,
 		};
@@ -375,6 +378,10 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 			};	
 		};		
 	});
+	socket.on("changeMoney", function(data){
+		player.money = data.newMoney;
+		socket.emit("SiNo");
+	})
 	socket.on("sendMsgToServer", function(data){
 		for(var i in SOCKET_LIST){
 			var name = "";
@@ -390,6 +397,7 @@ Player.onConnect = function(socket, username, tankColor, tankWeapon){
 		selfId:socket.id,
 		player:Player.getAllInitPack(),
 		bullet:Bullet.getAllInitPack(),
+		item:Items.getAllInitPack(),
 	});
 };
 Player.getAllInitPack = function(){
@@ -442,8 +450,10 @@ var Bullet = function(param){
 					if(shooter)
 						if(p.score == 0){
 							shooter.score += 1;
+							shooter.money += 1;
 						}else{
 							shooter.score += p.score;
+							shooter.money += 1;
 						};
 					var socket = SOCKET_LIST[p.id];
 					socket.emit("Die", {id:p.id});
@@ -526,10 +536,16 @@ var Items = function(){
 	if(Math.random() > .5){
 		self.map = "map2";
 	};
-    self.Src = "/client/css/keys/images/bullets.png";	
-    if(Math.random() > .8){
-		self.Src = "/client/css/keys/images/life.png";	
+    self.Src = "/client/css/keys/images/bullets.png";
+    var genItem = Math.random();
+	if(genItem > .3){
+		if(genItem > .75){
+			self.Src = "/client/css/keys/images/coin.png";
+		};
+	}else{
+		self.Src = "/client/css/keys/images/life.png";
 	};
+	//console.log(self.Src);
 	self.toRemove = false;
 	self.getDistance = function(pt){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
@@ -541,7 +557,9 @@ var Items = function(){
 			if(self.map === p.map && self.getDistance(p) < 35){
 				if(self.Src == "/client/css/keys/images/bullets.png"){	//more bullets
 					p.chargerNow = p.chargersize;
-				}else{	//more life
+				}else if(self.Src == "/client/css/keys/images/coin.png"){	//more money
+					p.money += 1;
+				}else{ // more life
 					p.hp = p.hpMax;
 				};
 				self.toRemove = true;
