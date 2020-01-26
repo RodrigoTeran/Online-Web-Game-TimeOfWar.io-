@@ -501,6 +501,85 @@ Bullet.getAllInitPack = function(){
 	};	
 	return bullets;
 };
+var Items = function(){
+    var self = {};
+    self.id = Math.random();
+	self.x = Math.random() * 3750;
+	self.y = Math.random() * 920;
+	if(self.x <= 25){
+		self.x = 25;
+	};
+	if(self.y <= 20){
+		self.y = 20;
+	};
+    self.map = "map1";
+	if(Math.random() > .5){
+		self.map = "map2";
+	};
+    self.Src = "/client/css/keys/images/bullets.png";	
+    if(Math.random() > .8){
+		self.Src = "/client/css/keys/images/life.png";	
+	};
+	self.toRemove = false;
+	self.getDistance = function(pt){
+		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
+	};
+	self.update = function(){
+		//Generates items
+		for(var i in Player.list){
+			var p = Player.list[i];
+			if(self.map === p.map && self.getDistance(p) < 35){
+				if(self.Src == "/client/css/keys/images/bullets.png"){	//more bullets
+					p.chargerNow = p.chargersize;
+				}else{	//more life
+					p.hp = p.hpMax;
+				};
+				self.toRemove = true;
+			};
+		};
+	};
+	self.getInitPack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+			map:self.map,
+			Src:self.Src,
+		};
+	};	
+	self.getUpdatePack = function(){
+		return {
+			id:self.id,
+			x:self.x,
+			y:self.y,
+		};
+	};	
+	Items.list[self.id] = self;
+	initPack.item.push(self.getInitPack());
+	return self;
+};
+Items.list = {};
+Items.update = function(){
+	var pack = [];
+	for(var i in Items.list){
+		var item = Items.list[i];
+		item.update(); 
+		if(item.toRemove){
+			delete Items.list[i];
+			removePack.item.push(item.id);
+		}else{
+			pack.push(item.getUpdatePack());
+		};
+	};
+	return pack;
+};
+Items.getAllInitPack = function(){
+	var items = [];
+	for(var i in Items.list){
+		items.push(Items.list[i].getInitPack());		
+	};	
+	return items;
+};
 var io = require("socket.io")(serv,{});	// Player connects
 io.sockets.on("connection", function(socket){
 	socket.id = Math.random();
@@ -519,26 +598,33 @@ io.sockets.on("connection", function(socket){
 	});
 });
 
-var initPack = {player:[], bullet:[]};
-var removePack = {player:[], bullet:[]};
+var initPack = {player:[], bullet:[], item:[]};
+var removePack = {player:[], bullet:[], item:[]};
 
 var functionalities = function(){
 	var pack = {
 		player:Player.update(),
 		bullet:Bullet.update(),
+		item:Items.update(),
 	};
 	for(var i in SOCKET_LIST){
 		var socket = SOCKET_LIST[i];
 		socket.emit("init",initPack);
 		socket.emit("update",pack);
 		socket.emit("remove",removePack);
-	};	
+	};
 	initPack.player = [];
 	initPack.bullet = [];
+	initPack.item = [];
 	removePack.player = [];
 	removePack.bullet = [];
+	removePack.item = [];	
 };
-
+var timerItems = 0;
 setInterval(function(){	//player
 	functionalities();
+	if(timerItems++ > 10){
+		timerItems = 0;
+		Items();
+	};
 },1000/25);

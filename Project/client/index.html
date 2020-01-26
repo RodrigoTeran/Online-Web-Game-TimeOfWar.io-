@@ -818,8 +818,7 @@
         Img.player = new Image();
         Img.playerW = new Image();        
         Img.bullet = new Image();
-        Img.bullets = new Image();
-        Img.life = new Image();        
+        Img.items = new Image();      
         Img.map = {};
         var angle = 0;
         var messageScore = "No one XD";
@@ -1005,6 +1004,32 @@
             return self;
         };
         Bullet.list = {};
+        var Items = function(initPack){
+            var self = {};
+            self.id = initPack.id;
+            self.x = initPack.x;
+            self.y = initPack.y;
+            self.map = initPack.map;
+            self.Src = initPack.Src;
+
+            self.draw = function(){
+                if(Player.list[selfId].map !== self.map){
+                    return;
+                };
+                Img.items.src = self.Src;
+                var width = Img.items.width/5;
+                var height = Img.items.height/5;
+
+                var x = self.x - Player.list[selfId].x + WIDTH/2;
+                var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+                ctx.drawImage(Img.items, 0,0,Img.items.width, Img.items.height, 
+                    x-width/2, y-height/2, width, height);
+            };
+            Items.list[self.id] = self;
+            return self;          
+        };
+        Items.list = {};
 
         var selfId = null;
         socket.on("init", function(data){
@@ -1015,7 +1040,10 @@
             };
             for(var i = 0; i < data.bullet.length; i++){
                 new Bullet(data.bullet[i]);
-            };      
+            };   
+            for(var i = 0; i < data.item.length; i++){
+                new Items(data.item[i]);
+            };                  
         });
         socket.on("update", function(data){
             for(var i = 0; i< data.player.length; i++){
@@ -1051,7 +1079,17 @@
                     if(pack.y !== undefined)
                         b.y = pack.y;           
                 };
-            };      
+            };
+            for(var i = 0; i< data.item.length; i++){
+                var pack = data.item[i];
+                var b = Items.list[data.item[i].id];
+                if(b){
+                    if(pack.x !== undefined)
+                        b.x = pack.x;
+                    if(pack.y !== undefined)
+                        b.y = pack.y;           
+                };
+            };               
         });
         socket.on("remove", function(data){
             for(var i = 0; i < data.player.length; i++){
@@ -1060,6 +1098,9 @@
             for(var i = 0; i < data.bullet.length; i++){
                 delete Bullet.list[data.bullet[i]];
             };
+            for(var i = 0; i < data.item.length; i++){
+                delete Items.list[data.item[i]];
+            };            
         });      
         setInterval(function(){
             if(!selfId)
@@ -1077,6 +1118,9 @@
                 for(var i in Player.list){
                     Player.list[i].draw();
                 }; 
+                for(var i in Items.list){
+                    Items.list[i].draw();
+                };                 
             };   
         }, 40);
 

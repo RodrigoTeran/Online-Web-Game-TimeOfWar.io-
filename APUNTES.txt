@@ -13,11 +13,8 @@ Dibujos:
 -Hacer el mapa más grande
 
 Para el juego: (js)
-1-Detectar qué tipo de colisión fue... (items)
-2-Cambiar configuración específica si hubo una colisión... (items)
-3-Añadir más arenas (3)
-4-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
-5-Que el damage de las balas sea como su vida:
+1-Que cuando mueras te devuelvas a la main page, y tu monito ya no se dibuja a menos que le des otra vez
+2-Que el damage de las balas sea como su vida:
 	Objeto (tanque u otra bullet) contra Objeto (tanque u otra bullet){	// el comportamiento es igual en ambos lados...
 		vidaAdversario = checa la vida del otro objeto...
 		if(vidaAdversario >= MyVida){
@@ -26,5 +23,4 @@ Para el juego: (js)
 			MyVida = MyVida - vidaAdversario;
 		};
 	};
-6- PUNTO 13... que los tanque tambien puedan colisionar... que usen la vida que les queda...
-7-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente
+3-Que cuando tengas suficiente score para comprar algo, la shop aparezca derrepente
