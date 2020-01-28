@@ -2,7 +2,7 @@
 <html>
 <head>
     <!--
-    Code made by: Rodrigo Terán     26/01/2020
+    Code made by: Rodrigo Terán     28/01/2020
          ____________     ________      ________       ___         ___        ___
         /____    ___/    /  _____/     /  ___   /     /   |       /  /       /  /
             /  /        /  /____      /     ___/     /    |      /  / |     /  /
@@ -24,30 +24,19 @@
             Connecting...
     </div>
     <div id="part2">
-        <!--<button onclick="finish();">putos</button>-->
-        <!-- width="1532" height="715"-->
         <canvas class="ctx" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:rgba(120, 120, 120 ,1);"></canvas>
         <canvas onClick="CheckWriteInputNo();" class="ctx-score" width="1532" height="715" style="position:absolute; left:0px; border:1px solid #000; background-color:transparent;"></canvas>     
         <div id="scoreboard" style="position: absolute; top:10px; left:1335px;">LEADERBOARD</div>
-        <!--Positions of Scoreboard-->
-        <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">No one XD</div>
-        <div id="topPlace" class="t2" style="position: absolute; top:70px; left:1300px;">No one XD</div>
-        <div id="topPlace" class="t3" style="position: absolute; top:100px; left:1300px;">No one XD</div>
-        <div id="topPlace" class="t4" style="position: absolute; top:130px; left:1300px;">No one XD</div>
-        <div id="topPlace" class="t5" style="position: absolute; top:160px; left:1300px;">No one XD</div>
+        <div id="topPlace" class="t1" style="position: absolute; top:40px; left:1300px;">----------</div>
+        <div id="topPlace" class="t2" style="position: absolute; top:70px; left:1300px;">----------</div>
+        <div id="topPlace" class="t3" style="position: absolute; top:100px; left:1300px;">----------</div>
+        <div id="topPlace" class="t4" style="position: absolute; top:130px; left:1300px;">----------</div>
+        <div id="topPlace" class="t5" style="position: absolute; top:160px; left:1300px;">----------</div>
         <div class="chatclass" onClick="CheckWriteInputNo();" id="chat-text" style="width: 210px; height: 450px; overflow-y: scroll;">
         </div>
         <form class="chatclass2" id="chat-form">
             <input class="chatclass3" onClick="CheckWriteInput();" id ="chat-input" type="text" style="width: 220px;"/>
         </form>
-        <!--
-        LIFE-4
-        DAMAGE-1
-        RPM-0
-        TANK SPEED-2
-        BULLET SPEED-3
-        CHARGER SIZE-5
-        -->
         <div id="stats" style="position:absolute;left:-450px; top:533px;border:1px solid #000; background-color:transparent;">          
             <div id="life" style="position:absolute;">
                 <div id="namelife" style="position:absolute; left:152px;top:5px;font-family:'Arial';font-weight: bold;font-size:12px;">LIFE</div>
@@ -159,7 +148,7 @@
                 </div>
                 <div class="start"> 
                     <section class="playername">
-                        <label>PLAYER NAME</label>
+                        <label>TANK NAME</label>
                         <input maxlength="16" class="inputname" type="text" name="nameplayer"/>
                     </section> 
                     <section>
@@ -174,7 +163,6 @@
                         tutorial('id2');
                         tutorial('id3');                    
                         return b">TUTORIAL</button>
-                        <!-- Appear and disappear -->
                         <div id="id1" class="tutorial" style=" 
                             text-align:center; 
                             font-weight:bold; 
@@ -184,10 +172,11 @@
                         <div id="id2" class="tutorial" style="
                             text-align:left; 
                             font-weight:bold;
-                            font-size: 22px;
+                            font-size: 20px;
                             top:140px;
                             padding-left: 15px;
                             width:605px;
+                            overflow-y: scroll;
                             font:Arial, Helvetica, sans-serif;">
                         </div>
                         <div id="id3" class="tutorial" style="
@@ -244,25 +233,22 @@
         <footer class="finalfooter">                                         
         </footer>
     </div>
-    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"> // Sockets
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js">
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> // JQuery libary
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
     </script> 
-    <script type="text/javascript"> // loading page
+    <script type="text/javascript">
     $(window).load(function() {
         $(".loader").fadeOut("slow");
         document.getElementById("part1").style.display = 'block';
     });
     </script>
     <script type="text/javascript">
-        // función que actualiza el zoom del elemento body
         function actualizarTama(){
         $("body").css("zoom", window.innerWidth / 1530);
         };
         $(document).ready(function(){
-            // actualizaremos el zoom cuando la ventana cambie de tamaño
             $(window).on("resize", actualizarTama);
-            // y al cargar la página
             actualizarTama();  
         });
         var detStats = 0;
@@ -276,51 +262,48 @@
                 detStats = 0;
             };
         };
-        // --------------------------------------------------------------------VARIABLES
         var names_of_weapon_list = ["SINGLE SHOT", "MACHINE GUN", "BOMB"];
         var superlist = [
-            ['<img src="css/keys/tanks/side_tanks/red/st0.png" width="160" height="100"/>',  // red
+            ['<img src="css/keys/tanks/side_tanks/red/st0.png" width="160" height="100"/>', 
             '<img src="css/keys/tanks/side_tanks/red/st1.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/red/st2.png" width="160" height="100"/>'],
             
-            ['<img src="css/keys/tanks/side_tanks/green/st0.png" width="160" height="100"/>',  // green
+            ['<img src="css/keys/tanks/side_tanks/green/st0.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/green/st1.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/green/st2.png" width="160" height="100"/>'],
             
-            ['<img src="css/keys/tanks/side_tanks/blue/st0.png" width="160" height="100"/>',  // blue
+            ['<img src="css/keys/tanks/side_tanks/blue/st0.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/blue/st1.png" width="160" height="100"/>',
             '<img src="css/keys/tanks/side_tanks/blue/st2.png" width="160" height="100"/>'],
         ];
         var superlist_2 = [
-            ["css/keys/tanks/red/r_b.png",  // red
+            ["css/keys/tanks/red/r_b.png",
             "css/keys/tanks/red/r_b.png",
             "css/keys/tanks/red/r_b.png"],
             
-            ["css/keys/tanks/green/g_b.png",  // green
+            ["css/keys/tanks/green/g_b.png", 
             "css/keys/tanks/green/g_b.png",
             "css/keys/tanks/green/g_b.png"],
             
-            ["css/keys/tanks/blue/b_b.png",  // blue
+            ["css/keys/tanks/blue/b_b.png", 
             "css/keys/tanks/blue/b_b.png",
             "css/keys/tanks/blue/b_b.png"],
         ];  
         var superlist_3 = [
-            ["css/keys/tanks/red/r_1.png",  // red
+            ["css/keys/tanks/red/r_1.png", 
             "css/keys/tanks/red/r_2.png",
             "css/keys/tanks/red/r_0.png"],
             
-            ["css/keys/tanks/green/g_1.png",  // green
+            ["css/keys/tanks/green/g_1.png",
             "css/keys/tanks/green/g_2.png",
             "css/keys/tanks/green/g_0.png"],
             
-            ["css/keys/tanks/blue/b_1.png",  // blue
+            ["css/keys/tanks/blue/b_1.png", 
             "css/keys/tanks/blue/b_2.png",
             "css/keys/tanks/blue/b_0.png"],
         ];
-        var superlistposition = 0;  // COLOR
-        var insidelistposition = 0;  // WEAPON
-
-        // CANVAS
+        var superlistposition = 0; 
+        var insidelistposition = 0; 
         var ctx_range = document.getElementsByClassName("rangebarcanvas")[0].getContext("2d");
         var ctx_rpm = document.getElementsByClassName("rpmbarcanvas")[0].getContext("2d");
         var ctx_damage = document.getElementsByClassName("damagebarcanvas")[0].getContext("2d");
@@ -333,27 +316,19 @@
         var howmuch_rpm = 0;
         var howmuch_damage = 0;
         var howmuch_charger = 0;
-        // CANVAS
-
-        // Check speed navigator
         var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
         var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
         var is_opera = navigator.userAgent.toLowerCase().indexOf('opera');              
-        // Check speed navigator
-
-        // Variable play audio
         var audio = new Audio("css/keys/sounds/sound_1.mp3");
-                
-        // --------------------------------------------------------------------FUNCTIONS 1
         function play(){
             audio.play();
         };      
         function change_weapon(){
-            write_();   //write and draw weapon
-            change_stats();     //canvas
-            clear();    //clear the stats before this ones, then call draw()
+            write_();  
+            change_stats();  
+            clear(); 
         };
-        function right_weapon(){            // Call outside change weapon
+        function right_weapon(){    
             if(insidelistposition == 2){
                 insidelistposition = 0;
             }
@@ -362,7 +337,7 @@
             };
             change_weapon();
         };
-        function left_weapon(){         // Call outside change weapon
+        function left_weapon(){     
             if(insidelistposition == 0){
                 insidelistposition = 2;
             }
@@ -371,8 +346,7 @@
             };
             change_weapon();
         };          
-        function change_color(color){           // Call outside change color
-            // green, red, blue
+        function change_color(color){   
             if(color == 0){
                 superlistposition = 1;
             };
@@ -385,39 +359,39 @@
             write_();               
         };      
         function write_(){
-            document.getElementsByClassName("weaponname")[0].innerHTML=names_of_weapon_list[insidelistposition];    //write weapon name
-            document.getElementsByClassName("weapon")[0].innerHTML=know_tank(); //draw tank (weapon side)
-            document.getElementsByClassName("weapon")[1].innerHTML=know_tank(); // draw tank (color side)
+            document.getElementsByClassName("weaponname")[0].innerHTML=names_of_weapon_list[insidelistposition];  
+            document.getElementsByClassName("weapon")[0].innerHTML=know_tank();
+            document.getElementsByClassName("weapon")[1].innerHTML=know_tank(); 
         };
-        function know_tank(){   //know what tank to draw first page 
+        function know_tank(){ 
             var color_position = superlist[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
         };
-        function know_tank_2(){   //know what tank to draw game
+        function know_tank_2(){  
             var color_position = superlist_2[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
         };
-        function know_tank_3(){   //know what tank's weapon to draw
+        function know_tank_3(){  
             var color_position = superlist_3[superlistposition];
             var actual_tank = color_position[insidelistposition];
             return actual_tank;
         }; 
         function change_stats(){
-            if(insidelistposition == 0){    //"SINGLE SHOT"
+            if(insidelistposition == 0){  
                 howmuch_range = 350;
                 howmuch_rpm = 210;
                 howmuch_damage = 120;
                 howmuch_charger = 150;
             };
-            if(insidelistposition == 1){    //"MACHINE GUN"
+            if(insidelistposition == 1){ 
                 howmuch_range = 250;
                 howmuch_rpm = 400;
                 howmuch_damage = 70;
                 howmuch_charger = 200;
             };
-            if(insidelistposition == 2){    //"BOMB"
+            if(insidelistposition == 2){ 
                 howmuch_range = 100;
                 howmuch_rpm = 50;
                 howmuch_damage = 400;
@@ -479,7 +453,7 @@
             var b = play(); tutorial("id1"); tutorial("id2"); tutorial("id3"); 
             return b;
         };
-        function tutorial(id){  //hide and show the tutorial section
+        function tutorial(id){  
             var margin_top_final_footer = document.getElementsByClassName("finalfooter")[0];
             var new_block = document.getElementById(id);
             if(new_block.className == ''){
@@ -497,27 +471,33 @@
                 };      
                 if(id == "id2"){
                     document.getElementById(id).innerHTML=
-                    'The game is a FFA tank war<br>'+
-                    'The game consist of attacking other players and gain score to get to the top position<br>'+
-                    'You gain the score of the tank you have eliminated and +1 coin<br>'+
-                    'Also, you cain gain coins through collecting coin items, +1 coin per item<br>'+
-                    'The bullet item fill your bullet capacity<br>'+
-                    'And the life item fill your life capacity<br>'+
-                    'Keys:<br>'+
-                    'r: Open chat<br>'+
+                    '- The game is a FFA tank war<br>'+
+                    '- It consists of attacking other players and gain score to get to the top position in the Scoreboard<br>'+
+                    '- You gain scroe by killing other tanks, you gain all the scrore of the other tank and +1 coin<br>'+
+                    '- Also, you can gain coins through collecting coin items, +1 coin per item<br>'+
+                    '- The bullet item fills your bullet capacity<br>'+
+                    '- And the life item fills your life capacity<br>'+
+                    '- The coins are for upgrade your stats in the SHOP<br>'+
+                    '--- SHOP:<br>'+
+                    '- For level 1 stats: 5 coins needed<br>'+
+                    '- For level 2 stats: 15 coins needed<br>'+
+                    '- For level 3 stats: 30 coins needed<br>'+
+                    '--- Keys:<br>'+
+                    't: Open chat<br>'+
                     'r: Open shop<br>'+
-                    'And...<br>'+
-                    '...if you die, you loose all your score...<br>';
+                    '- And...<br>'+
+                    '...if you die, you loose all your score...<br>'+
+                    '<br>'+
+                    '<br>';
                 };
                 if(id == "id3"){
                     document.getElementById(id).innerHTML='<button class="backbutton" onClick="tutorialbutton();">Got it bro!';
                 };
             };
         };
-        // --------------------------------------------------------------------FUNCTIONS 2
         var ctx = document.getElementsByClassName("ctx")[0].getContext("2d");
         var DetGame = false;
-        var socket = io(); // Sends package connection to the server
+        var socket = io(); 
 
         function getname_(){
             var nameplayer = document.getElementsByName("nameplayer")[0].value;
@@ -533,7 +513,7 @@
         function start2(){
             $("#part2").fadeIn("slow");
         };
-        function start(){  //hide the main page and show game
+        function start(){  
             $("#part1").fadeOut("slow");
             start2();
             SignIn();
@@ -542,7 +522,7 @@
         function finish2(){
             $("#part1").fadeIn("slow");
         };
-        function finish(){  //hide the game and show main page
+        function finish(){ 
             $("#part2").fadeOut("slow");
             finish2();
         };
@@ -568,7 +548,6 @@
                 new_block_3.className = 'chatclass3';
             };
         };
-        // --------------------------------------------------------------------CALL INITIAL FUNCTIONS
         tutorial('id1');
         tutorial('id2');
         tutorial('id3'); 
@@ -577,11 +556,8 @@
         setInterval(draw, check_navigator());
         change_stats();
         draw();
-        // --------------------------------------------------------------------ONLINE GAME LOGIC
-        // --------------------------------------------------------------------FUNCTIONS
         var WIDTH = 1532;
         var HEIGHT = 715;
-
         var Img = {};
         Img.player = new Image();
         Img.playerW = new Image();        
@@ -589,19 +565,15 @@
         Img.items = new Image();      
         Img.map = {};
         var angle = 0;
-        var messageScore = "No one XD";
-
+        var messageScore = "----------";
         Img.map["map1"] = new Image();
         Img.map["map1"].src = "/client/css/keys/images/map1.png";
-
         Img.map["map2"] = new Image();
         Img.map["map2"].src = "/client/css/keys/images/map1.png";        
-
         var ctxUi = document.getElementsByClassName("ctx-score")[0].getContext("2d");
         var chatText = document.getElementById("chat-text");
         var chatInput = document.getElementById("chat-input");
         var chatForm = document.getElementById("chat-form");
-
         var Player = function(initPack){
             var self = {};
             self.id = initPack.id;
@@ -620,7 +592,6 @@
             self.map = initPack.map;
             self.money = initPack.money;
             self.username = initPack.username;
-
             self.draw = function(){
                 function drawImageR(context, image, sx, sy, swidth, sheight, x, y, width_i, height_i, angle, det){
                     context.save();
@@ -645,23 +616,19 @@
                 };
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
-
                 var hpWidth = 50 * self.hp / self.hpMax;
                 var hpWidth2 = 800 * self.hp / self.hpMax;
                 if(self.id == Player.list[selfId].id){
                     ctx.fillStyle = "green";
-                    ctx.fillRect(x - hpWidth2/2, y + 330, hpWidth2, 15);    // Own player
+                    ctx.fillRect(x - hpWidth2/2, y + 330, hpWidth2, 15);   
                 }else{
                     ctx.fillStyle = "red";
-                    ctx.fillRect(x - hpWidth/2, y + 40, hpWidth, 4);    // Everyone player
+                    ctx.fillRect(x - hpWidth/2, y + 40, hpWidth, 4);   
                 };
-                
                 var width = Img.player.width/4;
                 var height = Img.player.height/4;    
-
                 var widthW = Img.playerW.width/2;
                 var heightW = Img.playerW.height/5;
-
                 drawImageR(ctx, Img.player, 0,0,Img.player.width, Img.player.height, x-width/2, y-height/2, width, height, self.angleChasis, 0);
                 drawImageR(ctx, Img.playerW, 0,0,Img.player.width, Img.player.height, x-widthW/2 + 29, y-heightW/2 - 60, widthW, heightW, self.mouseAngle +90, 1);
                 var name = "";
@@ -674,12 +641,10 @@
                 ctx.font = "15px Arial";
                 var widthText = ctx.measureText(name).width;
                 ctx.fillText(name, x - widthText/2, y - 30);
-
                 ctx.fillStyle = "black";
                 ctx.font = "30px Arial"; 
                 var money = "Money: " + Player.list[selfId].money;
                 ctx.fillText(money, 0, 100);
-                // Leaderboard
                 var arrScore = function(names){
                     function compare(a,b){
                         return b.score - a.score;
@@ -707,7 +672,6 @@
                     return arrScore(clients);
                 };
                 var SCORES = sortObject();
-                //console.log(SCORES[0].user + ": " + SCORES[0].score);
                 var top1 = document.getElementsByClassName("t1")[0];
                 var top2 = document.getElementsByClassName("t2")[0];
                 var top3 = document.getElementsByClassName("t3")[0];
@@ -748,7 +712,6 @@
             Player.list[self.id] = self;
             return self;
         };
-
         Player.list = {};
         var Bullet = function(initPack){
             var self = {};
@@ -757,19 +720,15 @@
             self.y = initPack.y;
             self.map = initPack.map;
             self.bulletSrc = initPack.bulletSrc;
-
             self.draw = function(){
                 if(Player.list[selfId].map !== self.map){
                     return;
                 };
                 var width = Img.bullet.width/10;
                 var height = Img.bullet.height/10;
-
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
-
                 Img.bullet.src = self.bulletSrc;
-
                 ctx.drawImage(Img.bullet, 0,0,Img.bullet.width, Img.bullet.height, 
                     x-width/2, y-height/2, width, height);
             };
@@ -784,7 +743,6 @@
             self.y = initPack.y;
             self.map = initPack.map;
             self.Src = initPack.Src;
-
             self.draw = function(){
                 if(Player.list[selfId].map !== self.map){
                     return;
@@ -792,10 +750,8 @@
                 Img.items.src = self.Src;
                 var width = Img.items.width/5;
                 var height = Img.items.height/5;
-
                 var x = self.x - Player.list[selfId].x + WIDTH/2;
                 var y = self.y - Player.list[selfId].y + HEIGHT/2;
-
                 ctx.drawImage(Img.items, 0,0,Img.items.width, Img.items.height, 
                     x-width/2, y-height/2, width, height);
             };
@@ -803,7 +759,6 @@
             return self;          
         };
         Items.list = {};
-
         var selfId = null;
         socket.on("init", function(data){
             if(data.selfId)
@@ -909,30 +864,25 @@
         var SiNo = 0;
         var SHOP = function(){
             var myMoney = Player.list[selfId].money;
-
             var buttonrpm = document.getElementById("buttonrpm");
             var buttondamage = document.getElementById("buttondamage");
             var buttontankspeed = document.getElementById("buttontankspeed");
             var buttonbulletspeed = document.getElementById("buttonbulletspeed");
             var buttonlife = document.getElementById("buttonlife");
             var buttonchargersize = document.getElementById("buttonchargersize");
-            
             buttonrpm.disabled = true;
             buttondamage.disabled = true;
             buttontankspeed.disabled = true;
             buttonbulletspeed.disabled = true;
             buttonlife.disabled = true;
             buttonchargersize.disabled = true;
-
             buttonrpm.className = "circlebutton2";
             buttondamage.className = "circlebutton2";
             buttontankspeed.className = "circlebutton2";
             buttonbulletspeed.className = "circlebutton2";
             buttonlife.className = "circlebutton2";
             buttonchargersize.className = "circlebutton2";
-
             var compra = 0;
-
             if(myMoney >= 5){
                 if(listOfStats[0] == 0){
                     buttonrpm.disabled = false;
@@ -1068,7 +1018,6 @@
         };
         var lastCharger = null;      
         var lastMoney = null;      
-
         socket.on("addToChat", function(data, map){
             if(map == Player.list[selfId].map){
                 chatText.innerHTML += "<div>" + data + "</div>";                
@@ -1081,7 +1030,7 @@
             if(data.id == Player.list[selfId].id){
                 finish();
             };  
-        });
+        });     
         chatForm.onsubmit = function(e){
             e.preventDefault();
             socket.emit("sendMsgToServer", chatInput.value);
@@ -1098,17 +1047,17 @@
             var player = Player.list[selfId];
             if(detChatTusa == true){
                 if(DetGame == true){
-                    if(event.keyCode === 65)   //a
+                    if(event.keyCode === 65)  
                         socket.emit("keyPress", {inputId:"left", state:true});
-                    else if(event.keyCode === 68)    //d
+                    else if(event.keyCode === 68)   
                         socket.emit("keyPress", {inputId:"right", state:true}); 
-                    else if(event.keyCode === 87)   //w
+                    else if(event.keyCode === 87) 
                         socket.emit("keyPress", {inputId:"up", state:true}); 
-                    else if(event.keyCode === 83)   //s
+                    else if(event.keyCode === 83)  
                         socket.emit("keyPress", {inputId:"down", state:true});                                         
-                    if(event.keyCode === 84)    //t
+                    if(event.keyCode === 84)  
                         chatHideShow();             
-                    if(event.keyCode === 82)    //r
+                    if(event.keyCode === 82)   
                         animaStats();                    
                 };
             };
@@ -1116,13 +1065,13 @@
         document.onkeyup = function(event){
             if(detChatTusa == true){
                 if(DetGame == true){
-                    if(event.keyCode === 68)    //d
+                    if(event.keyCode === 68)    
                         socket.emit("keyPress", {inputId:"right", state:false});
-                    else if(event.keyCode === 83)   //s
+                    else if(event.keyCode === 83)  
                         socket.emit("keyPress", {inputId:"down", state:false});
-                    else if(event.keyCode === 65)   //a
+                    else if(event.keyCode === 65)  
                         socket.emit("keyPress", {inputId:"left", state:false});
-                    else if(event.keyCode === 87)   //w
+                    else if(event.keyCode === 87)  
                         socket.emit("keyPress", {inputId:"up", state:false});
                 };                        
             };
@@ -1152,7 +1101,7 @@
             SiNo = 0;
         });
         var changeStats = function(det){
-            if(det == 0){   //Rpm
+            if(det == 0){   
                 var image = document.getElementById("imagerpm");
                 var button = document.getElementById("buttonrpm");
                 image.innerHTML='';
@@ -1192,7 +1141,7 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';
                 };                                                      
             };
-            if(det == 1){ //Damage
+            if(det == 1){ 
                 var image = document.getElementById("imagedamage");
                 var button = document.getElementById("buttondamage");
                 image.innerHTML='';
@@ -1232,7 +1181,7 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';           
                 };  
             };            
-            if(det == 2){ //Tank speed
+            if(det == 2){ 
                 var image = document.getElementById("imagetankspeed");
                 var button = document.getElementById("buttontankspeed");
                 image.innerHTML='';
@@ -1272,7 +1221,7 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';         
                 };  
             };
-            if(det == 3){ //Bulet speed
+            if(det == 3){ 
                 var image = document.getElementById("imagebulletspeed");
                 var button = document.getElementById("buttonbulletspeed");
                 image.innerHTML='';
@@ -1312,7 +1261,7 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
                 };  
             };
-            if(det == 4){ //Life
+            if(det == 4){ 
                 var image = document.getElementById("imagelife");
                 var button = document.getElementById("buttonlife");
                 image.innerHTML='';
@@ -1352,7 +1301,7 @@
                     image.innerHTML='<img src="css/keys/images/stat3.png"  width="330" height="25">';               
                 };  
             };
-            if(det == 5){ //charger size
+            if(det == 5){
                 var image = document.getElementById("imagechargersize");
                 var button = document.getElementById("buttonchargersize");
                 image.innerHTML='';

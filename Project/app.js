@@ -1,4 +1,13 @@
 // EXPRESS
+/*
+    Code made by: Rodrigo Terán     26/01/2020
+         ____________     ________      ________       ___         ___        ___
+        /____    ___/    /  _____/     /  ___   /     /   |       /  /       /  /
+            /  /        /  /____      /     ___/     /    |      /  / |     /  /
+           /  /        /  _____/     /  / | |       /  -  |     /  /   |   /  /
+          /  /        /  /____      /  /  | |      /  __  |    /  /     | /  /
+         /__/        /_______/     /__/   |_|     /__/  |_|   /__/       /__/
+*/
 var express = require("express");
 var path = require('path');
 var app = express();
@@ -76,6 +85,9 @@ var Player = function(param){
 		self.bulletDamage = 2;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 15;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke.png";
+		if(param.username == "Hisabella"){
+			self.bulletSrc = "/client/css/keys/images/isa_bebe.png";
+		};
 		self.bulletWidth = 32;
 		self.chargerNow = self.chargersize;
 		self.tank = 0;		
@@ -87,6 +99,9 @@ var Player = function(param){
 		self.bulletDamage = .5;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 20;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke.png";	
+		if(param.username == "Hisabella"){
+			self.bulletSrc = "/client/css/keys/images/isa_bebe.png";
+		};		
 		self.bulletWidth = 32;
 		self.chargerNow = self.chargersize;
 		self.tank = 1;
@@ -95,9 +110,12 @@ var Player = function(param){
 		//bomb
 		self.bulletRPM = 6;	//------------------------------stats -----------Tank weapon	
 		self.bulletSpd = 8;	//------------------------------stats -----------Tank weapon
-		self.bulletDamage = 5;	//------------------------------stats -----------Tank weapon
+		self.bulletDamage = 10;	//------------------------------stats -----------Tank weapon
 		self.chargersize = self.greatChat + 10;	//------------------------------stats -----------Tank weapon
 		self.bulletSrc = "/client/css/keys/images/nuke2.png";
+		if(param.username == "Hisabella"){
+			self.bulletSrc = "/client/css/keys/images/isa_bebe.png";
+		};		
 		self.bulletWidth = 50;
 		self.chargerNow = self.chargersize;
 		self.tank = 2;
@@ -148,7 +166,12 @@ var Player = function(param){
 					bulletDamage:self.bulletDamage,
 					bulletWidth:self.bulletWidth,
 					bulletSrc:self.bulletSrc,
-				});					
+				});
+				/*for(var i in SOCKET_LIST){
+					if(SOCKET_LIST[i].id == self.id){
+						SOCKET_LIST[i].emit("sound");
+					};
+				};*/			
 				self.chargerNow -= 1;
 			};
 		}else{
@@ -166,6 +189,11 @@ var Player = function(param){
 						bulletWidth:self.bulletWidth,
 						bulletSrc:self.bulletSrc,						
 					});
+					/*for(var i in SOCKET_LIST){
+						if(SOCKET_LIST[i].id == self.id){
+							SOCKET_LIST[i].emit("sound");
+						};
+					};*/			
 					self.chargerNow -= 1;
 				};
 			}
@@ -536,16 +564,15 @@ var Items = function(){
 	if(Math.random() > .5){
 		self.map = "map2";
 	};
-    self.Src = "/client/css/keys/images/bullets.png";
+    self.Src = "/client/css/keys/images/bullets.png"; //45%
     var genItem = Math.random();
-	if(genItem > .3){
-		if(genItem > .75){
-			self.Src = "/client/css/keys/images/coin.png";
+	if(genItem > .1){
+		if(genItem > .50){
+			self.Src = "/client/css/keys/images/coin.png"; //45%
 		};
 	}else{
-		self.Src = "/client/css/keys/images/life.png";
+		self.Src = "/client/css/keys/images/life.png";	//10%
 	};
-	//console.log(self.Src);
 	self.toRemove = false;
 	self.getDistance = function(pt){
 		return Math.sqrt(Math.pow(self.x-pt.x,2) + Math.pow(self.y-pt.y,2));
@@ -646,7 +673,7 @@ var functionalities = function(){
 var timerItems = 0;
 setInterval(function(){	//player
 	functionalities();
-	if(Object.keys(Items.list).length <= 300){ // max of items
+	if(Object.keys(Items.list).length <= 5000){ // max of items
 		if(timerItems++ > 10){
 			timerItems = 0;
 			Items();
