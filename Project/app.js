@@ -18,7 +18,8 @@ app.get("/", function(req, res){
 	res.sendFile(__dirname + "/client/index.html");
 });
 app.use("/client", express.static(__dirname + "/client"));
-serv.listen(2000); // Local host port
+
+serv.listen(process.env.PORT || 2000); // Local host port
 console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
@@ -166,12 +167,7 @@ var Player = function(param){
 					bulletDamage:self.bulletDamage,
 					bulletWidth:self.bulletWidth,
 					bulletSrc:self.bulletSrc,
-				});
-				/*for(var i in SOCKET_LIST){
-					if(SOCKET_LIST[i].id == self.id){
-						SOCKET_LIST[i].emit("sound");
-					};
-				};*/			
+				});		
 				self.chargerNow -= 1;
 			};
 		}else{
@@ -188,12 +184,7 @@ var Player = function(param){
 						bulletDamage:self.bulletDamage,
 						bulletWidth:self.bulletWidth,
 						bulletSrc:self.bulletSrc,						
-					});
-					/*for(var i in SOCKET_LIST){
-						if(SOCKET_LIST[i].id == self.id){
-							SOCKET_LIST[i].emit("sound");
-						};
-					};*/			
+					});		
 					self.chargerNow -= 1;
 				};
 			}
