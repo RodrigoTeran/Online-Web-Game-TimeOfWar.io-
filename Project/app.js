@@ -1,15 +1,27 @@
 // EXPRESS
 /*
-    Code made by: Rodrigo Terán     26/01/2020
+    Code made by: Rodrigo Terán     28/01/2020
          ____________     ________      ________       ___         ___        ___
         /____    ___/    /  _____/     /  ___   /     /   |       /  /       /  /
             /  /        /  /____      /     ___/     /    |      /  / |     /  /
            /  /        /  _____/     /  / | |       /  -  |     /  /   |   /  /
           /  /        /  /____      /  /  | |      /  __  |    /  /     | /  /
-         /__/        /_______/     /__/   |_|     /__/  |_|   /__/       /__/
+         /__/        /_______/     /__/   |_|     /__/  |_|   /__/       /__/        
 */
-var express = require("express");
-var path = require('path');
+//const cool = require('cool-ascii-faces')
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 2000
+
+/*
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .get('/cool', (req, res) => res.send(cool()))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))*/
+
 var app = express();
 var publicPath = path.resolve(__dirname, 'client');	//to use the css styles
 var serv = require("http").Server(app);
@@ -19,7 +31,7 @@ app.get("/", function(req, res){
 });
 app.use("/client", express.static(__dirname + "/client"));
 
-serv.listen(process.env.PORT || 2000); // Local host port
+serv.listen(PORT); // Local host port
 console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
@@ -664,7 +676,7 @@ var functionalities = function(){
 var timerItems = 0;
 setInterval(function(){	//player
 	functionalities();
-	if(Object.keys(Items.list).length <= 5000){ // max of items
+	if(Object.keys(Items.list).length <= 100){ // max of items
 		if(timerItems++ > 10){
 			timerItems = 0;
 			Items();

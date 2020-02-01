@@ -238,10 +238,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
     </script> 
     <script type="text/javascript">
-    $(window).load(function() {
-        $(".loader").fadeOut("slow");
-        document.getElementById("part1").style.display = 'block';
-    });
+        function isMobile(){
+            return (
+                (navigator.userAgent.match(/Android/i)) ||
+                (navigator.userAgent.match(/webOS/i)) ||
+                (navigator.userAgent.match(/iPhone/i)) ||
+                (navigator.userAgent.match(/iPod/i)) ||
+                (navigator.userAgent.match(/iPad/i)) ||
+                (navigator.userAgent.match(/iBlackBerry/i))
+            );
+        };
+        if(isMobile()){
+            document.getElementsByClassName("loader")[0].innerHTML = "the game is not made for mobile devices";
+        }else{
+            $(window).load(function() {
+                $(".loader").fadeOut("slow");
+                document.getElementById("part1").style.display = 'block';
+            });
+        };
     </script>
     <script type="text/javascript">
         function actualizarTama(){
@@ -478,11 +492,11 @@
                     '- The bullet item fills your bullet capacity<br>'+
                     '- And the life item fills your life capacity<br>'+
                     '- The coins are for upgrade your stats in the SHOP<br>'+
-                    '--- SHOP:<br>'+
+                    '---> SHOP:<br>'+
                     '- For level 1 stats: 5 coins needed<br>'+
                     '- For level 2 stats: 15 coins needed<br>'+
                     '- For level 3 stats: 30 coins needed<br>'+
-                    '--- Keys:<br>'+
+                    '---> Keys:<br>'+
                     't: Open chat<br>'+
                     'r: Open shop<br>'+
                     '- And...<br>'+
