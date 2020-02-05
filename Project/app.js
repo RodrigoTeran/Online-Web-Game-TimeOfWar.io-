@@ -11,7 +11,7 @@
 //const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
-const PORT = process.env.PORT || 2000
+// const PORT = process.env.PORT || 2000
 
 /*
 express()
@@ -27,11 +27,11 @@ var publicPath = path.resolve(__dirname, 'client');	//to use the css styles
 var serv = require("http").Server(app);
 app.use(express.static(publicPath));
 app.get("/", function(req, res){
-	res.sendFile(__dirname + "/client/index.html");
+	res.sendFile(__dirname + "Project/client/index.html");
 });
 app.use("/client", express.static(__dirname + "/client"));
 
-serv.listen(PORT); // Local host port
+serv.listen(); // Local host port
 console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
@@ -39,7 +39,7 @@ var SOCKET_LIST = {};
 var Entity = function(param){
 	var self = {
 		x:Math.random() * 3725 + 25,
-		y:Math.random() * 900 + 20,
+		y:Math.random() * 1920 + 20,
 		spdX:0,
 		spdY:0,
 		id:"",
@@ -151,8 +151,8 @@ var Player = function(param){
 		if(self.y <= 20){
 			self.y = 20;
 		};
-		if(self.y >= 975){
-			self.y = 975;
+		if(self.y >= 1960){	//975
+			self.y = 1960;
 		};		
 		if(self.pressingAttack){
 			if(self.tank == 1){
@@ -556,7 +556,7 @@ var Items = function(){
     var self = {};
     self.id = Math.random();
 	self.x = Math.random() * 3750;
-	self.y = Math.random() * 920;
+	self.y = Math.random() * 1960;
 	if(self.x <= 25){
 		self.x = 25;
 	};
@@ -676,7 +676,7 @@ var functionalities = function(){
 var timerItems = 0;
 setInterval(function(){	//player
 	functionalities();
-	if(Object.keys(Items.list).length <= 100){ // max of items
+	if(Object.keys(Items.list).length <= 200){ // max of items
 		if(timerItems++ > 10){
 			timerItems = 0;
 			Items();

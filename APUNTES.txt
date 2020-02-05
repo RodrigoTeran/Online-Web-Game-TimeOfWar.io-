@@ -1,6 +1,4 @@
 Colores importantes:
 -#2F2F2F	(background)
 
----------------------------------------------------------Por hacer--------------------------------------------------------
--Anuncios
--Facebook Page
+Web page: https://damp-thicket-64595.herokuapp.com
