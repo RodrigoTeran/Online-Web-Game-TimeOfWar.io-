@@ -11,7 +11,7 @@
 //const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
-// const PORT = process.env.PORT || 2000
+const PORT = process.env.PORT || 2000
 
 /*
 express()
@@ -31,7 +31,7 @@ app.get("/", function(req, res){
 });
 app.use("/client", express.static(__dirname + "/client"));
 
-serv.listen(); // Local host port
+serv.listen(PORT); // Local host port
 console.log("Starting Server..."); // When the server is started
 
 // SOCKETS
