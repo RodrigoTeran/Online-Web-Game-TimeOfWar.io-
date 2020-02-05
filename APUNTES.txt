@@ -2,3 +2,6 @@ Colores importantes:
 -#2F2F2F	(background)
 
 Web page: https://damp-thicket-64595.herokuapp.com
+
+To run the program in local host:
+  -command: node app.js
